@@ -1,0 +1,147 @@
+:root {
+    --cor-sucesso: #00a650;
+    --cor-primaria: rgb(43, 109, 77);
+    --cor-texto-claro: #666;
+    --cor-primaria-escura: rgb(34, 86, 61);
+    --fundo: rgb(241, 234, 234);
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: var(--cor-primaria);
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.container {
+    width: 1184px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    padding: 16px;
+    gap: 20px;
+}
+
+/* Coluna 1: Miniaturas */
+.produtos-verticais {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.produtos-imagem {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+.produtos-imagem:hover {
+    border-color: var(--cor-primaria);
+}
+
+/* Coluna 2: Imagem Principal */
+#produto-principal-borda {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+#produto-principal {
+    width: 35vw;
+    height: 70vh;
+
+}
+/* Coluna 3: Caixa de Compra */
+.comprar-container {
+    width: 350px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.vendas-info {
+    font-size: 12px;
+    color: var(--cor-texto-claro);
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.preco-antigo {
+    text-decoration: line-through;
+    color: var(--cor-texto-claro);
+    font-size: 16px;
+}
+
+.preco-atual {
+    font-size: 36px;
+    font-weight: 300;
+    margin: 4px 0;
+}
+
+.desconto {
+    color: var(--cor-sucesso);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.frete-gratis {
+    color: var(--cor-sucesso);
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.entrega-info {
+    font-size: 14px;
+    color: var(--cor-texto-claro);
+    margin-bottom: 20px;
+}
+
+.botoes-acao {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-comprar {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-comprar:hover{
+    transition: 0.5s;
+    background-color: var(--cor-primaria-escura);
+}
+.btn-carrinho {
+    background-color: rgba(65, 137, 230, 0.15);
+    color: var(--cor-primaria);
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}

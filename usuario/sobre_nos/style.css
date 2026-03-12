@@ -1,0 +1,495 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+:root{
+  --cor-primaria: rgb(43, 109, 77);
+}
+body {
+    margin: 0;
+    background-color: rgb(241, 234, 234);
+    font-family: "Poppins", sans-serif;
+    width: 100%; /* Alterado de 100vw para 100% */
+    overflow-x: hidden; /* Garante que nada escape pela lateral */
+}
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Cabeçalho geral */
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+/* Botões */
+.menu-horizontal { 
+  align-items: center;
+  padding: 0;
+}
+
+/* Orientação dos botões */
+.menu-horizontal li {
+  border-radius: 5px;
+  display: inline-block; /* ou float: left; */
+  margin-right: 15px; /* Espaçamento entre os itens */
+}
+/* Formatação dos botões */
+.menu-horizontal a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    text-decoration: none;
+}
+
+/* Efeito hover nos botões */
+.menu-horizontal a:hover, .menu-horizontal a.ativo {
+  background-color: var(--cor-primaria);
+  border-radius: 5px;
+  background-color: rgb(222, 217, 217);
+    text-decoration: none;
+    cursor: pointer;
+    
+}
+.logo {
+    cursor: pointer;
+    height: 60px;
+    padding-left:10px;
+    padding-right: 10px;
+}
+/* As imagens que ficam passando */
+.imagem_principal {
+    padding-top: 50px;
+    padding-left: 120px;
+    width: 1000px;
+    height: 300px;
+}
+/* Container do formulário */
+.fale_conosco_container {
+    background-color: var(--cor-primaria);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    width: 1000px;      
+    margin: 50px auto 0 auto;
+    font-family: "Poppins", sans-serif;
+}
+
+    /* Formulário */
+.fale_conosco_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+/* Barra de pesquisa */
+.search-group {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+}
+.search-bar {
+    width: clamp(150px, 300px, 900px);
+    height: 40px;
+    /* margin-right: 20px; */
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    padding: 15px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 5px 0px 0px 5px;
+}
+.search-group i {
+    width: 48px;
+    color: var(--cor-primaria);
+    background: aliceblue;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+/* Parte superior do cabeçalho */
+.header-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: var(--cor-primaria);
+}
+/* Parte inferior do cabeçalho */
+.header-bottom {
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    /* background: aliceblue; */
+}
+.header-bottom nav{
+  padding: 0;
+  height: 100%;
+}
+main{
+  width: 100%;
+  padding: 15px;
+  display: inline-flex;
+  flex-flow: row wrap;
+  gap:25px;
+}
+main h1{
+  color: var(--cor-primaria);
+}
+section{
+  width: 100%;
+}
+/* Botão de contato */
+.contato {
+  background-color: var(--cor-primaria);
+}
+/* Texto do botão contato */
+.contato a {
+  color: aliceblue;
+    transition: all .2 ease-in-out;
+}
+/* Efeito hover do botão contato */
+.contato a:hover {
+  background-color: rgb(34, 86, 61);
+  text-decoration: underline;
+  cursor: pointer;
+  transform: scale(1.1);
+
+}
+/* Foto de perfil */
+.foto_perfil::before {
+    display: flex;
+    font-size: 45px;
+    justify-content: right;
+    position: absolute;
+    right: 25px;
+    top: 16px;
+    cursor : pointer;
+}
+form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+} 
+/* Grupo que contém nome, email, telefone e o botão */
+.input_group {
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    width: 300px;
+    margin-bottom: 15px;
+}
+/* Formatação do botão */
+.input_group button {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.mensagem_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    width: 400px;
+    margin-bottom: 15px;
+}
+#mensagem {
+  resize: none;
+
+}
+
+.sobre_nos {
+    background-color: var(--cor-primaria);
+    border-radius: 15px; /* Ajustado de 5% para px para melhor visual */
+    color: aliceblue;
+    float: left;
+    width: 50%; /* Usar porcentagem em relação ao pai */
+    max-width: 600px;
+    height: auto; /* Deixe o conteúdo definir a altura ou use min-height */
+    min-height: 370px;
+    padding: 20px;
+    margin: 20px;
+    /* Removido: overflow e white-space que cortavam seu texto */
+}
+
+.foto_equipe{
+  float: right;
+  border-radius: 5%;
+  margin: 2%;
+}
+
+.texto_sn {
+    width: 43vw;
+    padding: 10px;
+    text-wrap: pretty;
+    text-align: justify;
+    text-overflow: ellipsis;
+
+}
+
+.equipe {
+  background-color: rgb(43, 109, 77);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+  border-radius: 10px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.equipe h2 {
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.container-equipe {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.icon i {
+  display: none;
+}
+.membro {
+  background-color: rgb(34, 84, 59);
+  border-radius: 10px;
+  padding: 15px;
+  width: 220px;
+  transition: transform 0.3s ease;
+}
+
+.membro:hover {
+  transform: scale(1.05);
+}
+
+.membro img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.membro h3 {
+  margin: 5px 0;
+  font-size: 1.2em;
+}
+
+.membro p {
+  font-size: 0.95em;
+  color: #dcdcdc;
+}
+.footer {
+  width: 100%;
+  background: rgb(23, 57, 41);
+  border-radius: 6px;
+}
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.footer-col .links {
+  margin-top: 20px;
+}
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+.footer-col .links li a:hover {
+  color: #fff;
+}
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+.footer-col input {
+  height: 40px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--cor-primaria) ;
+  caret-color: #fff;
+  color: #fff;
+  padding-left: 10px;
+}
+.footer-col input::placeholder {
+  color: #ccc;
+}
+ .footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: 180px;
+}
+.footer-col form button:hover {
+  background: #cecccc;
+}
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+.footer-col .icons i {
+  color: #afb6c7;
+  transition-duration: 0.2s;
+}
+.footer-col .icons i:hover  {
+  color: #fff;
+  font-size: 22px;
+  transition-duration: 0.2s;
+}
+.logo-footer {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+
+   body {
+    padding-top: 56px; /* Espaço para o nav fixo */
+  }
+
+
+.logo {
+    z-index: 99;
+    top: 5px;
+    position: fixed;
+    height: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .search-bar {
+    width: 60%;
+    margin-left: 10px;
+  }
+
+   .foto_perfil {
+    z-index: 99;
+    height: 48px;
+    width: auto;
+    padding-top: 0px;
+    margin-left : 0px;
+    margin-right : 0px;
+  }
+
+/* menu hamburguer */
+.header-bottom nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: 60px;
+    background-color: var(--cor-primaria);
+    z-index: 10;
+    border-bottom: 2px solid rgb(0, 0, 0);
+  }
+
+  .menu-horizontal {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--fundo);
+    z-index: 10;
+    border-bottom: 2px solid #000;
+  }
+
+  .menu-horizontal li {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  .menu-horizontal a {
+    width: 100%;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  .icon {
+    display: block;
+    float: right;
+    color: #ffffff;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  .icon:hover {
+    background-color: var(--cor-primaria-escura);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #menu-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--fundo);
+    z-index: 1;
+  }
+  #menu-links li {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  #menu-links a {
+    width: 1000px;
+    display: block;
+    padding: 14px 16px; 
+    text-decoration: none;
+    color: #000000;
+    border-radius: 0px;
+  }
+  .campos:hover {
+    background-color: var(--fundo);
+  }
+  .contato a {
+    background-color: var(--cor-primaria);
+  }
+  .contato a:hover {
+    background-color: var(--cor-primaria-escura);
+  }
+
+}

@@ -1,0 +1,318 @@
+:root{
+    --cor-primaria: rgb(43, 109, 77);
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+body {
+    margin: 0;
+    background-color: rgb(241, 234, 234);
+    width: 100%;
+    height: max-content;
+}
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Cabeçalho geral */
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+/* Botões */
+.menu-horizontal { 
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(241, 234, 234);
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+/* Orientação dos botões */
+.menu-horizontal li {
+  border-radius: 5px;
+  display: inline-block; /* ou float: left; */
+  margin-right: 15px; /* Espaçamento entre os itens */
+}
+/* Formatação dos botões */
+.menu-horizontal a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000000;
+}
+/* Efeito hover nos botões */
+.menu-horizontal a:hover {
+  border-radius: 5px;
+  background-color: rgb(222, 217, 217);
+    cursor: pointer;
+}
+/* Logo */
+.logo {
+    cursor: pointer;
+    height: 60px;
+    width: auto;
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+.foto_perfil {
+    display: flex;
+    width: 60px;
+    padding-top: 5px;
+    margin-left : 5px;
+    margin-right : 10px;
+    justify-content: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor : pointer;
+}
+/* Barra de pesquisa */
+.search-group {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+}
+.search-bar {
+    width: clamp(150px, 300px, 900px);
+    height: 40px;
+    /* margin-right: 20px; */
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    padding: 15px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 5px 0px 0px 5px;
+}
+.search-group i {
+    width: 48px;
+    color: var(--cor-primaria);
+    background: aliceblue;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+/* Parte superior do cabeçalho */
+.header-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: var(--cor-primaria);
+    margin-bottom: 10px
+}
+/* Parte inferior do cabeçalho */
+.header-bottom {
+    text-align: center;
+    justify-content: center;
+}
+/* Botão de contato */
+.contato {
+  background-color: var(--cor-primaria);
+}
+/* Texto do botão contato */
+.contato a {
+  color: white;
+}
+/* Efeito hover do botão contato */
+.contato a:hover {
+  background-color: rgb(34, 86, 61);
+  cursor: pointer;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Barra de Filtros */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+
+.sort-by {
+    cursor: pointer;
+}
+
+/* Grid de Produtos */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Card Individual */
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-container {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    position: relative;
+    padding: 40px 20px 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    max-width: 300px;
+    max-height: max-content;
+    flex-direction: column;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.image-container img {
+    max-width: 245px;
+    mix-blend-mode: multiply; /* Ajuda a remover fundos brancos de imagens JPG */
+    border: 3px solid black;
+    max-height: 190px;
+}
+.wishlist {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+}
+
+/* Informações do Produto */
+.product-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    height: 40px; /* Garante alinhamento mesmo com nomes longos */
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.price-pix {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #000;
+    margin-top: 5px;
+}
+
+.price-pix span {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.price-full {
+    font-size: 0.85rem;
+    color: #444;
+    margin-top: 4px;
+}
+/* Rodapé */
+.footer {
+  position: absolute;
+  width: 100%;
+  background: rgb(23, 57, 41);
+}
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.footer-col .links {
+  margin-top: 20px;
+}
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+.footer-col .links li a:hover {
+  color: #fff;
+}
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+.footer-col input {
+  height: 40px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--cor-primaria) ;
+  caret-color: #fff;
+  color: #fff;
+  padding-left: 10px;
+}
+.footer-col input::placeholder {
+  color: #ccc;
+}
+ .footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: 180px;
+}
+.footer-col form button:hover {
+  background: #cecccc;
+}
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+.footer-col .icons i {
+  color: #afb6c7;
+  transition-duration: 0.2s;
+}
+.footer-col .icons i:hover  {
+  color: #fff;
+  font-size: 22px;
+  transition-duration: 0.2s;
+}
+.logo-footer {
+  width: 150px;
+  margin-bottom: 15px;
+}

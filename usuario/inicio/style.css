@@ -1,0 +1,523 @@
+:root{
+    --cor-primaria: rgb(43, 109, 77);
+    --cor-primaria-escura: rgb(34, 86, 61);
+    --fundo: rgb(241, 234, 234);
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+body {
+    margin: 0;
+    background-color: rgb(241, 234, 234);
+    width: 100%;
+    height: max-content;
+}
+.fa.fa-bars {
+  display: none;
+}
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+/* Botões */
+.menu-horizontal { 
+  align-items: center;
+  padding-bottom: 10px;
+  margin: 0;
+  background-color: rgb(241, 234, 234);
+  font-family: "Poppins", sans-serif;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+/* Orientação dos botões */
+.menu-horizontal li {
+  border-radius: 5px;
+  display: inline-block; /* ou float: left; */
+  margin-right: 15px; /* Espaçamento entre os itens */
+}
+/* Formatação dos botões */
+.menu-horizontal a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000000;
+}
+/* Efeito hover nos botões */
+.menu-horizontal a:hover {
+  border-radius: 5px;
+  background-color: rgb(222, 217, 217);
+    cursor: pointer;
+}
+/* Logo */
+.logo {
+    cursor: pointer;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.foto_perfil::before {
+    display: flex;
+    font-size: 45px;
+    justify-content: right;
+    position: absolute;
+    right: 25px;
+    top: 16px;
+    cursor : pointer;
+}
+/* As imagens que ficam passando */
+.imagem_principal {
+    margin-top: 50px;
+    width: 1000px;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+}
+#menu-links {
+    display: block;
+  }
+/* Container do formulário */
+.fale_conosco_container {
+    border-radius: 10px;
+    background-color: var(--cor-primaria);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 1000px;
+    font-family: "Poppins", sans-serif;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+/* Formulário */
+.fale_conosco_form {
+    display: inline;
+    width: fit-content;
+    flex-flow: column wrap;
+}
+/* Grupos do formulário */
+.form_groups {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 20px;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+/* Título h2 acima dos grupos */
+.form_title {
+    text-align: left;
+    margin-bottom: 20px;
+}
+.fale_conosco_form h2 {
+    margin: 0;
+}
+/* Barra de pesquisa */
+.search-bar {
+    width: clamp(150px, 300px, 900px);
+    height: 40px;
+    /* margin-right: 20px; */
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    padding: 15px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 5px 0px 0px 5px;
+}
+.search-group {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: flex-start;
+}
+.search-group i {
+    width: 48px;
+    color: var(--cor-primaria);
+    background: aliceblue;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+}
+/* Parte superior do cabeçalho */
+.header-top {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: var(--cor-primaria);
+    margin-bottom: 10px;
+    position: relative;
+}
+/* Parte inferior do cabeçalho */
+.header-bottom {
+    text-align: center;
+    justify-content: center;
+}
+/* Botão de contato */
+.contato   {
+  background-color: var(--cor-primaria);
+}
+/* Texto do botão contato */
+.contato a {
+  color: white;
+}
+/* Efeito hover do botão contato */
+.contato a:hover {
+  background-color: var(--cor-primaria-escura);
+  cursor: pointer;
+}
+form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    
+} 
+/* Grupo que contém nome, email, telefone e o botão */
+.input_group {
+    display: inline-flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-content: center;
+}
+/* Formatação do botão */
+#enviar_mensagem {
+    background-color: var(--cor-primaria-escura);
+    width: 100%;
+    height: 48px;
+    color: white;
+    border: none;
+    margin: auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#enviar_mensagem:hover {
+    background-color: rgb(23, 57, 41);
+}
+.mensagem_group {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    width: 750px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+    gap: 0px;
+}
+.mensagem_group .message-title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    color: var(--cor-primaria);
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    background: aliceblue;
+    border-radius: 15px 15px 0px 0px;
+}
+.mensagem_group #mensagem{
+    border-radius:0 0 .5rem .5rem;
+    padding: 5px;
+    background: white;
+    outline: var(--cor-primaria);
+    border: none;
+    width: 100%;
+    resize: none;
+}
+.conjunto {
+    width: 100%;
+    display: inline-flex;
+    padding: 10px;
+    color: var(--cor-primaria);
+    margin: auto;
+    justify-content: center;
+    align-items: start;
+}
+.conjunto label {
+    width: 50px;
+    text-align: right;
+    height: 32px;
+    border-radius: 15px 0px 0px 15px;
+    background: aliceblue;
+    display: inline-flex;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+}
+.conjunto i{
+    color: var(--cor-primaria);
+}
+
+.conjunto input{
+    width: clamp(50px,460px,920px);
+    height: 32px;
+    border-radius: 0px 15px 15px 0px;
+    outline: none;
+    padding: 15px;
+    background: white;
+      border: none;
+}
+.conjunto p {
+    margin: 5px 0;
+    text-align: left;
+    position: absolute;
+}
+#mensagem {
+  height: 160px;
+}
+.footer {
+  position: absolute;
+  width: 100%;
+  background: rgb(23, 57, 41);
+  border-radius: 6px;
+}
+.footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3.5rem;
+  padding: 60px;
+}
+.footer-row .footer-col h4 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.footer-col .links {
+  margin-top: 20px;
+}
+.footer-col .links li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+.footer-col .links li a {
+  text-decoration: none;
+  color: #bfbfbf;
+}
+.footer-col .links li a:hover {
+  color: #fff;
+}
+.footer-col p {
+  margin: 20px 0;
+  color: #bfbfbf;
+  max-width: 300px;
+}
+.footer-col form {
+  display: flex;
+  gap: 5px;
+}
+.footer-col input {
+  height: 40px;
+  background: none;
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--cor-primaria) ;
+  caret-color: #fff;
+  color: #fff;
+  padding-left: 10px;
+}
+.footer-col input::placeholder {
+  color: #ccc;
+}
+ .footer-col form button {
+  background: #fff;
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: 180px;
+}
+.footer-col form button:hover {
+  background: #cecccc;
+}
+.footer-col .icons {
+  display: flex;
+  margin-top: 30px;
+  gap: 30px;
+  cursor: pointer;
+}
+.footer-col .icons i {
+  color: #afb6c7;
+  transition-duration: 0.2s;
+}
+.footer-col .icons i:hover  {
+  color: #fff;
+  font-size: 22px;
+  transition-duration: 0.2s;
+}
+.logo-footer {
+  width: 150px;
+  margin-bottom: 15px;
+}
+/* Identação pra mobile */
+
+ @media (max-width: 768px) {
+  body {
+    padding-top: 47px; /* Espaço para o nav fixo */
+  }
+  .logo {
+    z-index: 99;
+    top: 0px;
+    position: fixed;
+    height: 47px;
+    padding: 5px;
+  }
+  .foto_perfil::before {
+    font-size: 31px;
+    padding-top: 0px;
+    margin-left : 0px;
+    margin-right : 0px;
+  }
+  .search-bar {
+    width: 60%;
+    margin-left: 10px;
+  }
+    .conjunto input {
+    width: 100%;
+    }
+    .conjunto {
+    width: 100%;
+    margin-left: 0px;
+}
+  .form_groups {
+    flex-flow: column wrap;
+    align-items: start;
+  }
+  .imagem_principal {
+    margin-top: 50px;
+    width: 90%;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+}
+  .input_group {
+    width: 100%;
+    align-items: center;
+  }
+  .mensagem_group {
+    width: 100%;
+    align-items: start;
+    padding: 0px;
+  }
+  .message-title {
+    justify-content: center;
+  }
+  #mensagem {
+    width: 310px;
+  }
+  .fale_conosco_container {
+    border-radius: 10px;
+    background-color: var(--cor-primaria);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 90%;
+    font-family: "Poppins", sans-serif;
+}
+  .search-group {
+    width: 100%;
+  }
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+  }
+  .footer .footer-row {
+    padding: 20px;
+    gap: 16px;
+  }
+  .footer-col form {
+    display: block;
+  }
+  .footer-col form :where(input, button) {
+    width: 100%;
+  }
+  .footer-col form button {
+    margin: 10px 0 0 0;
+  }
+  
+  /* Menu hambúrguer */
+  .header-bottom nav {
+    position: fixed;
+    top: 0;
+    left: 0; 
+    width: 100%;
+    background-color: var(--cor-primaria); 
+    z-index: 10;
+    border-bottom: 2px solid rgb(0, 0, 0);
+  }
+  .menu-horizontal {
+    display: none;
+  }
+  .icon {
+    display: block;
+    float: right;
+    color: #ffffff;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  #menu-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--fundo);
+    z-index: 1;
+  }
+  #menu-links li {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  #menu-links a {
+    width: 100vw;
+    display: block;
+    padding: 14px 16px; 
+    text-decoration: none;
+    color: #000000;
+    border-radius: 0px;
+  }
+  .campos:hover {
+    background-color: rgb(222, 217, 217);
+  }
+  .contato a {
+    background-color: var(--cor-primaria);
+  }
+  .contato a:hover {
+    background-color: var(--cor-primaria-escura);
+  }
+  .fa.fa-bars {
+  display: block;
+}
+}

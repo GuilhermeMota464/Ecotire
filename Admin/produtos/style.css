@@ -1,0 +1,192 @@
+:root{
+    --cor-primaria: rgb(43, 109, 77);
+    --cor-primaria-escura: rgb(34, 86, 61);
+    --fundo: rgb(241, 234, 234);
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+body {
+    margin: 0;
+    background-color: var(--fundo);
+    width: 100%;
+    height: max-content;
+}
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Cabeçalho geral */
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+/* Botões */
+.menu-horizontal { 
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(241, 234, 234);
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+/* Orientação dos botões */
+.menu-horizontal li {
+  border-radius: 5px;
+  display: inline-block; /* ou float: left; */
+  margin-right: 15px; /* Espaçamento entre os itens */
+}
+/* Formatação dos botões */
+.menu-horizontal a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000000;
+}
+/* Efeito hover nos botões */
+.menu-horizontal a:hover {
+  border-radius: 5px;
+  background-color: rgb(222, 217, 217);
+    cursor: pointer;
+}
+/* Logo */
+.logo {
+    cursor: pointer;
+    height: 60px;
+    width: auto;
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+.foto_perfil {
+    display: flex;
+    width: 60px;
+    padding-top: 5px;
+    margin-left : 5px;
+    margin-right : 10px;
+    justify-content: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor : pointer;
+}
+
+/* Parte superior do cabeçalho */
+.header-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: var(--cor-primaria);
+    margin-bottom: 10px
+}
+/* Parte inferior do cabeçalho */
+.header-bottom {
+    text-align: center;
+    justify-content: center;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Barra de Filtros */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+
+.sort-by {
+    cursor: pointer;
+}
+.product-info {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: start;
+    text-align: start;
+}
+
+/* Grid de Produtos */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Card Individual */
+.product-card {
+    display: flex;
+    flex-direction: column;
+}
+.product-name {
+    font-size: 1rem;
+    margin: 10px 0 5px 0;
+    height: 40px; /* Garante alinhamento mesmo com nomes longos */
+}
+
+.image-container {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    max-width: 300px;
+    max-height: max-content;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.image-container img {
+    max-width: 245px;
+    mix-blend-mode: multiply; /* Ajuda a remover fundos brancos de imagens JPG */
+    border: 3px solid black;
+    max-height: 190px;
+}
+.div-botoes {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    height: 30px;
+    width: 120px;
+}
+.edit-button {
+    background-color: var(--cor-primaria);
+}
+.edit-button:hover {
+    background-color: var(--cor-primaria-escura);
+}
+.delete-button {
+    background-color: rgb(200, 0, 0);
+}
+.delete-button:hover {
+    background-color: rgb(150, 0, 0);
+}
