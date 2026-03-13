@@ -37,9 +37,9 @@
 </header>
 
 <div class="container">
-    <div class="content">
+    <div class="sales-content">
         <h1>Tabela de vendas</h1>
-        <div id="chart"></div>
+        <div id="sales-chart"></div>
     </div>
 
     <div class="gender-content">

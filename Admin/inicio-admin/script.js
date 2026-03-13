@@ -1,8 +1,11 @@
-// Gráfico de linhas para vendas mensais
 var options = {
+  // 1. Defina as cores aqui (na ordem das séries)
+  colors: ['#2abb75', '#36A2EB', '#ff0037'], 
+  
   series: [{
     name: "Faturamento mensal",
-    data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+    // 2. Apenas a array de números, sem o objeto "datasets" do Chart.js
+    data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10] 
   },
   {
     name: "Acessos ao site",
@@ -10,61 +13,66 @@ var options = {
   },
   {
     name: 'Abandono de carrinho',
-    data: [200, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47 ]
-  }
-  ],
+    data: [20, 27, 24, 19, 25, 38, 32, 27, 42, 26, 35, 7]
+  }],
   chart: {
     height: 350,
     type: 'line',
     zoom: {
-      enabled: false,
-      borderColor: 'rgba(255, 0, 0, 1)', 
-      tension: 0.1
+      enabled: false // Removi as propriedades inválidas que estavam aqui
     },
   },
-  dataLabels: {
-    enabled: false
-  },
   stroke: {
-    width: [5, 7, 5],
-    curve: 'straight',
-    dashArray: [0, 8, 5]
+    width: [3, 3, 3], // Aqui você define a espessura da linha (borderWidth)
+    curve: 'straight'   // Aqui você define a suavização (tension)
   },
-        legend: {
-          tooltipHoverFormatter: function(val, opts) {
-            return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
-          }
-        },
-        markers: {
-          size: 0,
-          hover: {
-            sizeOffset: 6
-          }
-        },
-        xaxis: {
-          categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-            'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-          ],
-        },
-        grid: {
-          borderColor: 'rgb(184, 190, 195)',
-        }
-        };
+  legend: {
+    tooltipHoverFormatter: function(val, opts) {
+      return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
+    }
+  },
+  xaxis: {
+    categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+  },
+  grid: {
+    borderColor: 'rgb(184, 190, 195)',
+  }
+};
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();   
+var chart = new ApexCharts(document.querySelector("#sales-chart"), options);
+chart.render();
 
         
 
 // Gráfico de pizza para gênero dos clientes
- var options = {
-          series: [44, 55, 13, 43],
-          chart: {
-          width: 380,
-          type: 'pie',
+var options = {
+    series: [44, 55, 13, 43],
+    chart: {
+        width: 380,
+        type: 'pie',
+    },
+    // 1. Impede que a fatia "pule" para fora ao clicar
+    plotOptions: {
+        pie: {
+            expandOnClick: false 
+        }
+    },
+    // 2. Controla o efeito visual de passar o mouse ou clicar
+    states: {
+        hover: {
+            filter: {
+                type: 'none'
+            }
         },
+        active: {
+            filter: {
+                type: 'darken', // Remove o escurecimento ao clicar
+                value: 0.1
+            }
+        }
+    },
         labels: ['Feminino', 'Masculino', 'Outros', 'Prefiro não dizer'],
-        colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4bc04bff'],
+        colors: ['#FF6384', '#36A2EB', '#FFCE56', 'rgb(175, 175, 175)'],
         responsive: [{
           breakpoint: 480,
           options: {

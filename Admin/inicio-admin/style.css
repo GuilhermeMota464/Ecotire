@@ -2,6 +2,7 @@
     --cor-primaria: rgb(43, 109, 77);
     --cor-primaria-escura: rgb(34, 86, 61);
     --fundo: rgb(241, 234, 234);
+    --container: rgb(255, 255, 255);
 }
 *{
     box-sizing: border-box;
@@ -112,13 +113,13 @@ body {
     padding-top: 50px;
     height: 100vh;
 }
-.content {
+.sales-content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background-color: aliceblue;
+    background-color: var(--container);
     border-radius: 10px;
     width: 700px;
     margin-left: 50px;
@@ -130,12 +131,12 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background-color: aliceblue;
+    background-color: var(--container);
     border-radius: 10px;
     width: 400px;
     margin-left: 50px;
     box-shadow: 0 8px 6px -6px black;
 } 
-#chart {
+#sales-chart {
   width: 600px;
 }
