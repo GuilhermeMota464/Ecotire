@@ -37,32 +37,32 @@ if (isset($_GET['id'])) {
 
 <div class="container">
     <div class="produtos-verticais">
-        <img src="../produtos/Assets/estojo2_1.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
-        <img src="../produtos/Assets/estojo2_2.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
+        <img src="../produtos/Assets/estojo1_1.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
+        <img src="../produtos/Assets/estojo1_2.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
     </div>
 
-    <div id="produto-principal-borda">
-        <img src="../produtos/Assets/estojo2_1.webp" id="produto-principal">
-    </div>
+    <img src="../produtos/Assets/estojo1_1.webp" id="produto-principal">
     
     <div class="comprar-container">
-        <p class="vendas-info">Novo | +50mil vendidos</p>
-        <h1><?php echo $produto['nome']; ?></h1>
+        <p class="vendas-info">Novo | 0 vendidos</p>
+    <form action="../../funcoesPHP/edit.php" method="POST">
+        <input name="id" hidden value="<?php $_GET['id'] ?>">
+        <textarea><?php echo $produto['nome']; ?></textarea>
         
-        <p class="preco-antigo">R$180,90</p>
-        <div class="preco-area">
-            <span class="preco-atual">
-                R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?>
-            </span>
-            <span class="desconto">36% OFF</span>
+        <input name="preco" class="preco-antigo" value="R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?>"></input>
+        <div class="preco-area"> 
+            <p class="preco-atual">R$<?php echo ($produto['preco'] - $produto['preco'] * $produto['promo']/100) ?>,00</p>
+            <input type="text" name="promo" class="desconto" value="<?php echo $produto['promo'] ?>" style="width: 19px;"></input>  
+            <p class="desconto">% OFF</p>
         </div>
 
-        <p class="frete-gratis">Frete grátis</p>
+        <p class="frete">Frete grátis</p>
         <p class="entrega-info">Chegará grátis amanhã</p>
 
         <div class="botoes-acao">
-            <button class="btn-comprar">Comprar agora</button>
-            <button class="btn-carrinho">Adicionar ao carrinho</button>
+            <input type="submit" class="btn-comprar"></button>
+        </form>
+            <button class="btn-carrinho">Resetar</button>
         </div>
     </div>
 </div>

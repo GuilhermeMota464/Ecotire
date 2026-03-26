@@ -2,7 +2,6 @@
     --cor-primaria: rgb(43, 109, 77);
     --cor-primaria-escura: rgb(34, 86, 61);
     --fundo: rgb(241, 234, 234);
-    --container: rgb(255, 255, 255);
 }
 *{
     box-sizing: border-box;
@@ -107,7 +106,7 @@ body {
   background-color: rgb(34, 86, 61);
   cursor: pointer;
 }
-.container {
+.sales-container {
     display: flex;
     align-items: flex-start;
     padding-top: 50px;
@@ -119,7 +118,7 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background-color: var(--container);
+    background-color: white;
     border-radius: 10px;
     width: 700px;
     margin-left: 50px;
@@ -131,7 +130,7 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background-color: var(--container);
+    background-color: white;
     border-radius: 10px;
     width: 400px;
     margin-left: 50px;

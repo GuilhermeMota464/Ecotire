@@ -69,7 +69,7 @@ if ($result) {
                         </p>
                      <div class="div-botoes">
                         <button class="edit-button" onclick="window.location.href='../pagina-produto/pagina-produto.php?produto=<?php echo urlencode($produto['nome']); ?>&id=<?php echo $produto['id_produto']; ?>'">Editar</button>
-                        <button class="delete-button" onclick="if(confirm('Tem certeza que deseja excluir este produto?')) window.location.href='../../funcoesPHP/remove.php?id=<?php echo $produto['id_produto']; ?>'">Excluir</button>
+                        <button class="delete-button" onclick="if(confirm('Tem certeza que deseja excluir este produto?')) window.location.href='../../funcoesPHP/remove.php?delete_id=<?php echo $produto['id_produto']; ?>'">Excluir</button>
                      </div>
                     </div>
                 </article>

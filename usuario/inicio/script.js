@@ -38,3 +38,50 @@ document.getElementById("telefone").addEventListener("input", function () {
     }
     this.value = formattedValue;
 });
+
+let slides = document.querySelector(".Slide");
+let index = 0;
+
+const total = slides.children.length;
+
+let intervalo = setInterval(proximoSlide, 3000);
+
+function proximoSlide() {
+    index++;
+    moverSlide();
+}
+
+function slideAnterior() {
+    index--;
+    if (index < 0) index = total - 2; // volta pro último real
+    moverSlide();
+}
+
+function moverSlide() {
+    slides.style.transition = "transform 0.8s ease-in-out";
+    slides.style.transform = `translateX(-${index * 25}%)`;
+
+    // loop infinito (clone)
+    if (index === total - 1) {
+        setTimeout(() => {
+            slides.style.transition = "none";
+            slides.style.transform = "translateX(0)";
+            index = 0;
+        }, 800);
+    }
+}
+
+function resetIntervalo() {
+    clearInterval(intervalo);
+    intervalo = setInterval(proximoSlide, 3000);
+}
+
+document.querySelector(".next").addEventListener("click", () => {
+    proximoSlide();
+    resetIntervalo();
+});
+
+document.querySelector(".prev").addEventListener("click", () => {
+    slideAnterior();
+    resetIntervalo();
+});

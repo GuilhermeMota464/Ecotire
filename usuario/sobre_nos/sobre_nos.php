@@ -44,13 +44,15 @@
   <h1>Sobre nós</h1>
 
   <div class="sobre_nos">
-      <p class="texto_sn">Somos uma equipe apaixonada por design sustentável e inovação com propósito. Acreditamos que é possível repensar a forma como produzimos e consumimos, dando novos significados a materiais que, de outra forma, seriam descartados.
+      <p class="texto_sn texto-desktop">Somos uma equipe apaixonada por design sustentável e inovação com propósito. Acreditamos que é possível repensar a forma como produzimos e consumimos, dando novos significados a materiais que, de outra forma, seriam descartados.
 
   É por isso que criamos estojos ecológicos feitos com câmaras de ar de pneus reutilizadas.<br> Cada peça que produzimos carrega uma história: de transformação, consciência ambiental e respeito pelo planeta.
 
   Nosso processo é totalmente artesanal, valorizando o trabalho manual, a originalidade e o cuidado com os detalhes. Ao escolher um dos nossos produtos, você apoia um movimento que une sustentabilidade, criatividade e responsabilidade social.
 
   Mais do que estojos, criamos soluções com impacto positivo — para o meio ambiente e para as pessoas</p>
+
+    <p class="texto_sn texto-mobile">Somos uma marca de design sustentável que transforma câmaras de ar de pneus em estojos ecológicos. Através de um processo artesanal e original, unimos criatividade e responsabilidade ambiental para criar produtos com impacto positivo e propósito.</p>
     
   </div>
   <img src="../../assetsGerais/placeholder.webp" height="300px" width="400px" class="foto_equipe">        
