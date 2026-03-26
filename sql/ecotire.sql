@@ -113,7 +113,6 @@ INSERT INTO produtos (nome, preco, promocao, promo_valor, estoque)
 VALUES ('Estojinho', 299.90, 'com', 5, 20);
 
 -- 4. Adiciona o produto acima aos Favoritos do usuário criado no início
--- (Aqui usamos um "macete" de SELECT para pegar os IDs caso não queira digitar 1, 1)
 INSERT INTO favoritos (id_usuario, id_produto) 
 VALUES (
     (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com'),
