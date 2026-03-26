@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS favoritos (
 
 -- 1. Cadastra o Usuário
 INSERT INTO usuario (email, senha, telefone, tipo) 
-VALUES ('gemi@ecotire.com', MD5('senha123'), '11999998888', 'cliente');
+VALUES ('us@ecotire.com', MD5('senha123'), '11999998888', 'cliente');
 
 -- 2. Cadastra o Endereço
 INSERT INTO endereco (cep, numero, complemento) 
@@ -111,7 +111,7 @@ VALUES ('12200-000', 150, 'Apto 10');
 
 -- 3. Cadastra o Produto
 INSERT INTO produtos (nome, preco, promocao, promo_valor, estoque) 
-VALUES ('Pneu EcoMax R15', 350.00, 'sem', 0, 100);
+VALUES ('Estojo', 350.00, 'sem', 0, 100);
 
 -- 4. Cadastra o Pedido
 INSERT INTO pedidos (quantidade, total, metodo_pagamento, preco_unitario, status)
