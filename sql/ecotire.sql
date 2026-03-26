@@ -11,7 +11,7 @@ CREATE TABLE if not exists usuario (
     senha VARCHAR(255) NOT NULL, -- Aumentado para suportar hashes de senha (como Bcrypt)
     telefone VARCHAR(15) NOT NULL,
     tipo ENUM('cliente','admin') DEFAULT 'cliente',
-    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP 
 ) ENGINE=InnoDB;
 
 -- ================= ENDERECO =================
@@ -22,6 +22,7 @@ CREATE TABLE if not exists endereco (
     numero INT NOT NULL,
     complemento VARCHAR(50),
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    -- AQUI: Se o usuário sumir, o endereço some
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -33,7 +34,7 @@ CREATE TABLE if not exists produtos (
     preco DECIMAL(10,2) NOT NULL,
     promocao enum ('sem','com') default 'sem',
     promo_valor int,
-    imagem varchar (200) NOT NULL,
+    imagem MEDIUMBLOB,
     estoque INT DEFAULT 0
 ) ENGINE=InnoDB;
 
@@ -44,12 +45,12 @@ CREATE TABLE if not exists carrinho(
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
     preco_unitario DECIMAL(10,2) NOT NULL,
+    -- AQUI: Se o usuário ou o produto sumirem, limpa o carrinho
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto)
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ================= PEDIDOS =================
--- CORREÇÃO AQUI: O erro estava no nome da coluna 'id_prudoto' e na FK faltante
 CREATE TABLE if not exists pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -61,9 +62,10 @@ CREATE TABLE if not exists pedidos (
     total DECIMAL(10,2) NOT NULL,
     metodo_pagamento VARCHAR(50),
     preco_unitario DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto), -- Agora referencia a coluna certa
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_endereco_entrega) REFERENCES endereco(id_endereco)
+    -- AQUI: Relacionamentos com cascata
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_endereco_entrega) REFERENCES endereco(id_endereco) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ================= AVALIACOES =================
@@ -74,7 +76,7 @@ CREATE TABLE if not exists avaliacoes (
     nota INT NOT NULL,
     comentario TEXT, -- Mudado para TEXT para maior flexibilidade
     data_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE, 
     FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
     CHECK (nota BETWEEN 1 AND 5)
 ) ENGINE=InnoDB;
@@ -88,40 +90,41 @@ CREATE TABLE if not exists email (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 ) ENGINE=InnoDB;
 
--- ================= USUARIO =================
-INSERT INTO usuario (email, senha, telefone, tipo)
-VALUES ('teste@email.com', '$2y$10$hashfakebcrypt', '11999999999', 'cliente');
+-- ================= Favoritos =================
+CREATE TABLE IF NOT EXISTS favoritos (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_produto INT NOT NULL,
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
+    UNIQUE KEY uk_usuario_produto (id_usuario, id_produto)
+) ENGINE=InnoDB;
 
--- ================= ENDERECO =================
-INSERT INTO endereco (id_usuario, cep, numero, complemento)
-VALUES (1, '12345-678', 100, 'Casa');
+-- 1. Cadastra o Usuário
+INSERT INTO usuario (email, senha, telefone, tipo) 
+VALUES ('gemi@ecotire.com', MD5('senha123'), '11999998888', 'cliente');
 
--- ================= PRODUTO =================
-INSERT INTO produtos (nome, preco, promocao, promo_valor, imagem, estoque)
-VALUES ('Estojo', 350.00, 'com', 299.99, 'pneu15.jpg', 50);
+-- 2. Cadastra o Endereço
+INSERT INTO endereco (cep, numero, complemento) 
+VALUES ('12200-000', 150, 'Apto 10');
 
--- ================= CARRINHO =================
-INSERT INTO carrinho (id_usuario, id_produto, quantidade, preco_unitario)
-VALUES (1, 1, 2, 299.99);
+-- 3. Cadastra o Produto
+INSERT INTO produtos (nome, preco, promocao, promo_valor, estoque) 
+VALUES ('Pneu EcoMax R15', 350.00, 'sem', 0, 100);
 
--- ================= PEDIDOS =================
-INSERT INTO pedidos 
-(id_usuario, id_produto, id_endereco_entrega, quantidade, total, metodo_pagamento, preco_unitario)
-VALUES 
-(1, 1, 1, 2, 599.98, 'cartao_credito', 299.99);
+-- 4. Cadastra o Pedido
+INSERT INTO pedidos (quantidade, total, metodo_pagamento, preco_unitario, status)
+VALUES (2, 700.00, 'PIX', 350.00, 'pago');
 
--- ================= AVALIACOES =================
-INSERT INTO avaliacoes (id_usuario, id_produto, nota, comentario)
-VALUES (1, 1, 5, 'Produto excelente, recomendo!');
+-- 5. Cadastra a Avaliação
+INSERT INTO avaliacoes (nota, comentario)
+VALUES (5, 'Entrega rápida e produto de qualidade!');
 
--- ================= EMAIL =================
-INSERT INTO email (id_usuario, msg)
-VALUES (1, 'Gostaria de saber mais sobre a garantia do produto.');
+-- 6. Cadastra o Favorito
+INSERT INTO favoritos (data_adicionado)
+VALUES (CURRENT_TIMESTAMP);
 
-SELECT * FROM usuario;
-SELECT * FROM endereco;
-SELECT * FROM produtos;
-SELECT * FROM carrinho;
-SELECT * FROM pedidos;
-SELECT * FROM avaliacoes;
-SELECT * FROM email;
+-- 7. Mensagem de Email
+INSERT INTO email (msg) 
+VALUES ('Gostaria de saber o prazo de entrega para o meu CEP.');
