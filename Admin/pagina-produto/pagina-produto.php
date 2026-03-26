@@ -37,17 +37,15 @@ if (isset($_GET['id'])) {
 
 <div class="container">
     <div class="produtos-verticais">
-        <img src="../produtos/Assets/estojo2_1.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
-        <img src="../produtos/Assets/estojo2_2.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
+        <img src="../produtos/Assets/estojo1_1.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
+        <img src="../produtos/Assets/estojo1_2.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
     </div>
 
-    <div id="produto-principal-borda">
-        <img src="../produtos/Assets/estojo2_1.webp" id="produto-principal">
-    </div>
+    <img src="../produtos/Assets/estojo1_1.webp" id="produto-principal">
     
     <div class="comprar-container">
         <p class="vendas-info">Novo | +50mil vendidos</p>
-        <h1><?php echo $produto['nome']; ?></h1>
+        <textarea><?php echo $produto['nome']; ?></textarea>
         
         <p class="preco-antigo">R$180,90</p>
         <div class="preco-area">
@@ -61,8 +59,8 @@ if (isset($_GET['id'])) {
         <p class="entrega-info">Chegará grátis amanhã</p>
 
         <div class="botoes-acao">
-            <button class="btn-comprar">Comprar agora</button>
-            <button class="btn-carrinho">Adicionar ao carrinho</button>
+            <button class="btn-comprar">Editar</button>
+            <button class="btn-carrinho">Resetar</button>
         </div>
     </div>
 </div>

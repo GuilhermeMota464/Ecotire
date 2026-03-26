@@ -44,7 +44,6 @@ body {
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
-    object-fit: contain;
 }
 
 .produtos-imagem:hover {
@@ -52,17 +51,12 @@ body {
 }
 
 /* Coluna 2: Imagem Principal */
-#produto-principal-borda {
-    flex: 1;
-    display: flex;
-    align-items: flex-start;
-    padding-top: 20px;
-}
-
 #produto-principal {
     width: 35vw;
     height: 70vh;
-
+    margin-right: 300px;
+    border-radius: 20px;
+    border: 3px solid var(--cor-primaria);
 }
 /* Coluna 3: Caixa de Compra */
 .comprar-container {
@@ -80,10 +74,15 @@ body {
     margin-bottom: 8px;
 }
 
-h1 {
+textarea {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 12px;
+    resize: none;
+    border: none;
+}
+textare:focus {
+    outline: 2px solid rgb(255, 0, 0);
 }
 
 .preco-antigo {
@@ -118,6 +117,7 @@ h1 {
 }
 
 .botoes-acao {
+    margin-top: 90px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -133,15 +133,17 @@ h1 {
     cursor: pointer;
 }
 .btn-comprar:hover{
-    transition: 0.5s;
     background-color: var(--cor-primaria-escura);
 }
 .btn-carrinho {
-    background-color: rgba(65, 137, 230, 0.15);
+    background-color: rgba(227, 237, 251);
     color: var(--cor-primaria);
     border: none;
     padding: 12px;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
+}
+.btn-carrinho:hover{
+    background-color: rgb(208, 221, 239);
 }

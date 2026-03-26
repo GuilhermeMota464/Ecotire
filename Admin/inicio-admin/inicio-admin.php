@@ -36,7 +36,7 @@
     </div>
 </header>
 
-<div class="container">
+<div class="sales-container">
     <div class="sales-content">
         <h1>Tabela de vendas</h1>
         <div id="sales-chart"></div>
