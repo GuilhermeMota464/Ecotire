@@ -33,7 +33,7 @@ CREATE TABLE if not exists produtos (
     preco DECIMAL(10,2) NOT NULL,
     promocao enum ('sem','com') default 'sem',
     promo_valor int,
-    imagem varchar (200) NOT NULL,
+    imagem MEDIUMBLOB,
     estoque INT DEFAULT 0
 ) ENGINE=InnoDB;
 
@@ -88,40 +88,55 @@ CREATE TABLE if not exists email (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 ) ENGINE=InnoDB;
 
--- ================= USUARIO =================
-INSERT INTO usuario (email, senha, telefone, tipo)
-VALUES ('teste@email.com', '$2y$10$hashfakebcrypt', '11999999999', 'cliente');
+-- ================= Favoritos =================
+CREATE TABLE IF NOT EXISTS favoritos (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_produto INT NOT NULL,
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
+    UNIQUE KEY uk_usuario_produto (id_usuario, id_produto)
+) ENGINE=InnoDB;
 
--- ================= ENDERECO =================
-INSERT INTO endereco (id_usuario, cep, numero, complemento)
-VALUES (1, '12345-678', 100, 'Casa');
 
--- ================= PRODUTO =================
-INSERT INTO produtos (nome, preco, promocao, promo_valor, imagem, estoque)
-VALUES ('Estojo', 350.00, 'com', 299.99, 'pneu15.jpg', 50);
+-- 1. Insere o Usuário (ID gerado automaticamente: 1)
+INSERT INTO usuario (email, senha, telefone, tipo) 
+VALUES ('cliente.teste@email.com', MD5('senha123'), '11988887777', 'cliente');
 
--- ================= CARRINHO =================
-INSERT INTO carrinho (id_usuario, id_produto, quantidade, preco_unitario)
-VALUES (1, 1, 2, 299.99);
+-- 2. Insere o Endereço usando o ID do usuário acima
+INSERT INTO endereco (id_usuario, cep, numero, complemento) 
+VALUES (LAST_INSERT_ID(), '12345-000', 150, 'Bloco B');
 
--- ================= PEDIDOS =================
-INSERT INTO pedidos 
-(id_usuario, id_produto, id_endereco_entrega, quantidade, total, metodo_pagamento, preco_unitario)
-VALUES 
-(1, 1, 1, 2, 599.98, 'cartao_credito', 299.99);
+-- 3. Insere um Produto (ID gerado automaticamente: 1)
+INSERT INTO produtos (nome, preco, promocao, promo_valor, estoque) 
+VALUES ('Pneu Eco-Friendly R14', 299.90, 'com', 5, 20);
 
--- ================= AVALIACOES =================
+-- 4. Adiciona o produto acima aos Favoritos do usuário criado no início
+-- (Aqui usamos um "macete" de SELECT para pegar os IDs caso não queira digitar 1, 1)
+INSERT INTO favoritos (id_usuario, id_produto) 
+VALUES (
+    (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com'),
+    (SELECT id_produto FROM produtos WHERE nome = 'Pneu Eco-Friendly R14')
+);
+
+-- 5. Cria um Pedido para esse usuário e produto
+INSERT INTO pedidos (id_usuario, id_produto, id_endereco_entrega, quantidade, total, metodo_pagamento, preco_unitario, status)
+VALUES (
+    (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com'),
+    (SELECT id_produto FROM produtos WHERE nome = 'Pneu Eco-Friendly R14'),
+    (SELECT id_endereco FROM endereco WHERE id_usuario = (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com')),
+    2, 599.80, 'PIX', 299.90, 'pago');
+
+-- 6. Adiciona uma Avaliação
 INSERT INTO avaliacoes (id_usuario, id_produto, nota, comentario)
-VALUES (1, 1, 5, 'Produto excelente, recomendo!');
+VALUES (
+    (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com'),
+    (SELECT id_produto FROM produtos WHERE nome = 'Pneu Eco-Friendly R14'),
+    5, 'Excelente custo-benefício!');
 
--- ================= EMAIL =================
-INSERT INTO email (id_usuario, msg)
-VALUES (1, 'Gostaria de saber mais sobre a garantia do produto.');
-
-SELECT * FROM usuario;
-SELECT * FROM endereco;
-SELECT * FROM produtos;
-SELECT * FROM carrinho;
-SELECT * FROM pedidos;
-SELECT * FROM avaliacoes;
-SELECT * FROM email;
+-- 7. Simula um envio de Email/Contato
+INSERT INTO email (id_usuario, msg) 
+VALUES (
+    (SELECT id_usuario FROM usuario WHERE email = 'cliente.teste@email.com'),
+    'Gostaria de saber o prazo de entrega para o CEP 12345-000.');
