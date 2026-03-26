@@ -1,6 +1,6 @@
 var options = {
   // 1. Defina as cores aqui (na ordem das séries)
-  colors: ['#2abb75', '#36A2EB', '#ff0037'], 
+  colors: ['rgb(43, 109, 77)', '#36A2EB', 'rgb(255, 0, 55)'], 
   
   series: [{
     name: "Faturamento mensal",
@@ -13,13 +13,13 @@ var options = {
   },
   {
     name: 'Abandono de carrinho',
-    data: [20, 27, 24, 19, 25, 38, 32, 27, 42, 26, 35, 7]
+    data: [20, 35, 44, 49, 40, 38, 42, 57, 67, 56, 45, 47]
   }],
   chart: {
     height: 350,
     type: 'line',
     zoom: {
-      enabled: false // Removi as propriedades inválidas que estavam aqui
+      enabled: false,
     },
   },
   stroke: {
