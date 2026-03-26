@@ -72,25 +72,7 @@ body {
     width: 1000px;
     height: 300px;
 }
-/* Container do formulário */
-.fale_conosco_container {
-    background-color: var(--cor-primaria);
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 50px;
-    width: 1000px;      
-    margin: 50px auto 0 auto;
-    font-family: "Poppins", sans-serif;
-}
 
-    /* Formulário */
-.fale_conosco_form {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-}
 /* Barra de pesquisa */
 .search-group {
     display: inline-flex;
@@ -241,7 +223,6 @@ form h2 {
     text-overflow: ellipsis;
 
 }
-
 .equipe {
   background-color: rgb(43, 109, 77);
   color: white;
@@ -296,6 +277,7 @@ form h2 {
   font-size: 0.95em;
   color: #dcdcdc;
 }
+
 .footer {
   width: 100%;
   background: rgb(23, 57, 41);
@@ -383,113 +365,120 @@ form h2 {
 }
 
 @media (max-width: 768px) {
+    /* Ajustes de Layout Geral */
+    body {
+        padding-top: 0; /* Reset se não for usar menu fixo */
+    }
 
-   body {
-    padding-top: 56px; /* Espaço para o nav fixo */
-  }
+    .header-top {
+        flex-direction: row; /* Mantém na mesma linha se o logo for pequeno */
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .logo {
+        position: static; 
+        height: 50px;
+        margin-left: 0;
+    }
+
+    .header-top {
+        flex-wrap: wrap;
+    }
+    
+    .search-group {
+        width: 100%;
+        margin-top: 20px;
+        padding-left: 20px;
+    }
 
 
-.logo {
-    z-index: 99;
-    top: 5px;
-    position: fixed;
-    height: 40px;
-    padding-left: 5px;
-    padding-right: 5px;
+    .search-bar {
+        width: 80%; 
+    }
+
+    /* Ajuste da Imagem Principal */
+    .imagem_principal {
+        padding: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Menu Hamburguer e Navegação */
+    .header-bottom {
+        padding: 0;
+    }
+
+    .menu-horizontal {
+        display: none; /* Esconde por padrão */
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+    }
+
+    /* Classe que você deve alternar via JavaScript para mostrar o menu */
+    .menu-horizontal.show {
+        display: flex;
+    }
+
+    .menu-horizontal li {
+        width: 100%;
+        margin: 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .menu-horizontal a {
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Seção Sobre Nós / Equipe */
+    .sobre_nos {
+        width: 95%;
+        margin: 10px auto;
+        float: none; /* Remove o float para empilhar */
+        min-height: auto;
+    }
+
+    .texto_sn {
+        width: 100%;
+        text-align: left;
+    }
+
+    .foto_equipe {
+        float: none;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    /* Formulário Fale Conosco */
+    .fale_conosco_form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input_group, .mensagem_group {
+        width: 100%;
+    }
+
+    /* Equipe */
+    .container-equipe {
+        gap: 15px;
+    }
+
+    .membro {
+        width: 45%; /* Dois por linha no mobile */
+        min-width: 150px;
+    }
+
+    /* Footer */
+    .footer .footer-row {
+        padding: 30px 20px;
+        flex-direction: column;
+        gap: 2rem;
+    }
   }
 
-  .search-bar {
-    width: 60%;
-    margin-left: 10px;
+  .equipe {
+    display: none
   }
-
-   .foto_perfil {
-    z-index: 99;
-    height: 48px;
-    width: auto;
-    padding-top: 0px;
-    margin-left : 0px;
-    margin-right : 0px;
-  }
-
-/* menu hamburguer */
-.header-bottom nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    max-height: 60px;
-    background-color: var(--cor-primaria);
-    z-index: 10;
-    border-bottom: 2px solid rgb(0, 0, 0);
-  }
-
-  .menu-horizontal {
-    display: none; 
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--fundo);
-    z-index: 10;
-    border-bottom: 2px solid #000;
-  }
-
-  .menu-horizontal li {
-    display: block;
-    width: 100%;
-    margin: 0;
-  }
-
-  .menu-horizontal a {
-    width: 100%;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-  }
-  .icon {
-    display: block;
-    float: right;
-    color: #ffffff;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  .icon:hover {
-    background-color: var(--cor-primaria-escura);
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  #menu-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--fundo);
-    z-index: 1;
-  }
-  #menu-links li {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-  #menu-links a {
-    width: 1000px;
-    display: block;
-    padding: 14px 16px; 
-    text-decoration: none;
-    color: #000000;
-    border-radius: 0px;
-  }
-  .campos:hover {
-    background-color: var(--fundo);
-  }
-  .contato a {
-    background-color: var(--cor-primaria);
-  }
-  .contato a:hover {
-    background-color: var(--cor-primaria-escura);
-  }
-
-}
