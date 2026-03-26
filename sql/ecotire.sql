@@ -33,7 +33,7 @@ CREATE TABLE if not exists produtos (
     nome VARCHAR(100) NOT NULL, -- Aumentado de 30 para 100 caracteres
     preco DECIMAL(10,2) NOT NULL,
     promocao enum ('sem','com') default 'sem',
-    promo_valor int,
+    promo int,
     imagem MEDIUMBLOB,
     estoque INT DEFAULT 0
 ) ENGINE=InnoDB;
