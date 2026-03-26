@@ -1,9 +1,3 @@
-function toggleMenu() {
-    var menu = document.getElementById("menu-links");
-
-    if (menu.style.display === "flex") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "flex";
-    }
-}
+document.querySelector('.icon').addEventListener('click', function() {
+    document.querySelector('.menu-horizontal').classList.toggle('show');
+});
