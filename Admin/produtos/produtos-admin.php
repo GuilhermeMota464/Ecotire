@@ -1,7 +1,7 @@
 <?php
 include '../../funcoesPHP/connection.php';
 
-$sql = "SELECT id_produto, nome, preco, estoque  FROM produtos";
+$sql = "SELECT id_produto, nome, preco, estoque, imagem  FROM produtos";
 $result = mysqli_query($conn, $sql);
 
 $produtos = [];
