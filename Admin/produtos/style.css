@@ -3,6 +3,7 @@
     --cor-primaria-escura: rgb(34, 86, 61);
     --fundo: rgb(241, 234, 234);
 }
+
 *{
     box-sizing: border-box;
     padding: 0;
