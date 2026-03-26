@@ -151,9 +151,7 @@ body {
     font-size: 0.9rem;
 }
 
-.sort-by {
-    cursor: pointer;
-}
+
 
 /* Grid de Produtos */
 .products-grid {
@@ -177,13 +175,14 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
-    max-width: 300px;
+    max-width: 500px;
     max-height: max-content;
     flex-direction: column;
     box-shadow: 0 8px 6px -6px black;
 }
 
 .image-container img {
+    margin-top: 30px;
     max-width: 245px;
     mix-blend-mode: multiply; /* Ajuda a remover fundos brancos de imagens JPG */
     border: 3px solid black;
@@ -191,8 +190,8 @@ body {
 }
 .wishlist {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 25px;
     font-size: 1.2rem;
     color: #555;
     cursor: pointer;
@@ -316,3 +315,110 @@ body {
   width: 150px;
   margin-bottom: 15px;
 }
+
+@media (max-width: 768px) {
+  body {
+        padding-top: 0; /* Reset se não for usar menu fixo */
+    }
+
+    .header-top {
+        flex-direction: line; /* Mantém na mesma linha se o logo for pequeno */
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .logo {
+        position: static; 
+        height: 50px;
+        margin-left: 0;
+    }
+
+    .header-top {
+        flex-wrap: wrap;
+    }
+    
+    .search-group {
+        width: 100%;
+        margin-top: 20px;
+        padding-left: 20px;
+    }
+
+
+    .search-bar {
+        width: 80%; 
+    }
+
+    .menu-horizontal{
+      display: none;
+    }
+
+   .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+}
+
+.image-container {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    position: relative;
+    padding: 20px; /* Reduzi o padding superior para ganhar espaço */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra mais suave */
+    width: 100%; /* Ocupa 100% da coluna do grid */
+    box-sizing: border-box;
+}
+
+.image-container img {
+    width: 100%;       /* A imagem ocupa a largura disponível */
+    max-width: 400px;  /* Mas não passa de 200px para não perder qualidade */
+    max-height: 400px;
+    height: auto;      /* Mantém a proporção */
+    mix-blend-mode: multiply;
+    border: 1px solid #ddd; /* Borda mais fina para mobile */
+}
+
+    .products-grid {
+        /* No mobile, 2 colunas é o ideal para produtos */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .product-card {
+        width: 100%; /* Garante que o card use a coluna toda */
+    }
+
+    .image-container {
+        padding: 15px 10px; /* Padding menor no mobile */
+    }
+
+    .product-name {
+        font-size: 0.9rem; /* Fonte um pouco menor para caber em 2 colunas */
+        height: auto;      /* Deixa o texto crescer se necessário */
+        margin-bottom: 5px;
+    }
+
+    .price-pix {
+        font-size: 1rem;
+    }
+
+    .price-full {
+        font-size: 0.75rem;
+    }
+
+    .wishlist {
+        position: absolute;
+        top: 15px;    
+        right: 15px;    
+        z-index: 10; 
+    }
+
+}
+
+    
+  
