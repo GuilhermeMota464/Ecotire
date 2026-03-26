@@ -110,7 +110,7 @@ VALUES (LAST_INSERT_ID(), '12345-000', 150, 'Bloco B');
 
 -- 3. Insere um Produto (ID gerado automaticamente: 1)
 INSERT INTO produtos (nome, preco, promocao, promo_valor, estoque) 
-VALUES ('Pneu Eco-Friendly R14', 299.90, 'com', 5, 20);
+VALUES ('Estojinho', 299.90, 'com', 5, 20);
 
 -- 4. Adiciona o produto acima aos Favoritos do usuário criado no início
 -- (Aqui usamos um "macete" de SELECT para pegar os IDs caso não queira digitar 1, 1)
