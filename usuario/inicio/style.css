@@ -82,14 +82,52 @@ body {
     cursor : pointer;
 }
 /* As imagens que ficam passando */
-.imagem_principal {
-    margin-top: 50px;
-    width: 1000px;
-    height: 300px;
-    border-radius: 10px;
-    box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+.imgAlternada{
+  margin-top: 50px;
+  width: 100%;
+  max-width: 1000px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.75);
+  border-radius: 10px;
+}
+
+.imgAlternada button{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  color: rgb(43, 109, 77);;
+  border: none;
+  font-size: 25px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.Slide{
+  display: flex;
+  width: 400%; /*4 Imagens*/
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+  border-radius: 10px;
+}
+.Slide img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 #menu-links {
     display: block;

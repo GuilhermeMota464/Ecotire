@@ -45,8 +45,17 @@
 </header>
 <div class="main-content">
 <!-- Foto que alterna -->
-<img src="../../assetsGerais/placeholder.webp" class="imagem_principal" alt="Imagem Principal">
-
+  <div class="imgAlternada">
+    <div class="Slide">
+      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> 
+      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
+    </div>
+    <button class="prev">❮</button>
+    <button class="next">❯</button>
+  </div>
+  
 <div class="fale_conosco_container">
  <form class="fale_conosco_form">
   <div class="form_title">
