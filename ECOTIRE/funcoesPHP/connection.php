@@ -1,15 +1,11 @@
 <?php
-    $host = "localhost";
-    $user = "root";
-    $password = "Home@spSENAI2025!";
-    $database = "Ecotire";
-    $charset = "utf8mb4";
+require_once '../config.php';
 
-    $dsn = "mysql:host=$host;dbname=$database;charset=$charset";
+    $dsn = "mysql:host=$DB_HOST;dbname=$DB_NAME;charset=$charset";
 
-    try {
+   try {
         //Cria a conexão
-        $pdo = new PDO($dsn, $user, $password);
+        $pdo = new PDO($dsn, $DB_USER, $DB_PASS);
 
         //Configura o PDO pra lançar exceções em caso de erro
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
