@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
         <input name="preco" class="preco-antigo" value="R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?>"></input>
         <div class="preco-area"> 
             <p class="preco-atual">R$<?php echo ($produto['preco'] - $produto['preco'] * $produto['promo']/100) ?>,00</p>
-            <input type="text" name="promo" class="desconto" value="<?php echo $produto['promo'] ?>" style="width: 19px;"></input>  
+            <input type="text" name="promo" class="desconto" value="<?php echo $produto['promo'] ?>" style="width: 21px;"></input>  
             <p class="desconto">% OFF</p>
         </div>
 

@@ -28,7 +28,7 @@ CREATE TABLE if not exists endereco (
 -- ================= PRODUTOS =================
 CREATE TABLE if not exists produtos (
     id_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,s
+    nome VARCHAR(100) NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
     promocao enum ('sem','com') default 'sem',
     promo int,

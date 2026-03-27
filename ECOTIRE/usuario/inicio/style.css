@@ -72,7 +72,7 @@ body {
     padding-left: 10px;
     padding-right: 10px;
 }
-.foto_perfil::before {
+.foto_perfil {
     display: flex;
     font-size: 45px;
     justify-content: right;
