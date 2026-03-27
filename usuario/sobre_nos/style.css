@@ -389,7 +389,7 @@ form h2 {
     .header-top {
         flex-direction: row; /* Mantém na mesma linha se o logo for pequeno */
         justify-content: space-between;
-        padding: 10px;
+        padding: 50px;
     }
 
     .logo {
@@ -467,11 +467,6 @@ form h2 {
         margin: 10px 0;
     }
 
-    /* Formulário Fale Conosco */
-    .fale_conosco_form {
-        flex-direction: column;
-        align-items: center;
-    }
 
     .input_group, .mensagem_group {
         width: 100%;
@@ -493,8 +488,9 @@ form h2 {
         flex-direction: column;
         gap: 2rem;
     }
-  }
+  
 
   .equipe {
     display: none
   }
+}

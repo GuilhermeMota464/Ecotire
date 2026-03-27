@@ -73,18 +73,25 @@ body {
     color: var(--cor-texto-claro);
     margin-bottom: 8px;
 }
-
+input {
+    border: none;
+}
 textarea {
+    field-sizing: content;
+    min-height: 10px;
+    max-height: 200px;
+    padding: auto;
+
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 12px;
     resize: none;
     border: none;
 }
-textare:focus {
-    outline: 2px solid rgb(255, 0, 0);
+.preco-area {
+    display: flex;
+    flex-direction: row;
 }
-
 .preco-antigo {
     text-decoration: line-through;
     color: var(--cor-texto-claro);
@@ -94,20 +101,21 @@ textare:focus {
 .preco-atual {
     font-size: 36px;
     font-weight: 300;
-    margin: 4px 0;
+    margin: 0px 0;
+    width: 200px;
 }
 
 .desconto {
     color: var(--cor-sucesso);
     font-size: 18px;
     font-weight: 400;
+    
 }
 
-.frete-gratis {
+.frete {
     color: var(--cor-sucesso);
     font-weight: 600;
     font-size: 14px;
-    margin-top: 15px;
 }
 
 .entrega-info {
