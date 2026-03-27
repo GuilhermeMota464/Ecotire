@@ -380,6 +380,8 @@ form h2 {
   margin-bottom: 15px;
 }
 
+
+
 @media (max-width: 768px) {
     /* Ajustes de Layout Geral */
     body {
@@ -389,7 +391,11 @@ form h2 {
     .header-top {
         flex-direction: row; /* Mantém na mesma linha se o logo for pequeno */
         justify-content: space-between;
-        padding: 50px;
+        padding: 20px;
+    }
+
+    .i{
+      padding-bottom: 16px;
     }
 
     .logo {
@@ -398,15 +404,20 @@ form h2 {
         margin-left: 0;
     }
 
+      .foto_perfil::before{
+      padding-top: 80px;
+    }
+
     .header-top {
         flex-wrap: wrap;
     }
     
     .search-group {
-        width: 100%;
-        margin-top: 20px;
-        padding-left: 20px;
-    }
+        width: 80%;
+        margin-top: 40px;
+        margin-left: 0px;
+        margin-right: 20px;
+      }
 
 
     .search-bar {
@@ -420,32 +431,9 @@ form h2 {
         height: auto;
     }
 
-    /* Menu Hamburguer e Navegação */
-    .header-bottom {
-        padding: 0;
-    }
 
     .menu-horizontal {
         display: none; /* Esconde por padrão */
-        flex-direction: column;
-        width: 100%;
-        background-color: #fff;
-    }
-
-    /* Classe que você deve alternar via JavaScript para mostrar o menu */
-    .menu-horizontal.show {
-        display: flex;
-    }
-
-    .menu-horizontal li {
-        width: 100%;
-        margin: 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .menu-horizontal a {
-        padding: 15px;
-        text-align: center;
     }
 
     /* Seção Sobre Nós / Equipe */
@@ -467,6 +455,7 @@ form h2 {
         margin: 10px 0;
     }
 
+  
 
     .input_group, .mensagem_group {
         width: 100%;
@@ -493,4 +482,9 @@ form h2 {
   .equipe {
     display: none
   }
+
+/* amborgui */
+
+
+  
 }
