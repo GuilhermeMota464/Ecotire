@@ -1,16 +1,9 @@
 <?php
 include '../../funcoesPHP/connection.php';
 
-$sql = "SELECT id_produto, nome, preco, estoque, imagem  FROM produtos";
-$result = mysqli_query($conn, $sql);
+$stmt = $pdo->query("SELECT id_produto, nome, preco, estoque, imagem  FROM produtos");
+$produtos = $stmt->fetchAll();
 
-$produtos = [];
-
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $produtos[] = $row;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

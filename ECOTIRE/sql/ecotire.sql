@@ -3,7 +3,8 @@ DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_unicode_ci;
 
 USE Ecotire;
-
+insert into produtos(nome, preco, promocao, promo, imagem, estoque)
+values ('Estojo de pneu', '150.00', 'sem', 20, 'estojo2', 30);
 -- ================= USUARIO =================
 CREATE TABLE if not exists usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -98,3 +99,24 @@ CREATE TABLE IF NOT EXISTS favoritos (
     FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
     UNIQUE KEY uk_usuario_produto (id_usuario, id_produto)
 ) ENGINE=InnoDB;
+
+-- ================= TRIGGER (ESTOQUE) =================
+
+-- QUANDO O PEDIDO JÁ ESTIVER PAGO
+CREATE TRIGGER pedido_pago
+AFTER INSERT ON pedidos
+FOR EACH ROW 
+UPDATE produtos
+SET estoque = estoque - NEW.quantidade
+WHERE id_produto = NEW.id_produto
+AND NEW.status = 'pago';
+        
+-- QUANDO O PEDIDO ALTERAR DE PENDENTE PARA PAGO
+CREATE TRIGGER pedido_pendente_pago
+AFTER UPDATE ON pedidos
+FOR EACH ROW
+UPDATE produtos
+SET estoque = estoque - NEW.quantidade
+WHERE id_produto = NEW.id_produto
+AND OLD.status <> 'pago'
+AND NEW.status = 'pago';
