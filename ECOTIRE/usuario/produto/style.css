@@ -65,15 +65,12 @@ body {
 }
 
 .foto_perfil {
-    display: flex;
-    width: 60px;
-    padding-top: 5px;
-    margin-left : 5px;
-    margin-right : 10px;
+   display: flex;
+    font-size: 45px;
     justify-content: right;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 20px;
+    top: 16px;
     cursor : pointer;
 }
 /* Barra de pesquisa */
@@ -333,14 +330,19 @@ body {
         margin-left: 0;
     }
 
+    .foto_perfil{
+      padding-top: 80px;
+    }
+
     .header-top {
         flex-wrap: wrap;
     }
     
     .search-group {
-        width: 100%;
-        margin-top: 20px;
-        padding-left: 20px;
+        width: 80%;
+        margin-top: 40px;
+        margin-left: 5px;
+        margin-right: 15px;
     }
 
 

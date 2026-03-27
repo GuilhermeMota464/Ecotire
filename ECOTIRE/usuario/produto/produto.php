@@ -55,7 +55,7 @@ $produtos = [
               <i class="fa-solid fa-magnifying-glass"></i>                
               </div>
 
-              <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de Perfil">
+               <i onclick="window.location.href='../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
       </div>
       <div class="header-bottom">
           <nav >
