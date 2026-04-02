@@ -232,11 +232,11 @@ form h2 {
 }
 
 .texto_sn {
-    width: 43vw;
     padding: 10px;
     text-wrap: pretty;
     text-align: justify;
     text-overflow: ellipsis;
+    max-width: auto;
 
 }
 .equipe {

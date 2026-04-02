@@ -14,7 +14,7 @@
     <title>Ecotire</title>
 </head>
 <body>
-    <form action="cadastro.php" method="post" class="card" id="cadastroForm">
+    <form action="login.php" method="post" class="card" id="cadastroForm">
 
     <div class="logo">
         <img src="../../assetsGerais/ecotire.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
@@ -25,13 +25,13 @@
 
     <div class="row">
         <input name="email" id="email" type="text" placeholder="Email" required>
-        <select id="domain">
-            <option>@gmail.com</option>
-            <option>@hotmail.com</option>
-            <option>@yahoo.com</option>
-            <option>@outlook.com</option>
-            <option>@icloud.com</option>
-            <option value="outro">Outro...</option>
+        <select id="domain" name="domain">
+                <option value="@gmail.com">@gmail.com</option>
+                <option value="@hotmail.com">@hotmail.com</option>
+                <option value="@yahoo.com">@yahoo.com</option>
+                <option value="@outlook.com">@outlook.com</option>
+                <option value="@icloud.com">@icloud.com</option>
+                <option value="outro">Outro...</option>
         </select>
     </div>
 
@@ -42,7 +42,7 @@
 
     <input type="checkbox" id="terms" required>
     <label for="terms">Eu aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">termos e condições</span></label>
-
+    <?php include "../../funcoesPHP/login.php" ?>
     <button type="submit">Entrar</button>
 
     <a href="../cadastro/cadastro.php">Cadastrar-se</a>

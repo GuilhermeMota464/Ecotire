@@ -33,7 +33,7 @@
             <li><a onclick="window.location.href='#'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Inicio</a></li>
             <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
             <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-            <li class="contato"><a>Contato</a></li>
+            <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>
 
          <a class="icon" id="icon" onclick="toggleMenu()">
@@ -60,7 +60,7 @@
 <div class="fale_conosco_container">
  <form class="fale_conosco_form">
   <div class="form_title">
-   <h2>Fale Conosco</h2>
+   <h2 id="fale_conosco">Fale Conosco</h2>
   </div>
   <div class="form_groups">
   <div class="input_group">
