@@ -63,7 +63,7 @@ $produtos = [
             <li><a onclick="window.location.href='../inicio/index.php'" >Inicio</a></li>
             <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
             <li><a onclick="window.location.href='#'"style="background-color: rgb(222, 217, 217); border-radius: 5px;">Produtos</a></li>
-            <li class="contato"><a>Contato</a></li>
+            <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>
           </nav>
       </div>

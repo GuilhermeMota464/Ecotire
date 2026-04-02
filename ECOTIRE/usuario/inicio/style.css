@@ -424,11 +424,12 @@ form h2 {
     height: 47px;
     padding: 5px;
   }
-  .foto_perfil::before {
+  .foto_perfil {
     font-size: 31px;
     padding-top: 0px;
     margin-left : 0px;
     margin-right : 0px;
+    padding-bottom: 20px;
   }
   .search-bar {
     width: 60%;
