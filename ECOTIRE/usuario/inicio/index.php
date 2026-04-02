@@ -21,6 +21,7 @@
             <div class="search-group">
             <input type="text" class="search-bar" placeholder="Pesquisar...">
             <i class="fa-solid fa-magnifying-glass"></i>                
+            <div id="resultado"></div>
           </div>
           
           <i onclick="window.location.href'../login/login.php'" class="fa-solid fa-user foto_perfil"></i>

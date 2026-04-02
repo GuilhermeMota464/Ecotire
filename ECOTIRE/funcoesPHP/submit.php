@@ -26,11 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo "Erro ao cadastrar: " . $stmt->error;
         }
+        
+    try{
 
     } catch (PDOException $e) {
         echo "Erro ao cadastrar: " . $e->getMessage();
     }
     
     $conn = null;
+    }
 }
 ?>
