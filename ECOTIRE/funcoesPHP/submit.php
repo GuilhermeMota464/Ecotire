@@ -1,27 +1,31 @@
 <?php
 include 'connection.php'; 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    $nome      = $_POST['nome'];
-    $preco     = $_POST['preco'];
-    $estoque   = $_POST['estoque'];
-    $avaliacao = $_POST['avaliacao'];
+    $nome = $_POST['nome'];
+    $preco = floatval($_POST['preco']);
+    $estoque   = intval($_POST['estoque']);
+    $avaliacao = intval($_POST['avaliacao']);
 
-    $sql = "INSERT INTO produtos (nome, preco, estoque, avaliacao) VALUES (:nome, :preco, :estoque, :avaliacao)";
+    $sql = "INSERT INTO produtos (nome, preco, estoque, avaliacao) VALUES (?, ?, ?, ?)";
 
-    try {
-        //Prepara a query usando sua variável de conexão
-        $stmt = $conn->prepare($sql);
+    $stmt = $pdo->prepare($sql);
 
-        //O PDO faz o "bind" e a execução de uma vez só passando um array
-        $stmt->execute([
-            ':nome'      => $nome,
-            ':preco'     => $preco,
-            ':estoque'   => $estoque,
+    if ($stmt) {
+
+        $stmt = $pdo->prepare([
+            ':nome' => $nome,
+            ':preco' => $preco,
+            ':estoque' => $estoque,
             ':avaliacao' => $avaliacao
         ]);
 
-        echo "Produto cadastrado com sucesso!";
+        if ($stmt->execute()) {
+            echo "Produto cadastrado com sucesso!";
+        } else {
+            echo "Erro ao cadastrar: " . $stmt->error;
+        }
 
     } catch (PDOException $e) {
         echo "Erro ao cadastrar: " . $e->getMessage();

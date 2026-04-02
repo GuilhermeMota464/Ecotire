@@ -3,8 +3,7 @@ DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_unicode_ci;
 
 USE Ecotire;
-insert into produtos(nome, preco, promocao, promo, imagem, estoque)
-values ('Estojo de pneu', '150.00', 'sem', 20, 'estojo2', 30);
+
 -- ================= USUARIO =================
 CREATE TABLE if not exists usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
