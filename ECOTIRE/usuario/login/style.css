@@ -136,3 +136,52 @@ input[type="checkbox"]:checked {
     text-decoration: underline;
     cursor: pointer;
 }
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+        height: auto; 
+        align-items: flex-start; 
+    }
+
+    .card {
+        width: 80%; /* Ocupa a largura disponível */
+        max-width: 80%; 
+        padding: 25px 20px; /* Reduz o padding interno */
+        box-shadow: none; /* Opcional: remove sombra em telas pequenas para look flat */
+        background: transparent; /* Opcional: integra com o fundo do body */
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    /* Ajuste da linha de Email + Domínio */
+    .row {
+        flex-direction: column; /* Empilha o input e o select */
+        align-items: stretch;
+        gap: 5px;
+    }
+
+    #email, select, #senha, #tele {
+        width: 100% !important; /* Força os campos a ocuparem 100% da largura */
+        box-sizing: border-box; /* Garante que o padding não "estoure" a largura */
+        font-size: 16px; /* Evita o zoom automático do iOS ao focar no input */
+    }
+
+    select {
+        margin-top: 5px;
+    }
+
+    /* Ajuste do botão e links */
+    button {
+        padding: 15px; /* Botão maior para facilitar o clique com o polegar */
+        font-size: 18px;
+    }
+
+    #terms + label {
+        font-size: 14px;
+        display: inline; /* Melhora a leitura do texto dos termos */
+    }
+}

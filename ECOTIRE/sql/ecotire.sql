@@ -7,6 +7,7 @@ USE Ecotire;
 -- ================= USUARIO =================
 CREATE TABLE if not exists usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE, 
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(15) NOT NULL,
