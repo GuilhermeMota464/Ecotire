@@ -1,33 +1,10 @@
 <?php
-$produtos = [
-  [
-    'nome' => 'Estojo Box Especial - Preto',
-    'preco_pix' => 'R$ 77,50',
-    'preco_full' => 'R$ 79,90',
-    'imagem' => 'Assets/estojo3_1.webp'
-  ],
-  [
-    'nome' => 'Estojo Box Hydroblock - Preto',
-    'preco_pix' => 'R$ 116,30',
-    'preco_full' => 'R$ 119,90',
-    'imagem' => 'Assets/estojo1_1.webp'
-  ],
-  [
-    'nome' => 'Estojo Box Hydroblock - Azul',
-    'preco_pix' => 'R$ 116,30',
-    'preco_full' => 'R$ 119,90',
-    'imagem' => 'Assets/estojo2_1.webp'
-  ],
-  [
-    'nome' => 'Estojo Box Hydroblock - Azul',
-    'preco_pix' => 'R$ 116,30',
-    'preco_full' => 'R$ 119,90',
-    'imagem' => 'Assets/estojo2_1.webp'
-  ]
-];
+include '../../funcoesPHP/connection.php';
+
+$stmt = $pdo->query("SELECT id_produto, nome, preco, estoque, imagem FROM produtos");
+$produtos = $stmt->fetchAll();
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -79,14 +56,14 @@ $produtos = [
             <article class="product-card">
                 <div class="image-container">
                     <i class="fa-regular fa-heart wishlist" onclick="favoritarProduto(this)"></i>
-                    <img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>">
+                    <img src="Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" alt="<?php echo $produto['nome']; ?>">
                    <div class="product-info">
                     <h2 class="product-name"><?php echo $produto['nome']; ?></h2>
                     <p class="price-pix">
-                        <?php echo $produto['preco_pix']; ?> <span>no Pix</span>
+                        <?php echo $produto['preco']; ?> <span>no Pix</span>
                     </p>
                     <p class="price-full">
-                        ou <?php echo $produto['preco_full']; ?> em 12x de <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco_full'])) / 12, 2, ',', '.'); ?>
+                        ou <?php echo $produto['preco']; ?> em 12x de <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco'])) / 12, 2, ',', '.'); ?>
                     </p>
                  </div>
                 </div>

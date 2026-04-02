@@ -72,5 +72,43 @@ $produtos = $stmt->fetchAll();
     </main>
         </div>
     </div>
+
+<div class="modal">
+        <form>
+            <div id="input-group-left">
+                <div class="field-container">
+                    <label>NOME</label>
+                    <input type="text" placeholder="Insira o nome..." id="nome" class="input">
+                </div>
+                
+                <div class="field-container">
+                    <label>PREÇO</label>
+                    <input type="number" placeholder="0,00" id="preco" class="input">
+                </div>
+
+                <div class="promo-box">
+                    <input type="checkbox" id="promo">
+                    <label for="promo">PROMO</label>
+                </div>
+            </div>
+
+            <div class="image-upload-section">
+                <label class="picture" tabindex="0">
+                    <input type="file" accept="image/*" id="inserir-imagem" hidden>
+                    <span class="picture-image">img</span>
+                </label>
+            </div>
+
+            <div id="input-group-right">
+                <div class="field-container">
+                    <label>Desc</label>
+                    <textarea id="descricao_imagem" placeholder="Descreva o produto..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+<script src="script.js"></script>
 </body>
 </html>
