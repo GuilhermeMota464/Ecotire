@@ -1,65 +1,48 @@
 <?php
-include '../../funcoesPHP/connection.php';
+require '../../funcoesPHP/connection.php';
 
 $feedback = ""; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // 1. Get the data
     $email_part = $_POST['email'];
     $dominio    = $_POST['domain']; 
     $telefone   = $_POST['telefone'];
     $senha      = $_POST['senha'];
 
-    // FIX: Handle the "Outro" case or concatenate correctly
-    // If the user selects "Outro", this logic might break unless you have javascript changing the input.
-    // For now, we assume standard concatenation:
     $full_email = $email_part . $dominio;
 
-    // 2. CHECK FIRST (Look Before You Leap)
-    // FIX: Use $connection (not $mysqli) and check the $full_email
-    $checkStmt = $connection->prepare("SELECT id_usuario FROM usuario WHERE email = ?");
-    $checkStmt->bind_param("s", $full_email); // Check the FULL email, not just the name
-    $checkStmt->execute();
-    $checkStmt->store_result();
-
-    if ($checkStmt->num_rows > 0) {
-        // --- STOP! Email found ---
-        // We store the error in $feedback to display it nicely in the HTML later
-        $feedback = "<p style='color: #dc3545; text-align: center;'>O email '$full_email' já está registrado. Insira outro.</p>";
+    try {
+        $checkSql = "SELECT id_usuario FROM usuario WHERE email = :email";
+        $checkStmt = $pdo->prepare($checkSql);
         
-        $checkStmt->close(); 
-        // We do NOT proceed to insert. The code ends here for this request.
+        $checkStmt->execute([':email' => $full_email]);
 
-    } else {
-        // --- PROCEED! Email is new ---
-        $checkStmt->close(); // Close the check statement
+        if ($checkStmt->fetch()) {
+            $feedback = "<p style='color: #dc3545; text-align: center;'>O email '$full_email' já está registrado. Insira outro.</p>";
 
-        // 3. Hash the password (only do this if we are actually saving)
-        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-        // 4. Insert into Database
-        $sql = "INSERT INTO usuario (email, senha, telefone) VALUES (?, ?, ?)";
-        $stmt = $connection->prepare($sql);
-        
-        // FIX: Added error checking for the prepare statement itself
-        if ($stmt) {
-            $stmt->bind_param("sss", $full_email, $senha_hash, $telefone);
-
-            if ($stmt->execute()) {
-                $feedback = "<p style='color: #28a745; text-align: center;'>Cadastro realizado com sucesso!</p>";
-                // Optional: Redirect to login after a few seconds?
-                // header("refresh:3;url=../login/login.php"); 
-            } else {
-                $feedback = "<p style='color: #dc3545; text-align: center;'>Erro ao cadastrar: " . $stmt->error . "</p>";
-            }
-            $stmt->close();
         } else {
-            $feedback = "<p style='color: #dc3545; text-align: center;'>Erro no sistema (Prepare failed).</p>";
+
+            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+            $insertSql = "INSERT INTO usuario (email, senha, telefone) VALUES (:email, :senha, :telefone)";
+            $stmt = $pdo->prepare($insertSql);
+            
+            $sucesso = $stmt->execute([
+                ':email'    => $full_email,
+                ':senha'    => $senha_hash,
+                ':telefone' => $telefone
+            ]);
+
+            if ($sucesso) {
+                $feedback = "<p style='color: #28a745; text-align: center;'>Cadastro realizado com sucesso!</p>";
+            } else {
+                $feedback = "<p style='color: #dc3545; text-align: center;'>Erro ao cadastrar.</p>";
+            }
         }
+
+    } catch (PDOException $e) {
+        $feedback = "<p style='color: #dc3545; text-align: center;'>Erro no sistema: " . $e->getMessage() . "</p>";
     }
-    
-    // connection close is usually handled at the end of the script or automatically
-    // $connection->close(); 
 }
 ?>
 
