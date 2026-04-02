@@ -85,3 +85,14 @@ document.querySelector(".prev").addEventListener("click", () => {
     slideAnterior();
     resetIntervalo();
 });
+
+//Pesquisa auto
+document.getElementById("busca").addEventListener("keyup", function(){
+    let texto =  this.value;
+
+    fetch("buscar.php?busca=" + texto)
+    .then(response => response.text())
+    .then(data => {
+        document;getElementById("resultado").innerHTML = data;
+    })
+})
