@@ -29,7 +29,7 @@
             <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
             <li><a style="background-color: rgb(222, 217, 217); border-radius: 5px;">Sobre</a></li>
             <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-            <li class="contato"><a>Contato</a></li>
+            <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>
 
           <a class="icon" onclick="toggleMenu()">
