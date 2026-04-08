@@ -2,27 +2,19 @@
 include '../../funcoesPHP/connection.php';
 
 if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-    $id = (int) $_GET['id'];
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id_produto = ?");
+    $stmt->execute([$id]);
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT * FROM produtos WHERE id_produto = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-
-    $resultado = mysqli_stmt_get_result($stmt);
-
-    if ($produto = mysqli_fetch_assoc($resultado)) {
-        // Produto encontrado
-    } else {
-        die("Produto não encontrado.");
+     if (!$produto) {
+        echo "Produto não encontrado.";
+        exit;
     }
-
-    mysqli_stmt_close($stmt);
-
 } else {
-    die("ID não informado.");
+    echo "Produto não encontrado.";
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -32,6 +24,14 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produto</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Link fonte Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Link API de icones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Icone da aba no navegador -->
+     <link rel="icon" type="image/png" href="../../assetsGerais/ecotire.webp">
 </head>
 <body>
 
@@ -49,9 +49,9 @@ if (isset($_GET['id'])) {
         <input name="id" hidden value="<?php $_GET['id'] ?>">
         <textarea><?php echo $produto['nome']; ?></textarea>
         
-        <input name="preco" class="preco-antigo" value="R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?>"></input>
+        <input name="preco" class="preco-antigo" value="R$<?php echo $produto['preco'] ?>"></input>
         <div class="preco-area"> 
-            <p class="preco-atual">R$<?php echo ($produto['preco'] - $produto['preco'] * $produto['promo']/100) ?>,00</p>
+            <p class="preco-atual">R$<?php echo $produto['preco'] ?></p>
             <input type="text" name="promo" class="desconto" value="<?php echo $produto['promo'] ?>" style="width: 21px;"></input>  
             <p class="desconto">% OFF</p>
         </div>

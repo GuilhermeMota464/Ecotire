@@ -2,6 +2,7 @@
     --cor-primaria: rgb(43, 109, 77);
     --cor-primaria-escura: rgb(34, 86, 61);
     --fundo: rgb(241, 234, 234);
+    --borda: rgba(107, 107, 107, 0.238);
 }
 
 *{
@@ -22,6 +23,10 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+h1, h2 {
+    font-size: 2rem;
+    color: var(--cor-primaria);
 }
 /* Cabeçalho geral */
 .header {
@@ -193,27 +198,110 @@ body {
 }
 /* Configuração Geral do Modal */
 .modal {
-    display: flex;
+    /* Hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--borda);
     position: fixed;
     width: 90vw;
-    height: 80vh;
-    top: 10vh;
-    left: 5vw;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1001;
+}
+
+.modal.open {
+    display: flex;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 .modal form {
     display: flex;
     flex-direction: row; /* Coloca as colunas lado a lado */
-    align-items: flex-start;
     gap: 40px;
     width: 100%;
-    justify-content: space-around;
+    align-items: flex-start;
 }
+.modal-column-left, .modal-column-right {
+    flex: 1; /* Divide o espaço igualmente */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-column-left {
+    padding-top: 50px
+}
+.input, #descricao_imagem {
+    width: 100% !important; 
+    box-sizing: border-box;
+}
+#descricao_imagem {
+    height: 120px; /* Ajustado para caber melhor */
+    resize: none;
+}
+.picture {
+    width: 100%; /* Ocupa a largura da coluna direita */
+    height: 200px; /* Altura fixa para manter simetria */
+    border: 2px dashed var(--cor-primaria);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .modal form {
+        flex-direction: column;
+    }
+    .modal {
+        width: 95%;
+        max-height: 95vh;
+        overflow-y: auto; /* Permite scroll se o celular for pequeno */
+    }
+}
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -224,12 +312,8 @@ input[type=number] {
   appearance: textfield;
 }
 .input {
-    width: 300px;
-    height: 30px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    border-color: rgb(176, 176, 176);
-    padding: 2px;   
+    padding: 12px !important;
+    height: 45px !important;
 }
 label {
     font-size: 24px;
@@ -256,7 +340,7 @@ label {
     align-items: center;
     justify-content: center;
     overflow: hidden; /* Corta o que sobrar da imagem */
-    border: 2px dashed #aaa;
+    border: 2px dashed var(--borda);
     cursor: pointer;
 }
 .picture img {
@@ -321,17 +405,13 @@ label {
 
 /* Textarea de Descrição */
 #descricao_imagem {
-    width: 420px;
     height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
     resize: none;
 }
 
 /* Botão Submit (Verde conforme o desenho) */
 .btn-submit {
-    background-color: #2b9e4b; /* Verde sólido */
+    background-color: var(--cor-primaria); /* Verde sólido */
     color: white;
     border: none;
     padding: 15px;
@@ -341,9 +421,253 @@ label {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s, background 0.3s;
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
 }
 
 .btn-submit:hover {
-    background-color: #22863e;
+    background-color: var(--cor-primaria-escura);
     transform: scale(1.02);
-}   
+    box-shadow: 0 6px 20px rgba(43,109,77,0.6); 
+}
+
+/* Adicionar Produto Button */
+.add-product-btn {
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
+    transition: all 0.3s ease;
+}
+
+.add-product-btn:hover {
+    background: var(--cor-primaria-escura); 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43,109,77,0.6);
+}
+
+/* Modal Close Button */
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: rgba(200,0,0,0.8);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1002;
+}
+
+.modal-close:hover {
+    background: rgba(150,0,0,0.9);
+    transform: scale(1.1);
+}
+
+/* Modern Field Containers */
+.field-container {
+    position: relative;
+    margin-top: 15px; /* Espaço para o label subir */
+    display: flex;
+    flex-direction: column;
+}
+
+.field-container textarea {
+    padding: 15px 12px !important;
+    min-height: 120px;
+    resize: none;
+    width: 100%;
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    background: white;
+    font-family: inherit;
+}
+
+.field-container label {
+    position: absolute;
+    left: 12px;
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Centraliza verticalmente sobre o input */
+    font-size: 0.9rem;
+    color: #888;
+    transition: all 0.2s ease;
+    pointer-events: none; /* Garante que clicar no label foque o input */
+    background-color: white; /* Evita que a linha do input passe por trás do texto */
+    padding: 0 4px;
+}
+
+.input, #descricao_imagem {
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input:focus, #descricao_imagem:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(43,109,77,0.1);
+    background: white;
+}
+
+#label-descricao-imagem {
+    top: 10%; /* Alinhado ao topo interno do textarea */
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria) !important;
+}
+
+/* Efeito de flutuar quando focado ou preenchido */
+textarea:focus + #label-descricao-imagem,
+textarea:not(:placeholder-shown) + #label-descricao-imagem {
+    top: 0px; /* Sobe para fora da borda superior */
+    left: 10px;
+    font-size: 0.75rem;
+    color: var(--cor-primaria);
+    font-weight: bold;
+}
+
+.input:focus + label,
+.input:not(:placeholder-shown) + label {
+    top: 0; /* Move para o topo da borda */
+    font-size: 0.75rem;
+    color: var(--cor-primaria);
+    font-weight: bold;
+}
+
+/* Enhanced Picture Upload */
+.picture {
+    position: relative;
+    border: 3px dashed var(--cor-primaria-escura);
+    background: linear-gradient(135deg, rgba(43,109,77,0.05), rgba(241,234,234,0.5));
+    transition: all 0.3s ease;
+}
+
+.picture:hover {
+    border-color: var(--cor-primaria);
+    background: linear-gradient(135deg, rgba(43,109,77,0.1), rgba(241,234,234,0.7));
+    transform: scale(1.02);
+}
+
+.picture-image {
+    font-size: 4rem;
+    color: var(--cor-primaria);
+}
+
+/* Custom Promo Checkbox */
+.promo-box {
+    position: relative;
+}
+
+.promo-box input[type="checkbox"] {
+    appearance: none;
+    width: 50px;
+    height: 25px;
+    background: #ddd;
+    border-radius: 25px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.promo-box input[type="checkbox"]:checked {
+    background: var(--cor-primaria);
+}
+
+.promo-box input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+.promo-box input[type="checkbox"]:checked::before {
+    transform: translateX(25px);
+}
+
+.promo-box label {
+    font-size: 1rem !important;
+    margin-left: 1rem;
+}
+
+/* Container para posicionar o símbolo */
+.percentage-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* O símbolo de porcentagem */
+.percentage-wrapper::after {
+    content: "%";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-weight: bold;
+    pointer-events: none; /* Não atrapalha o clique */
+    transition: all 0.3s ease;
+}
+
+/* Ajuste para o texto não ficar em cima do símbolo */
+#preco_promo {
+    padding-right: 35px !important;
+}
+
+/* Quando o input estiver vazio ou o label subir, podemos dar destaque ao % */
+#preco_promo:focus ~ ::after {
+    color: var(--cor-primaria);
+}
+
+#container-preco-promo {
+    transition: all 0.3s ease;
+}
+
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+    .modal {
+        width: 95vw;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .input, #descricao_imagem {
+        font-size: 1.1rem;
+    }
+    
+    label {
+        font-size: 1rem;
+    }
+    
+    .modal-close {
+        top: 0.5rem;
+        right: 1rem;
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+}

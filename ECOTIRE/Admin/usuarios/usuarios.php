@@ -1,3 +1,11 @@
+<?php
+include '../../funcoesPHP/connection.php';
+
+$stmt = $pdo->query("SELECT * FROM usuario");
+$stmt->execute();
+$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -29,29 +37,38 @@
     <div class="header-bottom">
         <nav>
          <ul class="menu-horizontal">
-          <li><a onclick="window.location.href='#'"style="background-color: rgb(222, 217, 217); border-radius: 5px;">Pedidos</a></li>
+          <li><a onclick="window.location.href='../inicio-admin/inicio-admin.php'">Pedidos</a></li>
           <li><a onclick="window.location.href='../produtos/produtos-admin.php'" >Produtos</a></li>
-          <li><a onclick="window.location.href='../usuarios/usuarios.php'" >Usuários</a></li>
+          <li><a onclick="window.location.href='../inicio/index.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Usuários</a></li>
          </ul>
         </nav>
         </div>
     </div>
 </header>
 
-<div class="sales-container">
-    <div class="sales-content">
-        <h1>Tabela de vendas</h1>
-        <div id="sales-chart"></div>
-    </div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Senha</th>
+        <th>Admin ou humano</th>
+        <th>Funções</th>
+    </tr>
+    <?php foreach ($usuarios as $usuario): ?>
+    <tr>
+        <td><?php echo $usuario['id_usuario'] ?></td>
+        <td><?php echo $usuario['nome'] ?></td>
+        <td><?php echo $usuario['email'] ?></td>
+        <td><?php echo $usuario['senha'] ?></td>
+        <td><?php echo $usuario['tipo'] ?></td>
+        <td>
+            <button class="edit-btn">Editar</button>
+            <button class="delete-btn">Excluir</button>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
 
-    <div class="gender-content">
-        <h1>Gênero dos clientes</h1>
-        <div id="gender-chart"></div>
-    </div>
-
-</div>
-
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="script.js"></script>
 </body>
 </html>
