@@ -456,6 +456,13 @@ form h2 {
   width: 150px;
   margin-bottom: 15px;
 }
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
 /* Identação pra mobile */
 
  @media (max-width: 768px) {
@@ -607,4 +614,8 @@ form h2 {
   .fa.fa-bars {
   display: block;
 }
+  .imgAlternada {
+    margin-top: 20px;
+    height:200px;
+  }
 }
