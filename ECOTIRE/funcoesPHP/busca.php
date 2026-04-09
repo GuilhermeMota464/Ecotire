@@ -10,7 +10,7 @@ if(isset($_GET['busca'])){
         ':busca' => "%$busca%"
     ]);
 
-    $resultados = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if($resultados){
         foreach ($resultados as $produto){
