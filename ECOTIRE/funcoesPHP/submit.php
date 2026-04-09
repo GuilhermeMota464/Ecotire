@@ -6,34 +6,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $preco = floatval($_POST['preco']);
     $estoque   = intval($_POST['estoque']);
-    $avaliacao = intval($_POST['avaliacao']);
+    $descricao = $_POST['descricao'];
 
-    $sql = "INSERT INTO produtos (nome, preco, estoque, avaliacao) VALUES (?, ?, ?, ?)";
+    try {
+        $sql = "INSERT INTO produtos (nome, preco, estoque, descricao) VALUES (:nome, :preco, :estoque, :descricao)";
 
-    $stmt = $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
-    if ($stmt) {
-
-        $stmt = $pdo->prepare([
+        $valores = [
             ':nome' => $nome,
             ':preco' => $preco,
             ':estoque' => $estoque,
-            ':avaliacao' => $avaliacao
-        ]);
+            ':descricao' => $descricao
+        ];
 
-        if ($stmt->execute()) {
+        if ($stmt->execute($valores)) {
             echo "Produto cadastrado com sucesso!";
         } else {
-            echo "Erro ao cadastrar: " . $stmt->error;
+            echo "Erro ao cadastrar o produto.";
         }
-        
-    try{
 
     } catch (PDOException $e) {
-        echo "Erro ao cadastrar: " . $e->getMessage();
+        echo "Erro no banco de dados: " . $e->getMessage();
     }
-    
-    $conn = null;
-    }
+    $pdo = null;
+    header("Location: ../../ECOTIRE/Admin/produtos/produtos-admin.php");
+    exit;
 }
 ?>
