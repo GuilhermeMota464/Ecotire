@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email      = $_POST['email'] ?? '';
     $tipo       = $_POST['tipo'] ?? '';
     $senha      = $_POST['senha'] ?? '';
-
+    
     if ($id_usuario) {
         try {
             // Verifica se o usuário digitou uma nova senha
