@@ -70,7 +70,8 @@ p {
     font-size: 15px;
 }
 
-#senha, #tele{
+#senha, #nome, #tele{
+
     padding: 12px;
     border: 1px solid #000000;
     border-radius: 6px;
@@ -170,7 +171,7 @@ input[type="checkbox"]:checked {
         gap: 5px;
     }
 
-    #email, select, #senha, #tele {
+    #email, select, #senha, #nome, #tele {
         width: 100% !important; /* Força os campos a ocuparem 100% da largura */
         box-sizing: border-box; /* Garante que o padding não "estoure" a largura */
         font-size: 16px; /* Evita o zoom automático do iOS ao focar no input */

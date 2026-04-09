@@ -4,6 +4,7 @@ require '../../funcoesPHP/connection.php';
 $feedback = ""; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome       = $_POST['nome'];
     $email_part = $_POST['email'];
     $dominio    = $_POST['domain']; 
     $telefone   = $_POST['telefone'];
@@ -24,10 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-            $insertSql = "INSERT INTO usuario (email, senha, telefone) VALUES (:email, :senha, :telefone)";
+            $insertSql = "INSERT INTO usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
             $stmt = $pdo->prepare($insertSql);
             
             $sucesso = $stmt->execute([
+                ':nome'     => $nome,
                 ':email'    => $full_email,
                 ':senha'    => $senha_hash,
                 ':telefone' => $telefone
@@ -86,6 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="row">
             <input name="senha" type="password" id="senha" placeholder="Crie uma senha" required>
+        </div>
+
+        <div class="row">
+            <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
         </div>
 
         <div class="row">

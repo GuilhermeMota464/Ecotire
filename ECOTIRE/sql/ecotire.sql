@@ -3,7 +3,6 @@ DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_unicode_ci;
 
 USE Ecotire;
-
 -- ================= USUARIO =================
 CREATE TABLE if not exists usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

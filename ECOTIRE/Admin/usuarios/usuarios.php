@@ -49,8 +49,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="main-content">
     <!-- Campo pra editar -->
     <div class="edit-form-container">
-        <form id="editUserForm" method="post" action="atualizar_usuario.php">
-            <h3><i class="fas fa-user-edit"></i>Editar Usuário</h3>
+        <form id="editUserForm" method="post" action="../../funcoesPHP/atualizar_usuario.php">
+            <h3><i class="fas fa-user-edit"></i> Editar Usuário</h3>
             
             <div class="form-row">
                 <div class="field-container id-field">
@@ -113,7 +113,12 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button class="edit-btn" onclick="editarUsuario('<?php echo $usuario['id_usuario'] ?>', '<?php echo addslashes($usuario['nome']) ?>', '<?php echo $usuario['email'] ?>', '<?php echo $usuario['tipo'] ?>')">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                <form action="../../funcoesPHP/deletar_usuario.php" method="POST" style="display: inline-block; margin: 0;" onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+        <input type="hidden" name="id_usuario" value="<?php echo $usuario['id_usuario']; ?>">
+        
+        <button type="submit" class="delete-btn">
+            <i class="fas fa-trash"></i>
+        </button>
                 </td>
             </tr>
             <?php endforeach; ?>
