@@ -121,6 +121,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </button>
                 </td>
             </tr>
+            </form>
             <?php endforeach; ?>
         </tbody>
     </table>
