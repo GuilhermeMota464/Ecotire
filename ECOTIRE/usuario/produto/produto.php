@@ -52,8 +52,7 @@ $produtos = $stmt->fetchAll();
   
     <section class="products-grid">
         <?php foreach ($produtos as $produto): ?>
-            
-            <article class="product-card">
+            <article class="product-card" onclick="window.location.href='../pagina-produto-usuario/pagina-produto-usuario.php?produto=<?php echo urlencode($produto['nome']); ?>&id=<?php echo $produto['id_produto']; ?>'">
                 <div class="image-container">
                     <i class="fa-regular fa-heart wishlist" onclick="favoritarProduto(this)"></i>
                     <img src="Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" alt="<?php echo $produto['nome']; ?>">

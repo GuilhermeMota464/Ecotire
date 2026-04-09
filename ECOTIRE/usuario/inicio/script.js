@@ -86,13 +86,32 @@ document.querySelector(".prev").addEventListener("click", () => {
     resetIntervalo();
 });
 
-//Pesquisa auto
-document.getElementById("busca").addEventListener("keyup", function(){
-    let texto =  this.value;
+// Pesquisa auto 
+const inputBusca = document.getElementById('busca');
+const divResultado = document.getElementById('resultado');
+const iconeLupa = document.getElementById('lupa');
 
-    fetch("buscar.php?busca=" + texto)
-    .then(response => response.text())
-    .then(data => {
-        document;getElementById("resultado").innerHTML = data;
-    })
-})
+inputBusca.addEventListener('input', async () => {
+    const query = inputBusca.value;
+    if(query.length < 2){
+        divResultado.style.display = 'none';
+        inputBusca.classList.remove('busca-ativa-input');
+        iconeLupa.classList.remove('busca-ativa-icone');
+        return;
+    }
+    // AJAX
+    const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
+    const htmlResultados = await response.text();
+    
+    if (htmlResultados && htmlResultados.trim() !== 'Nenhum resultado encontrado') {
+        divResultado.innerHTML = htmlResultados;
+        divResultado.style.display = 'block';
+        inputBusca.classList.add('busca-ativa-input');
+        iconeLupa.classList.add('busca-ativa-icone');
+    } else {
+        divResultado.style.display = 'none';
+        inputBusca.classList.remove('busca-ativa-input');
+        iconeLupa.classList.remove('busca-ativa-icone');
+    }
+
+});

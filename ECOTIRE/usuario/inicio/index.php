@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <!-- Link API de icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart" />
 </head>
  <body>
 <!-- Cabeçalho -->
@@ -18,9 +20,9 @@
     <div class="header">
      <div class="header-top">
             <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
-            <div class="search-group">
-            <input type="text" class="search-bar" placeholder="Pesquisar...">
-            <i class="fa-solid fa-magnifying-glass"></i>                
+          <div class="search-group">               
+            <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
+            <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
             <div id="resultado"></div>
           </div>
           
@@ -48,10 +50,12 @@
 <!-- Foto que alterna -->
   <div class="imgAlternada">
     <div class="Slide">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> 
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
+      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> 
+      <img src="../../assetsGerais/banner2.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner3.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner4.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner5.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
     </div>
     <button class="prev">❮</button>
     <button class="next">❯</button>

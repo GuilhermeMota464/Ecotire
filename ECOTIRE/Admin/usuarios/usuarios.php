@@ -1,7 +1,7 @@
 <?php
 include '../../funcoesPHP/connection.php';
 
-$stmt = $pdo->query("SELECT * FROM usuario");
+$stmt = $pdo->query("SELECT id_usuario, nome, email, senha, tipo FROM usuario");
 $stmt->execute();
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
@@ -55,7 +55,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="form-row">
                 <div class="field-container id-field">
                     <input type="text" name="id_usuario" id="edit_id" placeholder=" " class="input" readonly>
-                    <label for="edit_id">ID</label>
+                    <label for="edit_id" style="background-color: #f1f1f1">ID</label>
                 </div>
                 
                 <div class="field-container">
