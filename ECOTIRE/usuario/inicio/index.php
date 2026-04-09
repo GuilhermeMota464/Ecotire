@@ -48,10 +48,12 @@
 <!-- Foto que alterna -->
   <div class="imgAlternada">
     <div class="Slide">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> 
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/placeholder.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
+      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> 
+      <img src="../../assetsGerais/banner2.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner3.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner4.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner5.webp" alt="Imagem Principal">
+      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
     </div>
     <button class="prev">❮</button>
     <button class="next">❯</button>
