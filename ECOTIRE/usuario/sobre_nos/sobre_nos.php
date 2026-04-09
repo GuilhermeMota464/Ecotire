@@ -11,16 +11,15 @@
       <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   </head>
   <body>
-    <script src="script.js"></script>
   <header>
       <div class="header">
       <div class="header-top">
               <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
-              <div class="search-group">
-              <input type="text" class="search-bar" placeholder="Pesquisar...">
-              <i class="fa-solid fa-magnifying-glass"></i>                
+              <div class="search-group">               
+                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
+                <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
+                <div id="resultado"></div>
               </div>
-
               <i onclick="window.location.href='../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
       </div>
       <div class="header-bottom">
@@ -155,5 +154,6 @@
       </div>
     </section>
 </footer>
+<script src="script.js"></script>
   </body>
   </html>

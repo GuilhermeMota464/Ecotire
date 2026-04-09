@@ -18,7 +18,6 @@ $produtos = $stmt->fetchAll();
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <!-- Link API de icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="script.js"></script>
 </head>
  <body>
 <div class="main-content">
@@ -27,9 +26,10 @@ $produtos = $stmt->fetchAll();
     <div class="header">
       <div class="header-top">
               <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
-              <div class="search-group">
-              <input type="text" class="search-bar" placeholder="Pesquisar...">
-              <i class="fa-solid fa-magnifying-glass"></i>                
+              <div class="search-group">               
+                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
+                <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
+                <div id="resultado"></div>
               </div>
 
                <i onclick="window.location.href='../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
@@ -127,5 +127,6 @@ $produtos = $stmt->fetchAll();
       </div>
     </section>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>
