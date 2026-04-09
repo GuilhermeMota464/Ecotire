@@ -1,6 +1,5 @@
 <?php
 include '../../funcoesPHP/connection.php';
-
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
@@ -16,6 +15,7 @@ if (isset($_GET['id'])) {
     echo "Produto não encontrado.";
     exit;
 }
+$precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /100;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -50,10 +50,10 @@ if (isset($_GET['id'])) {
 
             <h1 class="produto-titulo"><?php echo $produto['nome']; ?></h1>
 
-            <p class="preco-antigo">R$ <?php echo $produto['preco']; ?></p>
+            <p class="preco-antigo">R$<?php echo $produto['preco']; ?></p>
 
             <div class="preco-area"> 
-                <span class="preco-atual">R$ <?php echo $produto['preco']; ?></span>
+                <span class="preco-atual">R$ <?php echo $precoDesconto; ?></span>
                 <span class="desconto"><?php echo $produto['promo']; ?>% OFF</span>
             </div>
 
