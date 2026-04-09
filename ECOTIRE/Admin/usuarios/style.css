@@ -106,3 +106,428 @@ body {
   background-color: rgb(34, 86, 61);
   cursor: pointer;
 }
+
+table {
+    width: 95%;
+    margin: 1.56vw auto; /* ~30px */
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    border-radius: 0.625vw; /* ~12px */
+    overflow: hidden;
+    box-shadow: 0 0.2vw 0.78vw rgba(0, 0, 0, 0.05); /* ~4px 15px */
+}
+
+/* Cabeçalho da Tabela */
+th {
+    background-color: var(--cor-primaria);
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.83vw; /* ~16px */
+    letter-spacing: 0.05vw; /* ~1px */
+    padding: 0.78vw; /* ~15px */
+    text-align: left;
+}
+
+/* Células da Tabela */
+td {
+    padding: 0.625vw 0.78vw; /* ~12px 15px */
+    border-bottom: 0.05vw solid #eee; /* ~1px */
+    color: #444;
+    font-size: 0.78vw; /* ~15px */
+    vertical-align: middle;
+}
+/* Linhas zebradas para facilitar a leitura */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Efeito de destaque ao passar o mouse na linha */
+table tr:hover td {
+    background-color: #dbe8e2 !important;
+}
+/* Estilo para a linha (card) quando estiver selecionada */
+table tr.row-active {
+    background-color: #d1e7dd !important;
+    border: 2px solid var(--cor-primaria) !important;
+}
+
+/* Estilo dos Botões de Ação */
+.edit-btn, .delete-btn {
+    padding: 0.31vw 0.625vw; /* ~6px 12px */
+    border: none;
+    border-radius: 0.31vw; /* ~6px */
+    cursor: pointer;
+    font-size: 0.73vw; /* ~14px */
+    transition: all 0.3s ease;
+    margin-right: 0.26vw; /* ~5px */
+}
+
+.edit-btn {
+    background-color: #f1c40f;
+    color: #333;
+}
+
+.edit-btn:hover {
+    background-color: #d4ac0d;
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Ajuste para o campo Senha (opcional: deixar truncado para segurança visual) */
+td:nth-child(4) {
+    font-family: monospace;
+    color: #888;
+}
+span {
+  padding: 4px 8px; 
+  border-radius: 4px; 
+  background: #eee; 
+  font-size: 0.65vw; /* ~11px */
+}
+.edit-form-container {
+    background: white;
+    padding: 1.5vw;
+    border-radius: 1vw;
+    margin: 2vw auto;
+    width: 95%;
+    box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.08);
+    border-top: clamp(4px, 0.4vw, 6px) solid var(--cor-primaria); /* Detalhe no topo em vez da lateral */
+}
+
+.edit-form-container h3 {
+    font-size: 1.2vw;
+    color: var(--cor-primaria);
+    margin-bottom: 1.5vw;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+/* Layout padrão: Desktop (Telas grandes) */
+.form-row {
+    display: flex;
+    align-items: flex-end; /* Alinha labels e inputs verticalmente */
+    gap: 1.5vw;
+    flex-wrap: wrap; /* Permite quebrar linha se não couber */
+}
+.field-container {
+    position: relative;
+    flex: 1;
+    min-width: 150px; /* Impede que o campo suma em telas pequenas */
+    margin-top: 0.8vw; /* Espaço para a label não cortar o topo do form */
+}
+/* Estilo da Label */
+.field-container label {
+    position: absolute;
+    left: 1vw;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white; /* Cor do fundo para "cortar" a borda */
+    padding: 0 0.4vw;
+    color: #888;
+    font-size: 0.8vw;
+    pointer-events: none; /* Permite clicar no input através da label */
+    transition: all 0.2s ease-out;
+    z-index: 1;
+}
+/* Reutilizando o estilo de label flutuante que funcionou no Estoque */
+.edit-form-container .field-container {
+    flex: 1; /* Faz os campos crescerem por igual */
+    min-width: 12vw; /* Impede que fiquem muito esmagados */
+}
+
+.edit-form-container .input {
+    width: 100%;
+    height: 3.5vw; /* Altura confortável */
+    padding: 0 1vw;
+    font-size: 0.9vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.6vw;
+    background: white;
+}
+
+.edit-form-container label {
+    position: absolute;
+    left: 1vw;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white; /* Cobre a linha da borda */
+    padding: 0 0.4vw;
+    font-size: 0.8vw;
+    color: #888;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+/* Efeito de subir o label */
+.edit-form-container .input:focus + label,
+.edit-form-container .input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 0.7vw;
+    color: var(--cor-primaria);
+    font-weight: bold;
+}
+.input:focus + label,
+.input:not(:placeholder-shown) + label {
+    top: 0;
+    /* Mínimo de 10px, ideal de 0.7vw, máximo de 14px */
+    font-size: clamp(10px, 0.7vw, 14px) !important;
+    transform: translateY(-50%);
+    color: var(--cor-primaria);
+    font-weight: bold;
+    background-color: white;
+    padding: 0 4px;
+}
+
+select.input + label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 0.7vw;
+}
+
+.edit-form-container .input:focus {
+    outline: var(--cor-primaria) solid 2px; /* Usa outline em vez de border */
+    border: 0.1vw solid #ccc; /* Mantém a borda original cinza sem mudar o tamanho */
+    box-shadow: 0 0.2vw 0.78vw rgba(43, 109, 77, 0.533);
+}
+
+/* Grupo de Botões */
+.button-group {
+    display: flex;
+    gap: 1vw;
+}
+
+.save-btn {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 0.6vw;
+    font-size: 0.8vw;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.save-btn:hover {
+    background-color: var(--cor-primaria-escura);
+    box-shadow: 0 0.3vw 1vw rgba(43,109,77,0.3);
+}
+
+.cancel-btn {
+    background-color: #f1f1f1;
+    color: #666;
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 0.6vw;
+    font-size: 0.8vw;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Ajuste específico para o ID no Desktop */
+.id-field {
+    flex: 0 0 6vw !important;
+}
+
+.id-field .input {
+    background-color: #f1f1f1 !important; /* Cinza clarinho */
+    color: #888 !important;
+    cursor: not-allowed; /* Ícone de "proibido" ao passar o mouse */
+    border-style: dashed; /* Borda pontilhada para diferenciar */
+}
+
+/* Remove o brilho de focus no campo ID */
+.id-field .input:focus {
+    box-shadow: none !important;
+    border-color: #ccc !important;
+}
+
+/* Ajuste na largura dos botões para caber tudo na linha */
+.button-group {
+    display: flex;
+    gap: 0.5vw;
+}
+
+.save-btn, .cancel-btn {
+    padding: 1vw 1.2vw; /* Botões um pouco mais compactos */
+}
+.edit-form-container select.input {
+    appearance: none; /* Remove a setinha e o fundo cinza nativo do navegador */
+    -webkit-appearance: none; /* Para Chrome e Safari */
+    -moz-appearance: none; /* Para Firefox */
+    
+    background-color: white; /* Garante que o fundo seja sempre branco */
+    cursor: pointer;
+    
+    /* Adiciona uma nova setinha customizada */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232b6d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1vw center; /* Posiciona a seta na direita */
+    background-size: 1vw; /* Tamanho da seta em vw */
+    
+}
+/* Garante que no hover ele não volte a ficar cinza */
+.edit-form-container select.input:hover {
+    background-color: #fff;
+    border-color: var(--cor-primaria);
+}
+
+/* Remove aquela borda azul ou cinza chata que aparece em alguns navegadores no focus */
+.edit-form-container select.input:focus {
+    background-color: white;
+    outline: none;
+}
+/* Container relativo para o input e o olho */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo do input para não sobrepor o texto no ícone */
+.password-wrapper .input {
+    padding-right: 3vw !important; /* Espaço na direita para o olho */
+    width: 100%;
+}
+
+/* Estilo do ícone do olho */
+.toggle-password {
+    position: absolute;
+    right: 1vw; /* Distância da borda direita em vw */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente */
+    cursor: pointer;
+    color: #888; /* Cor neutra inicial */
+    font-size: 1.1vw; /* Tamanho em vw */
+    transition: color 0.3s ease;
+    z-index: 2; /* Garante que fique em cima do input */
+}
+
+/* Efeito de hover e quando o olho está "ativo" */
+.toggle-password:hover,
+.toggle-password.active {
+    color: var(--cor-primaria); /* Muda para a cor do Ecotire */
+}
+
+
+
+@media (max-width: 728px) {
+    
+    /* Em telas menores, vw pode ficar muito pequeno, então usamos px ou rem como fallback */
+    .edit-form-container h3 { font-size: 18px; }
+    .edit-form-container .input { 
+        font-size: 16px; 
+        height: 45px;
+        border-radius: 1.2vw;
+     }
+    .edit-form-container label { font-size: 14px; }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Divide em 2 colunas */
+        gap: 20px;
+    }
+    .field-container label {
+        font-size: 14px;
+        left: 10px;
+    }
+
+    .id-field, .button-group {
+        grid-column: span 2; /* ID ocupa a linha toda ou fica sozinho */
+        width: 100px;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column; /* Botões um em cima do outro */
+        width: 100%;
+    }
+
+    .save-btn, .cancel-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        text-align: center;
+    }
+    table thead {
+        display: none;
+    }
+    tbody {
+        background-color: var(--fundo);
+    }
+    table tbody, table tr, table td {
+        display: block;
+    }
+    /* Transforma cada linha (tr) em um "card" separado */
+    table {
+        display: block;
+        width: 90%;
+    }
+
+    table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 0px 5px 11px -2px #000000;
+    }
+    table tr.row-active {
+        background-color: #dbe8e2 !important;
+        border: 2px solid var(--cor-primaria) !important;
+    }
+    /* Estiliza cada célula (td) para mostrar o título do dado */
+    table td {
+        text-align: right; /* Dado à direita */
+        padding: 8px 10px;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        font-size: 14px !important; /* Tamanho legível */
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Adiciona o nome da coluna antes do valor usando pseudo-elemento */
+    table td::before {
+        content: attr(data-label); /* Pega o texto do atributo HTML */
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--cor-primaria);
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    /* Ajuste para os botões na última célula */
+    table td:last-child {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding-top: 15px;
+    }
+    /* Ajuste dos botões */
+    .edit-btn, .delete-btn {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}

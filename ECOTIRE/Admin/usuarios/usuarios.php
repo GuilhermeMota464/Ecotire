@@ -46,29 +46,80 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </header>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Senha</th>
-        <th>Admin ou humano</th>
-        <th>Funções</th>
-    </tr>
-    <?php foreach ($usuarios as $usuario): ?>
-    <tr>
-        <td><?php echo $usuario['id_usuario'] ?></td>
-        <td><?php echo $usuario['nome'] ?></td>
-        <td><?php echo $usuario['email'] ?></td>
-        <td><?php echo $usuario['senha'] ?></td>
-        <td><?php echo $usuario['tipo'] ?></td>
-        <td>
-            <button class="edit-btn">Editar</button>
-            <button class="delete-btn">Excluir</button>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
+<div class="main-content">
+    <!-- Campo pra editar -->
+    <div class="edit-form-container">
+        <form id="editUserForm" method="post" action="atualizar_usuario.php">
+            <h3><i class="fas fa-user-edit"></i> Editar Usuário</h3>
+            
+            <div class="form-row">
+                <div class="field-container id-field">
+                    <input type="text" name="id_usuario" id="edit_id" placeholder=" " class="input" readonly>
+                    <label for="edit_id">ID</label>
+                </div>
+                
+                <div class="field-container">
+                    <input type="text" name="nome" id="edit_nome" placeholder=" " class="input" required>
+                    <label for="edit_nome">NOME</label>
+                </div>
 
+                <div class="field-container">
+                    <input type="email" name="email" id="edit_email" placeholder=" " class="input" required>
+                    <label for="edit_email">EMAIL</label>
+                </div>
+
+                <div class="field-container password-wrapper">
+                    <input type="password" name="senha" id="edit_senha" placeholder=" " class="input">
+                    <label for="edit_senha">NOVA SENHA</label>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+
+                <div class="field-container">
+                    <select name="tipo" id="edit_tipo" class="input">
+                        <option value="cliente">CLIENTE</option>
+                        <option value="admin">ADMIN</option>
+                    </select>
+                    <label for="edit_tipo">TIPO</label>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="save-btn">EDITAR</button>
+                    <button type="button" class="cancel-btn" onclick="limparForm()">LIMPAR</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Tabela -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Senha</th>
+                <th>Tipo</th>
+                <th>Funções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($usuarios as $usuario): ?>
+            <tr>
+                <td data-label="ID"><strong>#<?php echo $usuario['id_usuario'] ?></strong></td>
+                <td data-label="NOME"><?php echo $usuario['nome'] ?></td>
+                <td data-label="EMAIL"><?php echo $usuario['email'] ?></td>
+                <td data-label="SENHA"><?php echo $usuario['senha'] ?></td>
+                <td data-label="TIPO"><?php echo strtoupper($usuario['tipo']) ?></td>
+                <td data-label="AÇÕES">
+                    <button class="edit-btn" onclick="editarUsuario('<?php echo $usuario['id_usuario'] ?>', '<?php echo addslashes($usuario['nome']) ?>', '<?php echo $usuario['email'] ?>', '<?php echo $usuario['tipo'] ?>')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
