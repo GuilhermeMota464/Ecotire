@@ -45,7 +45,7 @@ if (isset($_GET['id'])) {
     
     <div class="comprar-container">
         <p class="vendas-info">Novo | 0 vendidos</p>
-    <form action="../../funcoesPHP/edit.php" method="POST">
+    <form action="../../funcoesPHP/editionProduct.php" method="POST">
         <input name="id" hidden value="<?php $_GET['id'] ?>">
         <textarea><?php echo $produto['nome']; ?></textarea>
         
