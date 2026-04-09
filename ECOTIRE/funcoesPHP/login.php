@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['usuario_id'] = $usuario['id_usuario'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
             
-            header("Location: ../usuario/inicio/index.php");
+            header("Location: ../../usuario/inicio/index.php");
             exit; // Sempre use exit após um header de redirecionamento
             
         } else {
