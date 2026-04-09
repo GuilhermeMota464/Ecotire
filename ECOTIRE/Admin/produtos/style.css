@@ -133,8 +133,10 @@ h1, h2 {
 /* Grid de Produtos */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+    /* Altera para ocupar 100% da largura em telas muito pequenas */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 20px;
+    padding: 10px;
 }
 
 /* Card Individual */
@@ -198,30 +200,30 @@ h1, h2 {
 }
 /* Configuração Geral do Modal */
 .modal {
-    /* Hidden by default */
     display: none;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--borda);
     position: fixed;
-    width: 90vw;
-    max-height: 90vh;
-    height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.7);
+    
+    width: 90vw;
+    max-width: 900px; /* Limite para não ficar largo demais no PC */
+    max-height: 90vh; /* LIMITE VERTICAL CRUCIAL */
+    
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
     border-radius: 24px;
     padding: 2rem;
     box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    z-index: 1001;
+    overflow-y: auto; /* PERMITE SCROLL SE O CONTEÚDO FOR GRANDE */
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 1001;
 }
 
 .modal.open {
     display: flex;
+    flex-direction: column;
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }
@@ -257,16 +259,42 @@ h1, h2 {
 }
 .modal form {
     display: flex;
-    flex-direction: row; /* Coloca as colunas lado a lado */
-    gap: 40px;
+    flex-direction: row;
+    flex-wrap: wrap; /* Faz a coluna da direita descer no mobile */
+    gap: 30px;
     width: 100%;
-    align-items: flex-start;
 }
-.modal-column-left, .modal-column-right {
-    flex: 1; /* Divide o espaço igualmente */
+/* Coluna da Direita */
+.modal-column-right {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%; /* Garante que ocupe o espaço disponível */
+    min-width: 300px; /* Evita que fique muito estreita antes de quebrar a linha */
+}
+/* Ajuste do Botão (O maior culpado pela quebra) */
+.btn-submit {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%; /* MUDADO: de 420px para 100% */
+    max-width: 420px; /* Mantém o tamanho máximo original */
+    border-radius: 5px;
+    font-size: 1.2rem; /* Reduzi um pouco para não quebrar o texto em telas pequenas */
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
+}
+/* Colunas do Formulário */
+.modal-column-left, 
+.modal-column-right {
+    flex: 1;
+    min-width: 280px; /* Impede que fiquem esmagadas */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 .modal-column-left {
     padding-top: 50px
@@ -280,24 +308,83 @@ h1, h2 {
     resize: none;
 }
 .picture {
-    width: 100%; /* Ocupa a largura da coluna direita */
-    height: 200px; /* Altura fixa para manter simetria */
-    border: 2px dashed var(--cor-primaria);
+    width: 100%;
+    max-width: 250px; /* Tamanho controlado */
+    height: 250px;    /* Altura fixa controlada */
+    margin: 0 auto;   /* Centraliza */
+    background: #ddd;
+    border: 3px dashed var(--cor-primaria-escura);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    overflow: hidden;
     cursor: pointer;
-    border-radius: 12px;
+    flex-shrink: 0;   /* IMPEDE DE SAIR DO MODAL */
+    position: relative;
 }
 
 @media (max-width: 768px) {
-    .modal form {
-        flex-direction: column;
+    .header-top {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .foto_perfil {
+        position: static; /* Remove do canto para não sobrepor o logo */
+        margin-left: 10px;
+    }
+
+    .menu-horizontal {
+        display: flex;
+        overflow-x: auto; /* Permite deslizar o menu se for muito grande */
+        white-space: nowrap;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+    
+    .menu-horizontal li {
+        margin-right: 5px;
+    }
+
+    .menu-horizontal a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
     }
     .modal {
-        width: 95%;
+        width: 95vw;
         max-height: 95vh;
-        overflow-y: auto; /* Permite scroll se o celular for pequeno */
+        overflow-y: auto; /* Ativa scroll interno se o formulário for maior que a tela */
+        padding: 1.5rem;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .modal form {
+        flex-direction: column; /* Empilha as colunas de cadastro */
+        gap: 20px;
+    }
+
+    .modal-column-left {
+        padding-top: 20px; /* Reduz o espaçamento do título */
+    }
+
+    .btn-submit {
+        width: 100%; /* Botão ocupa a largura total */
+        font-size: 1.2rem;
+    }
+
+    .picture {
+        width: 100%; /* Imagem cresce para ocupar a largura do celular */
+        height: 250px;
+    }
+
+    .modal-close {
+        /* Ajusta o botão X para não sumir da tela */
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+        top: 10px;
+        right: 10px;
     }
 }
 
@@ -346,9 +433,7 @@ label {
 .picture img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Corta as bordas para preencher o quadrado sem esticar */
-    object-position: center; /* Garante que o foco da foto seja o meio */
-    display: block;
+    object-fit: cover;
 }
 .picture:hover {
   color: #777;
@@ -411,18 +496,18 @@ label {
 
 /* Botão Submit (Verde conforme o desenho) */
 .btn-submit {
-    background-color: var(--cor-primaria); /* Verde sólido */
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
     color: white;
     border: none;
     padding: 15px;
-    width: 420px;
-    border-radius: 5px;
-    font-size: 1.5rem;
+    width: 100%;      /* Ajusta à largura da coluna */
+    max-width: 420px;
+    border-radius: 8px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
     box-shadow: 0 4px 15px rgba(43,109,77,0.4);
+    flex-shrink: 0;   /* Não deixa o botão "sumir" */
 }
 
 .btn-submit:hover {
@@ -460,10 +545,10 @@ label {
     background: rgba(200,0,0,0.8);
     color: white;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 5vw;
+    height: 5vw;
     border-radius: 50%;
-    font-size: 1.5rem;
+    font-size: 3em;
     font-weight: bold;
     cursor: pointer;
     display: flex;
@@ -647,27 +732,30 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 }
 
 
-/* Responsive Modal */
 @media (max-width: 768px) {
     .modal {
         width: 95vw;
-        padding: 1.5rem;
-        margin: 1rem;
+        padding: 1.2rem;
+        top: 50%;
     }
-    
-    .input, #descricao_imagem {
-        font-size: 1.1rem;
+
+    .modal form {
+        flex-direction: column; /* Força tudo em uma linha vertical */
     }
-    
-    label {
-        font-size: 1rem;
+
+    .modal-column-left {
+        padding-top: 10px;
     }
-    
+
+    .picture {
+        max-height: 200px; /* Diminui a foto no celular para caber o resto */
+        max-width: 200px;
+    }
+
     .modal-close {
-        top: 0.5rem;
-        right: 1rem;
-        width: 35px;
-        height: 35px;
-        font-size: 1.3rem;
+        position: sticky;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
     }
 }
