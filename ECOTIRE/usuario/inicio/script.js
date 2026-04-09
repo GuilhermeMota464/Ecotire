@@ -90,9 +90,14 @@ document.querySelector(".prev").addEventListener("click", () => {
 document.getElementById("busca").addEventListener("keyup", function(){
     let texto =  this.value;
 
-    fetch("buscar.php?busca=" + texto)
+    if(texto.length == 0){
+        document.getElementById("resultado").innerHTML = "";
+        return;
+    }
+
+    fetch("../../funcoesPHP/busca.php?busca=" + texto)
     .then(response => response.text())
     .then(data => {
-        document;getElementById("resultado").innerHTML = data;
+        document.getElementById("resultado").innerHTML = data;
     })
 })

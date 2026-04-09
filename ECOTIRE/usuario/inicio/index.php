@@ -19,7 +19,7 @@
      <div class="header-top">
             <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
             <div class="search-group">
-            <input type="text" class="search-bar" placeholder="Pesquisar...">
+            <input type="text" id="busca" class="search-bar" placeholder="Pesquisar...">
             <i class="fa-solid fa-magnifying-glass"></i>                
             <div id="resultado"></div>
           </div>

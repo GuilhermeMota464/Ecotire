@@ -20,8 +20,4 @@ if(isset($_GET['busca'])){
             echo "Nenhum resultado encontrado";
         }
 }
-
-
-
-
 ?>
