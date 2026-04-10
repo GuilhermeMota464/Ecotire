@@ -70,18 +70,18 @@ $produtos = $stmt->fetchAll();
                 </div>
 
                 <div class="promo-box">
-                    <input type="checkbox" name="promo" id="promo">
                     <label for="promo">PROMOÇÃO</label>
-                </div> 
+                    <input type="checkbox" name="promo" id="promo">
 
-                <div class="field-container hidden-field" id="container-preco-promo">
-                    <div class="percentage-wrapper">
-                        <input type="number" name="preco_promocional" step="1" max="100" placeholder=" " id="preco_promo" class="input">
-                        <label for="preco_promo">PROMOÇÃO</label>
+                    <div class="field-container hidden-field" id="container-preco-promo">
+                        <div class="percentage-wrapper">
+                            <input type="number" name="preco_promocional" step="1" max="100" placeholder=" " id="preco_promo" class="input">
+                            <label for="preco_promo" id="label_promo"></label>
+                        </div>
                     </div>
                 </div>
 
-
+                <button type="submit" class="btn-submit">CADASTRAR PRODUTO</button>
             </div>
 
             <div class="modal-column-right">
@@ -97,8 +97,6 @@ $produtos = $stmt->fetchAll();
                     <textarea id="descricao_imagem" name="descricao" placeholder=" " required></textarea>
                     <label for="descricao_imagem" id="label-descricao-imagem">DESCRIÇÃO</label>
                 </div>
-
-                <button type="submit" class="btn-submit">CADASTRAR PRODUTO</button>
             </div>
         </form>
     </div>
