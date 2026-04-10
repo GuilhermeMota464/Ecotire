@@ -90,29 +90,26 @@ openModalBtn.addEventListener('click', () => {
     document.body.style.overflow = 'hidden';
 });
 
-// Basic form validation and submit
+// Validação básica e envio real
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Impede o envio imediato para podermos validar primeiro
     
-    const formData = new FormData(form);
     const nome = document.getElementById('nome').value.trim();
     const preco = document.getElementById('preco').value;
     
+    // Validação dos campos
     if (!nome || !preco || !document.querySelector('#inserir-imagem').files[0]) {
         alert('Por favor, preencha todos os campos obrigatórios (nome, preço e imagem).');
-        return;
+        return; // Para a execução aqui se houver erro
     }
     
     if (parseFloat(preco) <= 0) {
         alert('O preço deve ser maior que zero.');
-        return;
+        return; // Para a execução aqui se houver erro
     }
     
-    // For now, console log - replace with AJAX or let form submit
-    console.log('Submitting product:', Object.fromEntries(formData));
-    alert('Produto adicionado com sucesso! (Simulação - integre com backend)');
-    closeModal();
-    // form.submit(); // Uncomment for actual submit
+    // Se passou em todas as validações acima, envia os dados para o submit.php!
+    form.submit(); 
 });
 
 // Drag & drop for image (enhancement)

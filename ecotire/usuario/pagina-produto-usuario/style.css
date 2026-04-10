@@ -22,6 +22,17 @@ body {
     padding-top: 40px;
 }
 
+i{
+    position: absolute;
+    left: 0;
+    margin-left: 50px ;
+    margin-top: 10px;
+    color: white;
+    transform: scale(2, 2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .container {
     background-color: white;
     border-radius: 8px;
@@ -155,4 +166,62 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+/* --- Responsividade para Tablets e Smartphones --- */
+@media (max-width: 768px) {
+    body {
+        padding-top: 20px;
+        align-items: flex-start; /* Evita que o conteúdo tente centralizar verticalmente em telas longas */
+    }
+
+    /* O ícone de voltar precisa de um ajuste para não sobrepor o conteúdo */
+    i {
+        margin-left: 20px;
+        position: relative; /* Muda de absolute para não flutuar sobre o container */
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        flex-direction: column; /* Empilha os elementos verticalmente */
+        width: 95%;            /* Ocupa quase toda a largura da tela */
+        margin: 0 auto;
+        gap: 20px;
+        padding: 15px;
+        margin-right: 30px;
+        margin-top: 80px
+    }
+
+    /* Colocamos as miniaturas em linha horizontal no mobile para economizar espaço */
+    .produtos-verticais {
+        flex-direction: row;
+        justify-content: center;
+        order: 2; /* Move as miniaturas para baixo da imagem principal se desejar */
+    }
+
+    .imagem-container {
+        order: 1; /* Garante que a imagem principal seja a primeira coisa vista */
+    }
+
+    #produto-principal {
+        width: 100%;    /* Imagem ocupa toda a largura disponível */
+        height: auto;   /* Mantém a proporção */
+        max-width: 350px; /* Limite para não estourar em tablets */
+    }
+
+    .comprar-container {
+        width: 100%;    /* Caixa de compra ocupa a largura total */
+        order: 3;
+        border: none;   /* Opcional: remover borda no mobile para um visual mais limpo */
+        padding: 10px 0;
+    }
+
+    .preco-atual {
+        font-size: 26px; /* Diminui um pouco a fonte do preço */
+    }
+
+    .produto-titulo {
+        font-size: 18px;
+    }
 }

@@ -10,14 +10,20 @@ if(isset($_GET['busca'])){
         ':busca' => "%$busca%"
     ]);
 
-    $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $resultados = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
     if($resultados){
         foreach ($resultados as $produto){
-            echo "<p>" .$produto['nome'] . " - R$ " . $produto['preco'] . "</p>";
+            echo 
+            "<a href='../pagina-produto-usuario/pagina-produto-usuario.php?produto=".urlencode($produto['nome'])."&id=".$produto['id_produto']."' 
+            class='resultado-item' style='color:rgb(43, 109, 77); text-decoration:none;'>
+            <p>".$produto['nome']." - R$ ".$produto['preco']."</p>
+            </a>";
         } 
     } else {
             echo "Nenhum resultado encontrado";
         }
 }
+
+
 ?>
