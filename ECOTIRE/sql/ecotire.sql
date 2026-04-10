@@ -10,8 +10,8 @@ CREATE TABLE if not exists usuario (
     email VARCHAR(50) NOT NULL UNIQUE, 
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(15) NOT NULL,
-    tipo ENUM('Homem','Mulher','Prefiro não dizer','Outros') not null,
-    tipo ENUM('cliente','admin') DEFAULT 'cliente',
+    genero ENUM('Homem','Mulher','Prefiro não dizer','Outros') not null,
+    tipo ENUM('cliente','admin') not null DEFAULT 'cliente',
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP 
 ) ENGINE=InnoDB;
 
