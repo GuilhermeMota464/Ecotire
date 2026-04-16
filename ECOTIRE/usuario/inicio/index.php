@@ -26,8 +26,10 @@
             <div id="resultado"></div>
           </div>
           
-          <i onclick="window.location.href'../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-
+          <div class="header-actions">
+            <i onclick= "window.location.href'../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i onclick="window.location.href='../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+          </div>
      </div>
     <div class="header-bottom">
         <nav>
@@ -55,7 +57,7 @@
       <img src="../../assetsGerais/banner3.webp" alt="Imagem Principal">
       <img src="../../assetsGerais/banner4.webp" alt="Imagem Principal">
       <img src="../../assetsGerais/banner5.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> <!-- 🔥 clone da primeira -->
+      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> <!-- clone da primeira -->
     </div>
     <button class="prev">❮</button>
     <button class="next">❯</button>

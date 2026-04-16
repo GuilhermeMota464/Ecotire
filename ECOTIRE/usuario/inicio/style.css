@@ -27,6 +27,36 @@ body {
 .fa.fa-bars {
   display: none;
 }
+/* Container que segura os dois ícones na direita */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre o carrinho e o perfil */
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente no header-top */
+}
+
+/* Ajuste nos ícones */
+.header-actions i {
+    font-size: 30px; /* Tamanho ajustado para ficar harmônico */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.header-actions i:hover {
+    color: var(--fundo);
+    transform: scale(1.1);
+}
+
+/* Removendo o absolute antigo do perfil para não dar conflito */
+.foto_perfil {
+    position: static !important; /* Anula o absolute anterior */
+    display: flex;
+}
+
 .poppins-regular {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -217,7 +247,7 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     z-index: 9999; /* Fica na frente de tudo */
     max-height: 250px;
-    overflow-y: auto;
+    overflow-y: auto; 
     display: none;
 }
 
@@ -468,6 +498,12 @@ form h2 {
  @media (max-width: 768px) {
   body {
     padding-top: 47px; /* Espaço para o nav fixo */
+  }
+  .header-actions {
+        right: 15px;
+  }
+  .header-actions i {
+        font-size: 24px; /* Ícones um pouco menores no celular */
   }
   .logo {
     z-index: 99;
