@@ -216,7 +216,6 @@ h1, h2 {
     padding: 2rem;
     box-shadow: 0 25px 50px rgba(0,0,0,0.25);
     z-index: 1001;
-    overflow-y: auto; /* PERMITE SCROLL SE O CONTEÚDO FOR GRANDE */
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -248,15 +247,6 @@ h1, h2 {
     opacity: 1;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-    from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
 .modal form {
     display: flex;
     flex-direction: row;
@@ -290,37 +280,19 @@ h1, h2 {
 /* Colunas do Formulário */
 .modal-column-left, 
 .modal-column-right {
+    height: 75vh;
     flex: 1;
-    min-width: 280px; /* Impede que fiquem esmagadas */
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.modal-column-left {
-    padding-top: 50px
-}
-.input, #descricao_imagem {
+#descricao_imagem {
     width: 100% !important; 
     box-sizing: border-box;
 }
 #descricao_imagem {
     height: 120px; /* Ajustado para caber melhor */
     resize: none;
-}
-.picture {
-    width: 100%;
-    max-width: 250px; /* Tamanho controlado */
-    height: 250px;    /* Altura fixa controlada */
-    margin: 0 auto;   /* Centraliza */
-    background: #ddd;
-    border: 3px dashed var(--cor-primaria-escura);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
-    flex-shrink: 0;   /* IMPEDE DE SAIR DO MODAL */
-    position: relative;
 }
 
 @media (max-width: 768px) {
@@ -399,11 +371,9 @@ input[type=number] {
   appearance: textfield;
 }
 .input {
-    padding: 12px !important;
-    height: 45px !important;
+    height: 10vw !important;
 }
 label {
-    font-size: 24px;
     font-family: "Poppins", sans-serif;
 }
 #inserir-imagem {
@@ -420,8 +390,8 @@ label {
 }
 /* Foto */
 .picture {
-    width: 300px;
-    height: 300px;
+    width: 15vw;
+    height: 15vw;
     background: #ddd;
     display: flex;
     align-items: center;
@@ -465,26 +435,14 @@ label {
 /* Checkbox Promo */
 .promo-box {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
-    margin-top: 10px;
+    height: 50px;
 }
 
 .promo-box input[type="checkbox"] {
     width: 25px;
     height: 25px;
-    cursor: pointer;
-}
-
-/* Área da Imagem (Centro) */
-.picture {
-    width: 280px;
-    height: 280px;
-    border: 2px solid #000;
-    background: #f9f9f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
 }
 
@@ -500,8 +458,7 @@ label {
     color: white;
     border: none;
     padding: 15px;
-    width: 100%;      /* Ajusta à largura da coluna */
-    max-width: 420px;
+    height: 100%;
     border-radius: 8px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -545,8 +502,8 @@ label {
     background: rgba(200,0,0,0.8);
     color: white;
     border: none;
-    width: 5vw;
-    height: 5vw;
+    width: 6%;
+    height: 9.8%;
     border-radius: 50%;
     font-size: 3em;
     font-weight: bold;
@@ -565,6 +522,7 @@ label {
 
 /* Modern Field Containers */
 .field-container {
+    height: 10%;
     position: relative;
     margin-top: 15px; /* Espaço para o label subir */
     display: flex;
@@ -630,26 +588,15 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
     font-weight: bold;
 }
 
+/* Seletor unificado para todas as labels que devem subir e diminuir */
 .input:focus + label,
-.input:not(:placeholder-shown) + label {
-    top: 0; /* Move para o topo da borda */
-    font-size: 0.75rem;
+.input:not(:placeholder-shown) + label,
+#preco_promo:focus + label,
+#preco_promo:not(:placeholder-shown) + label {
+    top: 0 !important; /* Força a posição */
+    font-size: 0.75rem !important; /* Força a diminuição do tamanho */
     color: var(--cor-primaria);
     font-weight: bold;
-}
-
-/* Enhanced Picture Upload */
-.picture {
-    position: relative;
-    border: 3px dashed var(--cor-primaria-escura);
-    background: linear-gradient(135deg, rgba(43,109,77,0.05), rgba(241,234,234,0.5));
-    transition: all 0.3s ease;
-}
-
-.picture:hover {
-    border-color: var(--cor-primaria);
-    background: linear-gradient(135deg, rgba(43,109,77,0.1), rgba(241,234,234,0.7));
-    transform: scale(1.02);
 }
 
 .picture-image {
@@ -659,7 +606,11 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 
 /* Custom Promo Checkbox */
 .promo-box {
-    position: relative;
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o switch e o input */
+    gap: 20px;           /* Espaço entre o switch e o campo de valor */
+    height: 70px;        /* Altura suficiente para o label flutuante do input */
+    margin-top: 10px;
 }
 
 .promo-box input[type="checkbox"] {
@@ -697,7 +648,15 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
     font-size: 1rem !important;
     margin-left: 1rem;
 }
-
+.promo-box label[for="promo"] {
+    position: static;         /* Impede que este label específico flutue */
+    transform: none;
+    font-size: 0.9rem !important;
+    color: var(--cor-primaria);
+    font-weight: bold;
+    margin-left: 0;
+    white-space: nowrap;      /* Evita que o texto quebre em duas linhas */
+}
 /* Container para posicionar o símbolo */
 .percentage-wrapper {
     position: relative;
@@ -720,16 +679,27 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 /* Ajuste para o texto não ficar em cima do símbolo */
 #preco_promo {
     padding-right: 35px !important;
+    width: 224px;
 }
-
+#label_promo {
+    left: 0px;
+}
 /* Quando o input estiver vazio ou o label subir, podemos dar destaque ao % */
 #preco_promo:focus ~ ::after {
     color: var(--cor-primaria);
 }
 
 #container-preco-promo {
-    transition: all 0.3s ease;
+    margin-top: 0 !important; /* Remove margens que desalinhariam o campo */
+    display: none;            /* Mantém escondido por padrão (controlado pelo JS) */
+    flex: 1;                  /* Permite que o campo cresça conforme o espaço */
+    max-width: 150px;         /* Limita a largura para manter a estética */
 }
+#preco_promo {
+    width: 100% !important;
+    height: 45px !important;
+}
+
 
 
 @media (max-width: 768px) {

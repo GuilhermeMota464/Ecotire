@@ -35,6 +35,8 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
 </head>
 <body>
 
+<i class="fa-solid fa-arrow-left" onclick="window.location.href='../produto/produto.php'"></i>
+
 <div class="container">
     <div class="produtos-verticais">
         <img src="../produto/Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" class="produtos-imagem" onclick="ChangeImage(this.src)">
