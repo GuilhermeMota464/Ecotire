@@ -12,8 +12,11 @@
 body {
     margin: 0;
     background-color: rgb(241, 234, 234);
-    width: 100%;
-    height: max-content;
+    background-image: url("ecotire/assetsGerais/folhaBackground.webp");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 1000px;
+    background-attachment: fixed;
 }
 .poppins-regular {
   font-family: "Poppins", sans-serif;

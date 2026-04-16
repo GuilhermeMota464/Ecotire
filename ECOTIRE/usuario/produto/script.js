@@ -39,5 +39,4 @@ inputBusca.addEventListener('input', async () => {
         inputBusca.classList.remove('busca-ativa-input');
         iconeLupa.classList.remove('busca-ativa-icone');
     }
-
-});
+})

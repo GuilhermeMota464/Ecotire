@@ -61,14 +61,17 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
             <p class="entrega-info">Chegará grátis amanhã</p>
 
             <div class="botoes-acao">
-                <button type="submit" class="btn-comprar">
+                <input type="hidden" name="id_produto" value="<?php echo $produto['id_produto']; ?>">
+                <input type="hidden" name="nome" value="<?php echo $produto['nome']; ?>">
+                <input type="hidden" name="preco" value="<?php echo $precoDesconto; ?>">
+
+                <button type="submit" name="btn_carrinho" class="btn-comprar">
                     Comprar agora
                 </button>
             </div>
         </form>
     </div>
 </div>
-
 <script src="script.js"></script>
 </body>
 </html>
