@@ -27,8 +27,8 @@
           </div>
           
           <div class="header-actions">
-            <i onclick= "window.location.href'../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-            <i onclick="window.location.href='../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
           </div>
      </div>
     <div class="header-bottom">

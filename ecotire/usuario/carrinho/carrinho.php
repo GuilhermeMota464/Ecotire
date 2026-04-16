@@ -2,6 +2,11 @@
 session_start();
 include '../../funcoesPHP/connection.php';
 
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../login/login.php?erro=sessao_expirada");
+    exit;
+}
+
 $id_usuario = $_SESSION['id_usuario'];
 
 $sql = "SELECT c.*, p.nome, p.imagem
@@ -31,7 +36,6 @@ $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Qtd</th>
                     <th>Preço Unit.</th>
                     <th>Subtotal</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>

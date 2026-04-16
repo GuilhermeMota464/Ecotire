@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // password_verify() compara a senha digitada com o hash salvo no banco
         if ($usuario && password_verify($senhaDigitada, $usuario['senha'])) {
             
-            $_SESSION['usuario_id'] = $usuario['id_usuario'];
+            $_SESSION['id_usuario'] = $usuario['id_usuario'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
             
             header("Location: ../../usuario/inicio/index.php");
