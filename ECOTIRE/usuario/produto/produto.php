@@ -24,26 +24,29 @@ $produtos = $stmt->fetchAll();
 <!-- Cabeçalho -->
 <header>
     <div class="header">
-      <div class="header-top">
-              <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
-              <div class="search-group">               
-                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
-                <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
-                <div id="resultado"></div>
-              </div>
-
-               <i onclick="window.location.href='../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-      </div>
-      <div class="header-bottom">
-          <nav >
-          <ul class="menu-horizontal">
-            <li><a onclick="window.location.href='../inicio/index.php'" >Inicio</a></li>
-            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
-            <li><a onclick="window.location.href='#'"style="background-color: rgb(222, 217, 217); border-radius: 5px;">Produtos</a></li>
+     <div class="header-top">
+            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
+          <div class="search-group">               
+            <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
+            <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
+            <div id="resultado"></div>
+          </div>
+          
+          <div class="header-actions">
+            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+          </div>
+          
+     </div>
+    <div class="header-bottom">
+        <nav>
+          <ul class="menu-horizontal" id="menu-links">
+            <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
+            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" >Sobre</a></li>
+            <li><a onclick="window.location.href='../produto/produto.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Produtos</a></li>
             <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>
-          </nav>
-      </div>
+        </nav>
     </div>
 </header>
 

@@ -1,9 +1,9 @@
 <?php
-include 'connection.php';
 session_start();
+include 'connection.php';
 
-if(!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login/login.php?erro=faca_login");
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../usuario/login/login.php?erro=sessao_expirada");
     exit;
 }
 

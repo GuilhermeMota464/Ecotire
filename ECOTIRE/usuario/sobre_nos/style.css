@@ -21,17 +21,51 @@
         display: none;
     }
 }
-
+.main-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
 :root{
   --cor-primaria: rgb(43, 109, 77);
 }
 body {
     margin: 0;
     background-color: rgb(241, 234, 234);
-    font-family: "Poppins", sans-serif;
-    width: 100%; /* Alterado de 100vw para 100% */
-    overflow-x: hidden; /* Garante que nada escape pela lateral */
+    width: 100%;
+    height: max-content;
 }
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+/* Ajuste nos ícones */
+.header-actions i {
+    font-size: 30px; /* Tamanho ajustado para ficar harmônico */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.header-actions i:hover {
+    color: var(--fundo);
+    transform: scale(1.1);
+}
+
+/* Removendo o absolute antigo do perfil para não dar conflito */
+.foto_perfil {
+    position: static !important; /* Anula o absolute anterior */
+    display: flex;
+}
+
 .poppins-regular {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -42,13 +76,15 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: auto;
 }
 /* Botões */
 .menu-horizontal { 
   align-items: center;
-  padding: 0;
+  padding-bottom: 10px;
+  margin: 0;
+  background-color: rgb(241, 234, 234);
+  font-family: "Poppins", sans-serif;
+  border-bottom: 2px solid black;
 }
 
 /* Orientação dos botões */
@@ -63,16 +99,14 @@ body {
     padding: 10px 20px;
     text-decoration: none;
     color: black;
-    text-decoration: none;
 }
 
 /* Efeito hover nos botões */
 .menu-horizontal a:hover, .menu-horizontal a.ativo {
-  background-color: var(--cor-primaria);
   border-radius: 5px;
   background-color: rgb(222, 217, 217);
-    text-decoration: none;
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
     
 }
 .logo {
@@ -81,14 +115,6 @@ body {
     padding-left:10px;
     padding-right: 10px;
 }
-/* As imagens que ficam passando */
-.imagem_principal {
-    padding-top: 50px;
-    padding-left: 120px;
-    width: 1000px;
-    height: 300px;
-}
-
 /* Barra de pesquisa */
 .search-bar {
     width: clamp(150px, 385px, 900px);
@@ -113,7 +139,7 @@ body {
     font-size: 20px;
     padding: 10px;
     cursor: pointer;
-     border-radius: 0px 5px 5px 0px; 
+    border-radius: 0px 5px 5px 0px; 
 }
 /* Classe para quando a busca estiver aberta */
 .busca-ativa-input {
@@ -122,9 +148,6 @@ body {
 .search-group i.busca-ativa-icone {
     border-radius: 0 5px 0 0;
 }
-/* .search-bar:focus {
-    border-color: var(--cor-primaria);
-}*/
 
 #resultado {
     position: absolute;
@@ -164,24 +187,19 @@ body {
 /* Parte superior do cabeçalho */
 .header-top {
     display: flex;
-    align-items: center;
-    padding-bottom: 10px;
+    align-items: center; /* Centraliza verticalmente */
     padding-top: 10px;
+    padding-bottom: 10px;
     background-color: var(--cor-primaria);
+    margin-bottom: 10px;
+    position: relative;
 }
 /* Parte inferior do cabeçalho */
 .header-bottom {
-    height: 100%;
     text-align: center;
     justify-content: center;
-    padding: 10px;
-    border-bottom: 2px solid black;
-    /* background: aliceblue; */
 }
-.header-bottom nav{
-  padding: 0;
-  height: 100%;
-}
+
 main{
   width: 100%;
   padding: 15px;
@@ -212,27 +230,19 @@ section{
   transform: scale(1.1);
 
 }
-/* Foto de perfil */
-.foto_perfil::before {
-    display: flex;
-    font-size: 45px;
-    justify-content: right;
-    position: absolute;
-    right: 25px;
-    top: 16px;
-    cursor : pointer;
-}
 form h2 {
     margin-top: 0;
     margin-bottom: 20px;
 } 
 /* Grupo que contém nome, email, telefone e o botão */
 .input_group {
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-    width: 300px;
+    display: inline-flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+    width: 100%;
     margin-bottom: 15px;
+    justify-content: center;
+    align-content: center;
 }
 /* Formatação do botão */
 .input_group button {

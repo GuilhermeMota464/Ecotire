@@ -129,29 +129,23 @@ i{
 }
 
 .btn-comprar {
-    width: 100%;
     background-color: var(--cor-primaria);
     color: white;
     border: none;
-    padding: 14px;
-    border-radius: 6px;
+    padding: 15px 30px;
+    font-size: 18px;
     font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    width: 100%; 
 }
 .btn-comprar:hover{
     background-color: var(--cor-primaria-escura);
+    transform: scale(1.02);
 }
-.btn-carrinho {
-    background-color: rgba(227, 237, 251);
-    color: var(--cor-primaria);
-    border: none;
-    padding: 12px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-}
-.btn-carrinho:hover{
-    background-color: rgb(208, 221, 239);
+.btn-comprar i {
+    margin-right: 10px;
 }
 form {
     display: flex;
