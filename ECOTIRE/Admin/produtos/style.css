@@ -2,7 +2,8 @@
     --cor-primaria: rgb(43, 109, 77);
     --cor-primaria-escura: rgb(34, 86, 61);
     --fundo: rgb(241, 234, 234);
-    --borda: rgba(107, 107, 107, 0.238);
+    --borda: rgb(180, 175, 175);
+    --fundo-input: rgb(255, 255, 255);
 }
 
 *{
@@ -25,8 +26,8 @@ body {
   font-style: normal;
 }
 h1, h2 {
-    font-size: 2rem;
     color: var(--cor-primaria);
+    font-size: 3vw;
 }
 /* Cabeçalho geral */
 .header {
@@ -265,11 +266,15 @@ h1, h2 {
 /* Colunas do Formulário */
 .modal-column-left, 
 .modal-column-right {
-    height: 75vh;
+    height: 65vh;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 3vh;
+    gap: 1vh;
+}
+
+.modal-column-left {
+    gap: 3vh
 }
 
 @media (max-width: 768px) {
@@ -415,13 +420,15 @@ label {
     color: white;
     border: none;
     padding: 15px;
-    height: 15%;
+    height: 60px;
+    width: 100%;
+    flex-basis: 100%;
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 2vw;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(43,109,77,0.4);
-    flex-shrink: 0;   /* Não deixa o botão "sumir" */
+    flex-shrink: 0;  
 }
 
 .btn-submit:hover {
@@ -476,7 +483,6 @@ label {
     background: rgba(150,0,0,0.9);
     transform: scale(1.1);
 }
-
 /* Modern Field Containers */
 .field-container {
     height: 10%;
@@ -493,29 +499,29 @@ label {
     width: 100%;
     border: 2px solid var(--borda);
     border-radius: 12px;
-    background: white;
+    background: var(--fundo-input);
     font-family: inherit;
 }
 
 .field-container label {
     position: absolute;
-    left: 12px;
-    top: 55%; /* Centraliza verticalmente */
+    left: 0.9vw;
+    top: 60%; /* Centraliza verticalmente */
     transform: translateY(-50%); /* Centraliza verticalmente sobre o input */
-    font-size: 0.9rem;
+    font-size: 3vh;
     color: #888;
     transition: all 0.2s ease;
     pointer-events: none; /* Garante que clicar no label foque o input */
-    background-color: white; /* Evita que a linha do input passe por trás do texto */
+    background-color: var(--fundo-input); /* Evita que a linha do input passe por trás do texto */
     padding: 0 4px;
 }
 
 .input, #descricao_imagem {
-    border: 2px solid var(--borda);
-    border-radius: 12px;
-    font-size: 1rem;
-    background: rgba(255,255,255,0.8);
-    padding: 10px;
+    border: 0.1vh solid var(--borda);
+    border-radius: 0.9vw;
+    font-size: 1.5vw;
+    background: var(--fundo-input);
+    padding: 1vw;
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
@@ -524,11 +530,18 @@ label {
     outline: none;
     border-color: var(--cor-primaria);
     box-shadow: 0 0 0 3px rgba(43,109,77,0.1);
-    background: white;
+    background: var(--fundo-input);
 }
 
 #label-descricao-imagem {
-    top: 10%; /* Alinhado ao topo interno do textarea */
+    top: 2vh; /* Posição inicial responsiva dentro do textarea */
+    left: 0.9vw;
+    position: absolute;
+    transition: all 0.2s ease;
+    top: 50%;
+    background-color: var(--fundo-input); /* Importante para cobrir a borda */
+    padding: 0 0.5vw;
+    pointer-events: none;
 }
 
 textarea:focus {
@@ -536,25 +549,21 @@ textarea:focus {
     border-color: var(--cor-primaria) !important;
 }
 
-/* Efeito de flutuar quando focado ou preenchido */
-textarea:focus + #label-descricao-imagem,
-textarea:not(:placeholder-shown) + #label-descricao-imagem {
-    top: 0px; /* Sobe para fora da borda superior */
-    left: 10px;
-    font-size: 0.75rem;
-    color: var(--cor-primaria);
-    font-weight: bold;
-}
-
 /* Seletor unificado para todas as labels que devem subir e diminuir */
+/* Seletor unificado para Nome, Preço, Estoque e Descrição */
 .input:focus + label,
 .input:not(:placeholder-shown) + label,
 #preco_promo:focus + label,
-#preco_promo:not(:placeholder-shown) + label {
-    top: 0 !important; /* Força a posição */
-    font-size: 0.75rem !important; /* Força a diminuição do tamanho */
+#preco_promo:not(:placeholder-shown) + label,
+#descricao_imagem:focus + label,
+#descricao_imagem:not(:placeholder-shown) + label {
+    top: 0 !important;
+    transform: translateY(-50%); /* Centraliza na borda superior usando valor relativo */
+    font-size: 1vw !important;
     color: var(--cor-primaria);
     font-weight: bold;
+    background-color: var(--fundo-input);
+    padding: 0 0.4vw;
 }
 
 .picture-image {
@@ -573,10 +582,10 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 
 .promo-box input[type="checkbox"] {
     appearance: none;
-    width: 5vw;
-    height: 4.2vh;
+    width: 10vw;
+    height: 6vh;
     background: #ddd;
-    border-radius: 25px;
+    border-radius: 1.5vw;
     position: relative;
     cursor: pointer;
     transition: background 0.3s ease;
@@ -589,17 +598,17 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 .promo-box input[type="checkbox"]::before {
     content: '';
     position: absolute;
-    width: 3.5vh;
-    height: 3.5vh;
+    width: 5.6vh;
+    height: 5.6vh;
     border-radius: 50%;
     background: white;
-    top: 2px;
-    left: 2px;
+    top: 0.23vh;
+    left: 0.23vh;
     transition: transform 0.3s ease;
 }
 
 .promo-box input[type="checkbox"]:checked::before {
-    transform: translateX(25px);
+    transform: translateX(279%);
 }
 
 .promo-box label {
@@ -609,7 +618,7 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 .promo-box label[for="promo"] {
     position: static;         /* Impede que este label específico flutue */
     transform: none;
-    font-size: 0.9rem !important;
+    font-size: 1.7vw !important;
     color: var(--cor-primaria);
     font-weight: bold;
     margin-left: 0;
@@ -658,91 +667,119 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
     height: 45px !important;
 }
 @media (max-width: 768px) {
-    .modal {
-        width: 95vw;
-        padding: 1.2rem;
-        top: 50%;
+    /* 1. Títulos e Textos */
+    h1, h2 {
+        font-size: 8vw; /* Maior no celular */
+        text-align: center;
+    }
+
+    /* 2. O Modal */
+    .modal.open {
+        width: 95%;
+        max-height: 95vh;
+        padding: 1.5rem;
+        overflow-y: auto; /* Permite rolar o formulário se for longo */
+        border-radius: 15px;
     }
 
     .modal form {
-        flex-direction: column; /* Força tudo em uma linha vertical */
+        flex-direction: column; /* Coluna única */
+        gap: 15px;
     }
 
-    .modal-column-left {
-        padding-top: 10px;
+    /* 3. Inputs e Labels (Aumentar área de toque) */
+    .input, #descricao_imagem {
+        font-size: 1rem !important; /* Unidade fixa para legibilidade */
+        padding: 15px !important;
+        height: 60px !important; /* Altura confortável para o dedo */
+        border-radius: 5vw;
+        width: 80vw;
     }
 
+    #descricao_imagem {
+        min-height: 150px; /* Menor que no desktop */
+    }
+
+    .field-container label {
+        font-size: 1rem !important;
+        top: 50%;      
+    } 
+    #label-descricao-imagem {
+        font-size: 1rem !important;
+        top: 15%;
+    }
+
+    /* Efeito da label subindo no mobile */
+    .input:focus + label,
+    .input:not(:placeholder-shown) + label,
+    #descricao_imagem:focus + label,
+    #descricao_imagem:not(:placeholder-shown) + label {
+        top: 0 !important;
+        font-size: 0.8rem !important;
+        transform: translateY(-50%);
+    }
+
+    /* 4. Imagem (Centralizar e Ajustar) */
     .picture {
-        max-height: 200px; /* Diminui a foto no celular para caber o resto */
-        max-width: 200px;
+        width: 150px; /* Tamanho fixo centralizado */
+        height: 150px;
+        margin: 0 auto;
     }
 
+    .picture-image {
+        font-size: 2rem;
+    }
+
+    /* 5. Checkbox de Promoção */
+    .promo-box {
+        justify-content: center;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .promo-box input[type="checkbox"] {
+        width: 80px;
+        border-radius: 20px;
+        height:40px;
+    }
+
+    .promo-box input[type="checkbox"]::before {
+        width: 36.5px;
+        height: 36.5px
+    }
+
+    .promo-box input[type="checkbox"]:checked::before {
+        transform: translateX(38.5px);
+    }
+    
+    .modal-column-left {
+        align-items: flex-start;
+    }
+
+    .promo-box label[for="promo"] {
+        font-size: 1rem !important;
+    }
+
+    /* 6. Botão de Enviar */
+    .btn-submit {
+        font-size: 1.2rem;
+        height: 60px;
+        margin-top: 10px;
+    }
+
+    /* 7. Botão Fechar (X) */
     .modal-close {
         position: sticky;
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
+        top: 5px;
+        right: 5px;
     }
-}
-@media (min-width: 1058px) {
-    h1, h2 {
-        font-size: 3vw;
-    }
-    .field-container label {
-        font-size: 1.4vw;
-    }
-    .input:focus + label,
-    .input:not(:placeholder-shown) + label,
-    #preco_promo:focus + label,
-    #preco_promo:not(:placeholder-shown) + label {
-        top: 0 !important; /* Força a posição */
-        font-size: 1vw !important; /* Força a diminuição do tamanho */
-        color: var(--cor-primaria);
-        font-weight: bold;
-    }
-    .promo-box label[for="promo"] {
-        position: static;         /* Impede que este label específico flutue */
-        transform: none;
-        font-size: 1.7vw !important;
-        color: var(--cor-primaria);
-        font-weight: bold;
-        margin-left: 0;
-        white-space: nowrap;      /* Evita que o texto quebre em duas linhas */
-    }
-    .promo-box input[type="checkbox"] {
-        appearance: none;
-        width: 4vw;
-        height: 3.7vh;
-        background: #ddd;
-        border-radius: 1vw;
-        position: relative;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-    .promo-box input[type="checkbox"]::before {
-        content: '';
-        position: absolute;
-        width: 3.2vh;
-        height: 3.2vh;
-        border-radius: 50%;
-        background: white;
-        top: 0.23vh;
-        left: 2px;
-        transition: transform 0.3s ease;
-    }
-    .promo-box input[type="checkbox"]:checked::before {
-        transform: translateX(2vw);
-    }
-    .input, #descricao_imagem {
-        border: 2px solid var(--borda);
-        border-radius: 12px;
-        font-size: 1.5vw;
-        background: rgba(255,255,255,0.8);
-        padding: 1vw;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-    }
-    .btn-submit {
-        font-size: 2vw
+
+    /* 8. Grid de Produtos (1 card por linha em telas bem pequenas) */
+    .products-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
     }
 }

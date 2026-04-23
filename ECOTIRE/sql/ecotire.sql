@@ -44,6 +44,7 @@ CREATE TABLE if not exists carrinho(
     id_usuario INT NOT NULL,
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
+    imagem MEDIUMBLOB,
     preco_unitario DECIMAL(10,2) NOT NULL,
     -- AQUI: Se o usuário ou o produto sumirem, limpa o carrinho
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,

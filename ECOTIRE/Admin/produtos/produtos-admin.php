@@ -80,8 +80,6 @@ $produtos = $stmt->fetchAll();
                         </div>
                     </div>
                 </div>
-
-                <button type="submit" class="btn-submit">CADASTRAR PRODUTO</button>
             </div>
 
             <div class="modal-column-right">
@@ -98,6 +96,8 @@ $produtos = $stmt->fetchAll();
                     <label for="descricao_imagem" id="label-descricao-imagem">DESCRIÇÃO</label>
                 </div>
             </div>
+
+            <button type="submit" class="btn-submit">CADASTRAR PRODUTO</button>
         </form>
     </div>
 </div>
