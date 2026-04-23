@@ -16,7 +16,7 @@ $sql = "SELECT c.*, p.nome, p.imagem
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$id_usuario]);
-$produto = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -41,20 +41,22 @@ $produto = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tbody>
                 <?php 
                 $totalGeral = 0;
-                foreach ($produto as $produto): 
+                foreach ($produtos as $produto): 
                     $subtotal = $produto['preco_unitario'] * $produto['quantidade'];
                     $totalGeral += $subtotal;
                 ?>
                 <tr>
                     <td>
-                        <img src="../assets/<?php echo $produto['imagem']; ?>.webp" width="50">
+                        <img src="../produto/Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" width="50">
                         <?php echo $produto['nome']; ?>
                     </td>
                     <td><?php echo $produto['quantidade']; ?></td>
                     <td>R$ <?php echo number_format($produto['preco_unitario'], 2, ',', '.'); ?></td>
                     <td>R$ <?php echo number_format($subtotal, 2, ',', '.'); ?></td>
                     <td>
-                        <a href="remover.php?id=<?php echo $produto['id_item']; ?>" class="btn-remover">Remover</a>
+                        <a href="../../funcoesPHP/removeCarrinho.php?id_item=<?php echo $produto['id_item']; ?>" class="btn-remover">
+                            Remover
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
