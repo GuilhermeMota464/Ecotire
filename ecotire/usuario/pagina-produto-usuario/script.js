@@ -13,4 +13,3 @@ function ChangeImage(src) {
     }
 }
 
-document.getElementById

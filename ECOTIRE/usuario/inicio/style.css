@@ -90,10 +90,11 @@ body {
   color: #000000;
 }
 /* Efeito hover nos botões */
-.menu-horizontal a:hover {
+.menu-horizontal a:hover, .menu-horizontal a.ativo  {
   border-radius: 5px;
   background-color: rgb(222, 217, 217);
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
 }
 /* Logo */
 .logo {
@@ -101,15 +102,6 @@ body {
     height: 60px;
     padding-left: 10px;
     padding-right: 10px;
-}
-.foto_perfil {
-    display: flex;
-    font-size: 45px;
-    justify-content: right;
-    position: absolute;
-    right: 25px;
-    top: 16px;
-    cursor : pointer;
 }
 /* As imagens que ficam passando */
 .imgAlternada{
@@ -222,7 +214,7 @@ body {
     font-size: 20px;
     padding: 10px;
     cursor: pointer;
-     border-radius: 0px 5px 5px 0px; 
+    border-radius: 0px 5px 5px 0px; 
 }
 /* Classe para quando a busca estiver aberta */
 .busca-ativa-input {

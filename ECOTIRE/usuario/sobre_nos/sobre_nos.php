@@ -10,36 +10,36 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   </head>
-  <body>
-  <header>
-      <div class="header">
-      <div class="header-top">
-              <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
-              <div class="search-group">               
-                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
-                <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
-                <div id="resultado"></div>
-              </div>
-              <i onclick="window.location.href='../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-      </div>
-      <div class="header-bottom">
+<body>
+  <!-- Cabeçalho -->
+<header>
+    <div class="header">
+     <div class="header-top">
+            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
+          <div class="search-group">               
+            <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
+            <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
+            <div id="resultado"></div>
+          </div>
+          
+          <div class="header-actions">
+            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+          </div>
+          
+     </div>
+    <div class="header-bottom">
         <nav>
           <ul class="menu-horizontal" id="menu-links">
             <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
-            <li><a style="background-color: rgb(222, 217, 217); border-radius: 5px;">Sobre</a></li>
+            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Sobre</a></li>
             <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
             <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>
-
-          <a class="icon" onclick="toggleMenu()">
-            <i class="fa fa-bars"></i>
-          </a>
         </nav>
-       </div>
-      </div>
+    </div>
+</header>
 
-
-  </header>
   <main>
       <section>
   <h1>Sobre nós</h1>
@@ -157,3 +157,4 @@
 <script src="script.js"></script>
   </body>
   </html>
+

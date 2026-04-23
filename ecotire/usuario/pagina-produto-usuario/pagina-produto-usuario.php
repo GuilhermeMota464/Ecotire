@@ -46,9 +46,9 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
     <div class="imagem-container">
         <img src="../produto/Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" id="produto-principal">
     </div>
-
+    
     <div class="comprar-container">
-        <form action="../../funcoesPHP/edit.php" method="POST">
+        <form action="../../funcoesPHP/addCarrinho.php" method="POST">
 
             <h1 class="produto-titulo"><?php echo $produto['nome']; ?></h1>
 
@@ -62,13 +62,15 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
             <p class="frete">Frete grátis</p>
             <p class="entrega-info">Chegará grátis amanhã</p>
 
+            <p class="descricao"><?php echo $produto['descricao']; ?></p>
+
             <div class="botoes-acao">
                 <input type="hidden" name="id_produto" value="<?php echo $produto['id_produto']; ?>">
                 <input type="hidden" name="nome" value="<?php echo $produto['nome']; ?>">
                 <input type="hidden" name="preco" value="<?php echo $precoDesconto; ?>">
 
                 <button type="submit" name="btn_carrinho" class="btn-comprar">
-                    Comprar agora
+                Adicionar ao Carrinho
                 </button>
             </div>
         </form>
