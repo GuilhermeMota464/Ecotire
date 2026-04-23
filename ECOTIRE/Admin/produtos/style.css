@@ -103,6 +103,7 @@ h1, h2 {
 .container {
     max-width: 1100px;
     margin: 0 auto;
+    overflow-y: hidden;
 }
 
 .main-title {
@@ -133,11 +134,9 @@ h1, h2 {
 
 /* Grid de Produtos */
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-    gap: 25px;
-    padding: 20px;
-    justify-items: center;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
 }
 
 /* Card Individual */
@@ -276,72 +275,6 @@ h1, h2 {
 .modal-column-left {
     gap: 3vh
 }
-
-@media (max-width: 768px) {
-    .header-top {
-        justify-content: center;
-        padding: 15px;
-    }
-
-    .foto_perfil {
-        position: static; /* Remove do canto para não sobrepor o logo */
-        margin-left: 10px;
-    }
-
-    .menu-horizontal {
-        display: flex;
-        overflow-x: auto; /* Permite deslizar o menu se for muito grande */
-        white-space: nowrap;
-        justify-content: flex-start;
-        padding: 10px;
-    }
-    
-    .menu-horizontal li {
-        margin-right: 5px;
-    }
-
-    .menu-horizontal a {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    .modal {
-        width: 95vw;
-        max-height: 95vh;
-        overflow-y: auto; /* Ativa scroll interno se o formulário for maior que a tela */
-        padding: 1.5rem;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .modal form {
-        flex-direction: column; /* Empilha as colunas de cadastro */
-        gap: 20px;
-    }
-
-    .modal-column-left {
-        padding-top: 20px; /* Reduz o espaçamento do título */
-    }
-
-    .btn-submit {
-        width: 100%; /* Botão ocupa a largura total */
-        font-size: 1.2rem;
-    }
-
-    .picture {
-        width: 100%; /* Imagem cresce para ocupar a largura do celular */
-        height: 250px;
-    }
-
-    .modal-close {
-        /* Ajusta o botão X para não sumir da tela */
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-        top: 10px;
-        right: 10px;
-    }
-}
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -582,7 +515,7 @@ textarea:focus {
 
 .promo-box input[type="checkbox"] {
     appearance: none;
-    width: 10vw;
+    width: 6vw;
     height: 6vh;
     background: #ddd;
     border-radius: 1.5vw;
@@ -608,7 +541,7 @@ textarea:focus {
 }
 
 .promo-box input[type="checkbox"]:checked::before {
-    transform: translateX(279%);
+    transform: translateX(123%);
 }
 
 .promo-box label {

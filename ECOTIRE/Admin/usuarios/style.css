@@ -417,7 +417,6 @@ select.input + label {
     transform: translateY(-50%); /* Centraliza verticalmente */
     cursor: pointer;
     color: #888; /* Cor neutra inicial */
-    font-size: 1.1vw; /* Tamanho em vw */
     transition: color 0.3s ease;
     z-index: 2; /* Garante que fique em cima do input */
 }

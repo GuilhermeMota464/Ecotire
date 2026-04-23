@@ -105,7 +105,7 @@ $produtos = $stmt->fetchAll();
 
 
 
-        <div class="product-list">
+    <div class="product-list">
         
     <main class="container">
         <section class="products-grid">
@@ -133,6 +133,7 @@ $produtos = $stmt->fetchAll();
 
     </main>
         </div>
+    <p>Ver miaus...</p>
     </div>
 
 
