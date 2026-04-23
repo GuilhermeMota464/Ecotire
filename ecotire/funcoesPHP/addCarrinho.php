@@ -26,8 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             ':preco' => $preco
         ]);
 
-        header("Location: ../view/carrinho.php");
+        http_response_code(200);
+        echo "Adicionado com sucesso";
     } catch (PDOException $e){
+        http_response_code(500);
         echo "Erro ao adicionar: " . $e->getMessage();
     }
 }

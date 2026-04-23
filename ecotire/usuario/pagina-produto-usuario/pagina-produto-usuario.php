@@ -48,7 +48,7 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
     </div>
     
     <div class="comprar-container">
-        <form action="../../funcoesPHP/addCarrinho.php" method="POST">
+        <form id="form-carrinho" action="../../funcoesPHP/addCarrinho.php" method="POST">
 
             <h1 class="produto-titulo"><?php echo $produto['nome']; ?></h1>
 
@@ -76,6 +76,7 @@ $precoDesconto = $produto['preco'] - ($produto['preco'] * $produto['promo']) /10
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="script.js"></script>
 </body>
 </html>
