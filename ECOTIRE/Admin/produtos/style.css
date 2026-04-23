@@ -133,16 +133,16 @@ h1, h2 {
 /* Grid de Produtos */
 .products-grid {
     display: grid;
-    /* Altera para ocupar 100% da largura em telas muito pequenas */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 20px;
-    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 25px;
+    padding: 20px;
+    justify-items: center;
 }
 
 /* Card Individual */
 .product-card {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    max-width: 300px; /* Evita que o card estique demais em telas grandes */
 }
 .product-name {
     font-size: 1rem;
@@ -206,9 +206,8 @@ h1, h2 {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.7);
     
-    width: 90vw;
-    max-width: 900px; /* Limite para não ficar largo demais no PC */
-    max-height: 90vh; /* LIMITE VERTICAL CRUCIAL */
+    width: 90%;
+    max-height: 90%; /* LIMITE VERTICAL CRUCIAL */
     
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -263,20 +262,6 @@ h1, h2 {
     width: 100%; /* Garante que ocupe o espaço disponível */
     min-width: 300px; /* Evita que fique muito estreita antes de quebrar a linha */
 }
-/* Ajuste do Botão (O maior culpado pela quebra) */
-.btn-submit {
-    background-color: var(--cor-primaria);
-    color: white;
-    border: none;
-    padding: 15px;
-    width: 100%; /* MUDADO: de 420px para 100% */
-    max-width: 420px; /* Mantém o tamanho máximo original */
-    border-radius: 5px;
-    font-size: 1.2rem; /* Reduzi um pouco para não quebrar o texto em telas pequenas */
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
-}
 /* Colunas do Formulário */
 .modal-column-left, 
 .modal-column-right {
@@ -284,15 +269,7 @@ h1, h2 {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-#descricao_imagem {
-    width: 100% !important; 
-    box-sizing: border-box;
-}
-#descricao_imagem {
-    height: 120px; /* Ajustado para caber melhor */
-    resize: none;
+    gap: 3vh;
 }
 
 @media (max-width: 768px) {
@@ -371,7 +348,7 @@ input[type=number] {
   appearance: textfield;
 }
 .input {
-    height: 10vw !important;
+    height: 9vh !important;
 }
 label {
     font-family: "Poppins", sans-serif;
@@ -432,33 +409,13 @@ label {
     flex-direction: column;
     gap: 20px;
 }
-/* Checkbox Promo */
-.promo-box {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    height: 50px;
-}
-
-.promo-box input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-}
-
-/* Textarea de Descrição */
-#descricao_imagem {
-    height: 200px;
-    resize: none;
-}
-
 /* Botão Submit (Verde conforme o desenho) */
 .btn-submit {
     background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
     color: white;
     border: none;
     padding: 15px;
-    height: 100%;
+    height: 15%;
     border-radius: 8px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -502,10 +459,10 @@ label {
     background: rgba(200,0,0,0.8);
     color: white;
     border: none;
-    width: 6%;
-    height: 9.8%;
+    width: 10vh;
+    height: 10vh;
     border-radius: 50%;
-    font-size: 3em;
+    font-size: 7vh;
     font-weight: bold;
     cursor: pointer;
     display: flex;
@@ -531,7 +488,7 @@ label {
 
 .field-container textarea {
     padding: 15px 12px !important;
-    min-height: 120px;
+    min-height: 30vh;
     resize: none;
     width: 100%;
     border: 2px solid var(--borda);
@@ -543,7 +500,7 @@ label {
 .field-container label {
     position: absolute;
     left: 12px;
-    top: 50%; /* Centraliza verticalmente */
+    top: 55%; /* Centraliza verticalmente */
     transform: translateY(-50%); /* Centraliza verticalmente sobre o input */
     font-size: 0.9rem;
     color: #888;
@@ -558,6 +515,7 @@ label {
     border-radius: 12px;
     font-size: 1rem;
     background: rgba(255,255,255,0.8);
+    padding: 10px;
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
@@ -600,23 +558,23 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 }
 
 .picture-image {
-    font-size: 4rem;
+    font-size: 4vw;
     color: var(--cor-primaria);
 }
 
 /* Custom Promo Checkbox */
 .promo-box {
     display: flex;
-    align-items: center; /* Centraliza verticalmente o switch e o input */
-    gap: 20px;           /* Espaço entre o switch e o campo de valor */
-    height: 70px;        /* Altura suficiente para o label flutuante do input */
+    align-items: flex-start;
+    gap: 20px;     
+    height: 70px;
     margin-top: 10px;
 }
 
 .promo-box input[type="checkbox"] {
     appearance: none;
-    width: 50px;
-    height: 25px;
+    width: 5vw;
+    height: 4.2vh;
     background: #ddd;
     border-radius: 25px;
     position: relative;
@@ -631,8 +589,8 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
 .promo-box input[type="checkbox"]::before {
     content: '';
     position: absolute;
-    width: 21px;
-    height: 21px;
+    width: 3.5vh;
+    height: 3.5vh;
     border-radius: 50%;
     background: white;
     top: 2px;
@@ -699,9 +657,6 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
     width: 100% !important;
     height: 45px !important;
 }
-
-
-
 @media (max-width: 768px) {
     .modal {
         width: 95vw;
@@ -727,5 +682,67 @@ textarea:not(:placeholder-shown) + #label-descricao-imagem {
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
+    }
+}
+@media (min-width: 1058px) {
+    h1, h2 {
+        font-size: 3vw;
+    }
+    .field-container label {
+        font-size: 1.4vw;
+    }
+    .input:focus + label,
+    .input:not(:placeholder-shown) + label,
+    #preco_promo:focus + label,
+    #preco_promo:not(:placeholder-shown) + label {
+        top: 0 !important; /* Força a posição */
+        font-size: 1vw !important; /* Força a diminuição do tamanho */
+        color: var(--cor-primaria);
+        font-weight: bold;
+    }
+    .promo-box label[for="promo"] {
+        position: static;         /* Impede que este label específico flutue */
+        transform: none;
+        font-size: 1.7vw !important;
+        color: var(--cor-primaria);
+        font-weight: bold;
+        margin-left: 0;
+        white-space: nowrap;      /* Evita que o texto quebre em duas linhas */
+    }
+    .promo-box input[type="checkbox"] {
+        appearance: none;
+        width: 4vw;
+        height: 3.7vh;
+        background: #ddd;
+        border-radius: 1vw;
+        position: relative;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .promo-box input[type="checkbox"]::before {
+        content: '';
+        position: absolute;
+        width: 3.2vh;
+        height: 3.2vh;
+        border-radius: 50%;
+        background: white;
+        top: 0.23vh;
+        left: 2px;
+        transition: transform 0.3s ease;
+    }
+    .promo-box input[type="checkbox"]:checked::before {
+        transform: translateX(2vw);
+    }
+    .input, #descricao_imagem {
+        border: 2px solid var(--borda);
+        border-radius: 12px;
+        font-size: 1.5vw;
+        background: rgba(255,255,255,0.8);
+        padding: 1vw;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+    .btn-submit {
+        font-size: 2vw
     }
 }
