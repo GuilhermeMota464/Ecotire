@@ -124,53 +124,112 @@ h1, h2 {
 .sort-by {
     cursor: pointer;
 }
+
+/* Informações do Produto */
 .product-info {
+    padding: 12px;
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
-    align-items: start;
-    text-align: start;
+    gap: 4px;
 }
 
 /* Grid de Produtos */
 .products-grid {
-    display: flex;
-    gap: 20px;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+    padding: 20px;
+    background-color: #f5f5f5;
+
+    /* Esconder no Firefox */
+    scrollbar-width: none;
+
+    /* Esconder no Internet Explorer e Edge antigo */
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* Card Individual */
 .product-card {
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #eee;
     width: 100%;
-    max-width: 300px; /* Evita que o card estique demais em telas grandes */
-}
-.product-name {
-    font-size: 1rem;
-    margin: 10px 0 5px 0;
-    height: 40px; /* Garante alinhamento mesmo com nomes longos */
 }
 
-.image-container {
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    position: relative;
-    padding: 20px;
+.product-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    scale: 1.01;
+    transition: 0.3s ease;
+}
+
+.tag-mais-vendido {
+    background-color: #00a650;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+.price-old {
+    font-size: 12px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.price-row {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 15px;
-    max-width: 300px;
-    max-height: max-content;
-    box-shadow: 0 8px 6px -6px black;
+    gap: 8px;
+}
+
+.discount-tag {
+    color: #00a650;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.shipping-info {
+    color: #00a650;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.price-current {
+    font-size: 22px;
+    color: #333;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 5px 0;
+}
+
+/* Área da Imagem */
+.image-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .image-container img {
-    max-width: 245px;
-    mix-blend-mode: multiply; /* Ajuda a remover fundos brancos de imagens JPG */
-    border: 3px solid black;
-    max-height: 190px;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
 }
+
 .div-botoes {
     display: flex;
     flex-direction: row;
@@ -391,25 +450,25 @@ label {
     box-shadow: 0 6px 20px rgba(43,109,77,0.6);
 }
 
-/* Modal Close Button */
 .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
+    position: sticky; /* Muda de absolute para sticky */
+    top: 0;           /* Gruda no topo do modal ao scrollar */
+    align-self: flex-end; /* Garante que ele fique na direita se o modal for flex */
+    margin-bottom: -60px; /* Truque para ele não empurrar o título para baixo */
+    z-index: 1002;
+    
+    /* Mantenha o resto das suas estilizações (cores, bordas, etc) */
     background: rgba(200,0,0,0.8);
     color: white;
     border: none;
-    width: 10vh;
-    height: 10vh;
+    width: 60px; /* Recomendo usar px ou rem fixo para evitar distorção no scroll */
+    min-height: 60px;
     border-radius: 50%;
-    font-size: 7vh;
-    font-weight: bold;
+    font-size: 3rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 1002;
 }
 
 .modal-close:hover {
@@ -541,7 +600,7 @@ textarea:focus {
 }
 
 .promo-box input[type="checkbox"]:checked::before {
-    transform: translateX(123%);
+    transform: translateX(80%);
 }
 
 .promo-box label {
@@ -703,11 +762,11 @@ textarea:focus {
     /* 7. Botão Fechar (X) */
     .modal-close {
         position: sticky;
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
+        width: 60px;
+        height: 60px;
+        font-size: 3rem;
         top: 5px;
-        right: 5px;
+        left: 5px;
     }
 
     /* 8. Grid de Produtos (1 card por linha em telas bem pequenas) */
