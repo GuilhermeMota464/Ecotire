@@ -49,10 +49,19 @@ if (isset($_GET['id'])) {
         <input name="id" hidden value="<?php echo htmlspecialchars($id); ?>">
         <textarea><?php echo $produto['nome']; ?></textarea>
         
-        <input name="preco" class="preco-antigo" value="R$<?php echo $produto['preco'] ?>"></input>
+        <form action="../../funcoesPHP/editionProduct.php" method="POST">
+        <input name="id" hidden value="<?php echo htmlspecialchars($id); ?>">
+        
+        <textarea name="nome"><?php echo htmlspecialchars($produto['nome']); ?></textarea>
+        
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 5px;">R$</span>
+            <input name="preco" class="preco-antigo" value="<?php echo htmlspecialchars($produto['preco']); ?>">
+        </div>
+
         <div class="preco-area"> 
-            <p class="preco-atual">R$<?php echo $produto['preco'] ?></p>
-            <input type="text" name="promo" class="desconto" value="<?php echo $produto['promo'] ?>" style="width: 21px;"></input>  
+            <p class="preco-atual">R$<?php echo htmlspecialchars($produto['preco']); ?></p>
+            <input type="text" name="promo" class="desconto" value="<?php echo htmlspecialchars($produto['promo']); ?>" style="width: 21px;">  
             <p class="desconto">% OFF</p>
         </div>
 
@@ -60,9 +69,9 @@ if (isset($_GET['id'])) {
         <p class="entrega-info">Chegará grátis amanhã</p>
 
         <div class="botoes-acao">
-            <input type="submit" class="btn-comprar"></button>
-        </form>
-            <button class="btn-carrinho">Resetar</button>
+            <button type="submit" class="btn-comprar">Salvar</button>
+    </form>
+            <button type="button" class="btn-carrinho" onclick="window.location.reload();">Resetar</button>
         </div>
     </div>
 </div>
