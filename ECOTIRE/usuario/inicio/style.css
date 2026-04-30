@@ -103,6 +103,24 @@ body {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+/* Cabeçalho geral */
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header top - Green bar */
+.header-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: var(--cor-primaria);
+    margin-bottom: 10px;
+    position: relative;
+}
 /* As imagens que ficam passando */
 .imgAlternada{
   margin-top: 50px;
@@ -261,16 +279,6 @@ body {
 #resultado p:hover {
     background-color: #d0d0d0;
     color: var(--cor-primaria-escura);
-}
-/* Parte superior do cabeçalho */
-.header-top {
-    display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: var(--cor-primaria);
-    margin-bottom: 10px;
-    position: relative;
 }
 /* Parte inferior do cabeçalho */
 .header-bottom {

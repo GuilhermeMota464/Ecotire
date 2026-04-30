@@ -119,6 +119,37 @@ h1 {
     transform: translateY(-2px);
 }
 
+/* Carrinho Vazio */
+.carrinho-vazio {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.carrinho-vazio i {
+    margin-bottom: 20px;
+}
+
+.carrinho-vazio p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn-voltar {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--cor-primaria);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-voltar:hover {
+    background-color: var(--cor-primaria-escura);
+}
+
 /* Responsividade para Celular */
 @media (max-width: 768px) {
     .container {
@@ -148,5 +179,19 @@ h1 {
     .tabela-carrinho td::before {
         content: attr(data-label); /* Você precisaria adicionar data-label no HTML para isso funcionar 100% */
         font-weight: bold;
+    }
+    
+    /* Modal responsivo */
+    .modal {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .metodo-pagamento {
+        flex-direction: column;
     }
 }
