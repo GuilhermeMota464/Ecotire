@@ -26,6 +26,32 @@ body {
     display: flex;
     flex-direction: column;
 }
+/* Container que segura os dois ícones na direita */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espaço entre o carrinho e o perfil */
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente no header-top */
+}
+/* Ajuste nos ícones */
+.header-actions i {
+    font-size: 30px; /* Tamanho ajustado para ficar harmônico */
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+.header-actions i:hover {
+    color: var(--fundo);
+    transform: scale(1.1);
+}
+/* Removendo o absolute antigo do perfil para não dar conflito */
+.foto_perfil {
+    position: static !important; /* Anula o absolute anterior */
+    display: flex;
+}
 /* Botões */
 .menu-horizontal {
   align-items: center;
@@ -138,11 +164,12 @@ body {
 /* Parte superior do cabeçalho */
 .header-top {
     display: flex;
-    align-items: center;
-    padding-bottom: 10px;
+    align-items: center; /* Centraliza verticalmente */
     padding-top: 10px;
+    padding-bottom: 10px;
     background-color: var(--cor-primaria);
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    position: relative;
 }
 /* Parte inferior do cabeçalho */
 .header-bottom {
@@ -162,19 +189,7 @@ body {
   background-color: rgb(34, 86, 61);
   cursor: pointer;
 }
-/* Foto de perfil */
-.foto_perfil {
-    display: flex;
-    width: 60px;
-    padding-top: 5px;
-    margin-left : 5px;
-    margin-right : 10px;
-    justify-content: right;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    cursor : pointer;
-}
+
 main {
     padding: 20px;
     max-width: 1200px;

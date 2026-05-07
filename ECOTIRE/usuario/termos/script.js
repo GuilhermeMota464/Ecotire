@@ -47,3 +47,31 @@ inputBusca.addEventListener('input', async () => {
     }
 
 });
+
+document.getElementById('botaoCarrinho').addEventListener('click', function() {
+    fetch('../../funcoesPHP/verificarSessao.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.logado) {
+            window.location.href = '../carrinho/carrinho.php';
+        } else {
+            Swal.fire({
+                title: 'Acesso Restrito',
+                text: 'Você precisa fazer login para ver seu carrinho.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Fazer Login',
+                cancelButtonText: 'Depois'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../login/login.php';
+                }
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao verificar sessão:', error);
+    });
+});
