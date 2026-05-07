@@ -1,13 +1,33 @@
 // Script para a página de perfil
 document.addEventListener('DOMContentLoaded', function() {
-    
+    const TAB_STORAGE_KEY = 'ecotire.perfil.activeTab';
+
     // ================= TROCA DE TABS =================
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
+    // Restaura tab ativa após refresh/submit
+    const savedTab = window.localStorage.getItem(TAB_STORAGE_KEY);
+    if (savedTab) {
+        tabBtns.forEach(b => {
+            if (b.getAttribute('data-tab') === savedTab) b.classList.add('active');
+            else b.classList.remove('active');
+        });
+
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        const el = document.getElementById(savedTab);
+        if (el) el.classList.add('active');
+    }
+
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
+
+            const tabId = this.getAttribute('data-tab');
+            if (tabId) window.localStorage.setItem(TAB_STORAGE_KEY, tabId);
             
             // Remove active class from all buttons
             tabBtns.forEach(b => b.classList.remove('active'));
@@ -19,10 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
             tabContents.forEach(content => content.classList.remove('active'));
             
             // Show the corresponding tab content
-            const tabId = this.getAttribute('data-tab');
             document.getElementById(tabId).classList.add('active');
         });
     });
+
     
     // ================= VALIDAÇÃO DO FORMULÁRIO DE PERFIL =================
     const perfilForm = document.querySelector('.form-perfil');

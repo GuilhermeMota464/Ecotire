@@ -200,9 +200,41 @@ if (isset($_GET['logout'])) {
                                 <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
                                 <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
                                 <p><strong>Método de Pagamento:</strong> <?php echo htmlspecialchars($pedido['metodo_pagamento']); ?></p>
-                                <button class="btn-pagar" onclick="window.location.href='../checkout/finalizar_compra.php?pedido=<?php echo $pedido['id_pedido']; ?>'">
-                                    <i class="fa-solid fa-credit-card"></i> Pagar Agora
-                                </button>
+                                <div class="actions-row">
+                                    <div class="actions-item">
+                                        <?php if (($pedido['status'] ?? '') === 'pago'): ?>
+                                            <button type="button" class="btn-pago" disabled style="cursor:not-allowed;">
+                                                <i class="fa-solid fa-check"></i> Pago
+                                            </button>
+                                        <?php else: ?>
+                                            <form method="POST" action="../checkout/finalizar_compra.php" style="margin:0;">
+                                                <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+                                                <button type="submit" class="btn-pagar">
+                                                    <i class="fa-solid fa-credit-card"></i> Pagar Agora
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <div class="actions-item">
+                                        <form method="POST" action="../checkout/finalizar_compra.php" style="margin:0;">
+                                            <input type="hidden" name="cancelar_pedido" value="1">
+                                            <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
+                                            <?php if (($pedido['status'] ?? '') === 'pago'): ?>
+                                                <button type="button" class="btn-cancelar" disabled>
+                                                    <i class="fa-solid fa-ban"></i> Cancelar
+                                                </button>
+                                            <?php else: ?>
+                                                <button type="submit" class="btn-cancelar">
+                                                    <i class="fa-solid fa-ban"></i> Cancelar
+                                                </button>
+                                            <?php endif; ?>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
                         <?php endforeach; ?>

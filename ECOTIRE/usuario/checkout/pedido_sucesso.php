@@ -144,7 +144,7 @@ unset($_SESSION['ultimo_pedido'], $_SESSION['total_pedido'], $_SESSION['sucesso'
             <a href="../inicio/index.php" class="btn-voltar">
                 <i class="fa-solid fa-home"></i> Voltar ao Início
             </a>
-            <a href="../pedidos/meus_pedidos.php" class="btn-ver-pedidos">
+            <a href="../perfil/perfil.php" class="btn-ver-pedidos">
                 <i class="fa-solid fa-box"></i> Ver Meus Pedidos
             </a>
         </div>

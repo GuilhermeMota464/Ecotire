@@ -50,15 +50,96 @@ if (isset($_POST['cep']) && isset($_POST['numero'])) {
     }
 }
 
+// Processar cancelamento do pedido (botão Cancelar no perfil)
+if (isset($_POST['cancelar_pedido']) && isset($_POST['id_pedido']) && intval($_POST['id_pedido']) > 0) {
+    $id_pedido = intval($_POST['id_pedido']);
+
+    try {
+        $sql_check = "SELECT id_pedido, status FROM pedidos WHERE id_pedido = ? AND id_usuario = ?";
+        $stmt_check = $pdo->prepare($sql_check);
+        $stmt_check->execute([$id_pedido, $id_usuario]);
+        $pedido = $stmt_check->fetch(PDO::FETCH_ASSOC);
+
+        if (!$pedido) {
+            $_SESSION['erro'] = 'Pedido inválido.';
+            header("Location: ../perfil/perfil.php");
+            exit;
+        }
+
+// Se já estiver pago ou cancelado, não permite cancelar
+        $status_atual = strtolower(trim($pedido['status'] ?? ''));
+        if ($status_atual === 'pago' || $status_atual === 'cancelado') {
+
+            $_SESSION['erro'] = 'Pedido já está pago e não pode ser cancelado.';
+            header("Location: ../perfil/perfil.php");
+            exit;
+        }
+
+        $sql_update = "UPDATE pedidos SET status = 'cancelado' WHERE id_pedido = ? AND id_usuario = ?";
+        $stmt_update = $pdo->prepare($sql_update);
+        $stmt_update->execute([$id_pedido, $id_usuario]);
+
+        $_SESSION['sucesso'] = 'Pedido cancelado.';
+        header("Location: ../perfil/perfil.php");
+        exit;
+    } catch (PDOException $e) {
+        $_SESSION['erro'] = 'Erro ao cancelar pedido: ' . $e->getMessage();
+        header("Location: ../perfil/perfil.php");
+        exit;
+    }
+}
+
 // Caso contrário, é para processar a compra (recebe dados via POST formato regular)
+// Suporte ao clique no botão "Pagar Agora" do perfil.php
+// Quando enviado, atualizamos o status do pedido para "pago".
+if (isset($_POST['id_pedido']) && intval($_POST['id_pedido']) > 0) {
+
+    $id_pedido = intval($_POST['id_pedido']);
+
+    try {
+        $pdo->beginTransaction();
+
+        $sql_check = "SELECT id_pedido FROM pedidos WHERE id_pedido = ? AND id_usuario = ?";
+        $stmt_check = $pdo->prepare($sql_check);
+        $stmt_check->execute([$id_pedido, $id_usuario]);
+
+        if (!$stmt_check->fetch()) {
+            $_SESSION['erro'] = 'Pedido inválido.';
+            $pdo->rollBack();
+            header("Location: ../perfil/perfil.php");
+            exit;
+        }
+
+        $sql_update = "UPDATE pedidos SET status = 'pago' WHERE id_pedido = ? AND id_usuario = ?";
+        $stmt_update = $pdo->prepare($sql_update);
+        $stmt_update->execute([$id_pedido, $id_usuario]);
+
+        $pdo->commit();
+        $_SESSION['sucesso'] = 'Pagamento confirmado!';
+        header("Location: ../perfil/perfil.php");
+        exit;
+    } catch (PDOException $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        $_SESSION['erro'] = 'Erro ao confirmar pagamento: ' . $e->getMessage();
+        header("Location: ../perfil/perfil.php");
+        exit;
+    }
+}
+
 $id_endereco = isset($_POST['id_endereco']) ? intval($_POST['id_endereco']) : 0;
 $metodo_pagamento = isset($_POST['metodo_pagamento']) ? $_POST['metodo_pagamento'] : 'pix';
 
+
+// Se vier pelo botão "Pagar Agora" do perfil, já tratamos e fizemos redirect acima.
+// Então, se não houver id_endereco, seguimos apenas para o fluxo normal do checkout.
 if ($id_endereco <= 0) {
     $_SESSION['erro'] = 'Selecione um endereço de entrega.';
     header("Location: ../carrinho/carrinho.php");
     exit;
 }
+
 
 try {
     // Verifica se o carrinho tem itens

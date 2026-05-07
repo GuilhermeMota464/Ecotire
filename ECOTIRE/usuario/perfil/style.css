@@ -28,6 +28,43 @@ body {
     min-height: 100vh;
 }
 
+/* Ações lado a lado (Pagar / Cancelar) */
+.actions-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.actions-item {
+    flex: 1;
+    min-width: 180px;
+}
+
+.btn-cancelar {
+    padding: 12px 25px;
+    color: #721c24;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-cancelar:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-cancelar:hover:enabled {
+    transform: scale(1.02);
+}
+
+
 /* Header */
 .header {
     display: flex;
@@ -319,10 +356,11 @@ body {
 }
 
 .btn-pagar {
-    margin-top: 15px;
+    margin-top: 0;
     padding: 12px 25px;
     background: var(--alerta-amarelo);
     color: #856404;
+
     border: none;
     border-radius: 8px;
     cursor: pointer;
