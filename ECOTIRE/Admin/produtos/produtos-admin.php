@@ -102,41 +102,36 @@ $produtos = $stmt->fetchAll();
     </div>
 </div>
 
-
-
-
-        <div class="product-list">
-        
+   <div class="product-list">   
     <main class="container">
         <section class="products-grid">
             <?php foreach ($produtos as $produto): ?>
-                
                 <article class="product-card">
                     <div class="image-container">
                         <img src="../produtos/Assets/<?php echo $produto['imagem'] . '_1' ?>.webp" alt="<?php echo $produto['nome']; ?>">
+                    </div>
                     <div class="product-info">
+                        <span class="tag-mais-vendido">MAIS VENDIDO</span>
                         <h3 class="product-name"><?php echo $produto['nome']; ?></h3>
-                        <p class="price-pix">
-                            <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco'])));?> <span>no Pix</span>
-                        </p>
-                        <p class="price-full">
-                            ou <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco']))); ?> em 12x de <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco'])) / 12, 2, ',', '.'); ?>
-                        </p>
-                     <div class="div-botoes">
+                        <p class="price-old">R$ <?php echo number_format($produto['preco'] * 1.2, 2, ',', '.'); ?></p>
+                        <div class="price-row">
+                            <span class="price-current">R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></span>
+                            <span class="discount-tag">20% OFF</span>
+                        </div>
+                        <p class="installments">12x R$ <?php echo number_format($produto['preco'] / 12, 2, ',', '.'); ?></p>
+                        <p class="shipping-info">Chegará grátis amanhã</p>
+                    <div class="div-botoes">
                         <button class="edit-button" onclick="window.location.href='../pagina-produto-admin/pagina-produto-admin.php?produto=<?php echo urlencode($produto['nome']); ?>&id=<?php echo $produto['id_produto']; ?>'">Editar</button>
                         <button class="delete-button" onclick="if(confirm('Tem certeza que deseja excluir este produto?')) window.location.href='../../funcoesPHP/remove.php?delete_id=<?php echo $produto['id_produto']; ?>'">Excluir</button>
-                     </div>
+                    </div>    
                     </div>
                 </article>
             <?php endforeach; ?>
         </section>
-
     </main>
-        </div>
-    </div>
-
-
-    </div>
+   </div>
+  </div>
+ </div>
 
 <script src="script.js"></script>
 </body>

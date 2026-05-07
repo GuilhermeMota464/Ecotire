@@ -26,8 +26,6 @@
             <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
             <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
           </div>
-          
-     </div>
     <div class="header-bottom">
         <nav>
           <ul class="menu-horizontal" id="menu-links">

@@ -1,0 +1,188 @@
+/* =========================================================
+   PÁGINA DE PEDIDOS - INTEGRADA AO TEMA PRINCIPAL
+   ========================================================= */
+
+/* Container principal da tabela */
+.container-pedidos {
+    max-width: 1200px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px; /* Segue o padrão do seu .fale_conosco_container */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Sombra mais suave para facilitar a leitura */
+    width: 90%;
+}
+
+/* Título da página */
+.container-pedidos h2 {
+    margin-top: 0;
+    color: var(--cor-primaria-escura); /* Puxa sua variável verde escuro */
+    font-size: 24px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--fundo);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.container-pedidos h2 i {
+    color: var(--cor-primaria); /* Puxa sua variável verde padrão */
+}
+
+/* Estrutura da Tabela */
+.tabela-pedidos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabela-pedidos th, 
+.tabela-pedidos td {
+    border-bottom: 1px solid var(--fundo); /* Usa a cor de fundo como uma borda divisória suave */
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Cabeçalho da Tabela */
+.tabela-pedidos th {
+    background-color: aliceblue; /* Mesma cor que você usa nos inputs do formulário */
+    color: var(--cor-primaria-escura);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+/* Efeito Hover nas linhas */
+.tabela-pedidos tr {
+    transition: background-color 0.2s ease;
+}
+
+.tabela-pedidos tr:hover {
+    background-color: var(--fundo); /* Destaca a linha com a sua cor de fundo */
+}
+
+/* Destacando IDs e Valores */
+.tabela-pedidos td:first-child {
+    font-weight: 600;
+    color: var(--cor-primaria-escura);
+}
+
+.tabela-pedidos td:nth-last-child(2) { 
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--cor-primaria);
+}
+
+/* =========================================================
+   BADGES DE STATUS DO PEDIDO (BASEADO NAS SUAS CORES)
+   ========================================================= */
+.status {
+    padding: 6px 12px;
+    border-radius: 15px; /* Segue o padrão das suas labels */
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    min-width: 90px;
+}
+
+/* Pendente: Cor de alerta/espera */
+.status-pendente { 
+    background-color: #fff3cd; 
+    color: #856404; 
+}
+/* Pago: Verde contornado */
+.status-pago { 
+    background-color: white; 
+    color: var(--cor-primaria); 
+    border: 1px solid var(--cor-primaria);
+}
+/* Enviado: Usando a paleta do aliceblue */
+.status-enviado { 
+    background-color: aliceblue; 
+    color: var(--cor-primaria-escura); 
+}
+/* Entregue: Preenchimento total da sua marca */
+.status-entregue { 
+    background-color: var(--cor-primaria); 
+    color: white; 
+}
+/* Cancelado: Vermelho clássico para erro/cancelamento */
+.status-cancelado { 
+    background-color: #ffeaea; 
+    color: #d93025; 
+}
+
+  /* =========================================================
+   RESPONSIVIDADE (MOBILE) - MODO CARDS VERTICAIS
+   ========================================================= */
+@media (max-width: 768px) {
+    .container-pedidos {
+        padding: 15px;
+        margin-top: 20px;
+        width: 95%;
+        background-color: transparent; /* Remove o fundo branco principal para destacar os cards */
+        box-shadow: none;
+    }
+
+    /* Esconde o cabeçalho original da tabela no mobile */
+    .tabela-pedidos thead {
+        display: none;
+    }
+
+    /* Transforma a tabela, o corpo, as linhas e as células em blocos */
+    .tabela-pedidos, 
+    .tabela-pedidos tbody, 
+    .tabela-pedidos tr, 
+    .tabela-pedidos td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Estiliza cada linha como um Card individual */
+    .tabela-pedidos tr {
+        background-color: #ffffff;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid var(--fundo);
+        overflow: hidden;
+    }
+
+    /* Ajuste interno das células do Card */
+    .tabela-pedidos td {
+        text-align: right;
+        padding: 12px 15px;
+        position: relative;
+        border-bottom: 1px solid var(--fundo);
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between; /* Alinha o rótulo à esquerda e o valor à direita */
+        align-items: center;
+    }
+
+    /* Remove a borda inferior do último item do card */
+    .tabela-pedidos td:last-child {
+        border-bottom: none;
+        background-color: aliceblue; /* Dá um destaque no status no final do card */
+    }
+
+    /* Cria o título da informação usando o data-label que colocamos no HTML */
+    .tabela-pedidos td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--cor-primaria-escura);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        text-align: left;
+    }
+}
