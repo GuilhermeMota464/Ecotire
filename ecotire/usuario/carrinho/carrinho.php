@@ -2,9 +2,9 @@
 session_start();
 include '../../funcoesPHP/connection.php';
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: ../login/login.php"); 
-    exit();
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../login/login.php?erro=sessao_expirada");
+    exit;
 }
 
 $id_usuario = $_SESSION['id_usuario'];
