@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Falha! Usuário não encontrado ou senha incorreta
             // É boa prática dar uma mensagem genérica para não dar dicas a invasores
-            echo "E-mail ou senha incorretos!";
+            echo "<br>E-mail ou senha incorretos!";
         }
         
     } catch (PDOException $e) {
