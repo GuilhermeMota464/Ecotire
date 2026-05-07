@@ -25,13 +25,16 @@
               <div id="resultado"></div>
             </div>
 
-            <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de Perfil" onclick="window.location.href='../cadastro/cadastro.php'">
+          <div class="header-actions">
+            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+          </div>
     </div>
     <div class="header-bottom">
         <nav>
          <ul class="menu-horizontal">
           <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
-          <li><a onclick="window.location.href='../sobre_nos/sobre_nos.html'">Sobre</a></li>
+          <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
           <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
           <li class="contato"><a>Contato</a></li>
          </ul>
@@ -227,6 +230,7 @@
     </section>
 </footer>
 </div>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="script.js"></script>  
 </body>
 </html>

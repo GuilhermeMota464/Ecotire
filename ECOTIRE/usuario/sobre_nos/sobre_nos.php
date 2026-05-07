@@ -23,11 +23,9 @@
           </div>
           
           <div class="header-actions">
-<i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-user foto_perfil"></i>
-            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
           </div>
-          
-     </div>
     <div class="header-bottom">
         <nav>
           <ul class="menu-horizontal" id="menu-links">
@@ -154,7 +152,8 @@
       </div>
     </section>
 </footer>
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="script.js"></script>  
   </body>
   </html>
 
