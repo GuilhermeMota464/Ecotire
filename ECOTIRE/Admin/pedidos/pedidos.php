@@ -12,7 +12,7 @@ $sql = "SELECT
             p.status,
             p.total,
             p.preco_unitario,
-            p.metodo_pagamento,
+                    pa.metodo, 
             u.nome as nome_usuario,
             u.email as email_usuario,
             pr.nome as nome_produto,
@@ -193,7 +193,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <span class="info-label">Produto</span>
                     <span class="info-value"><?php echo htmlspecialchars($pedido['nome_produto']); ?></span>
                     <br>
-                    <span class="info-email">R$ <?php echo number_format($pedido['preco_unitario'], 2, ',', '.'); ?> un.</span>
+                    <span class="info-email">R$ <?php echo number_format($pedido['preco_unitario'] ?? 0, 2, ',', '.'); ?> un.</span>
                 </td>
                 <td>
                     <span class="info-address">
@@ -218,7 +218,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </td>
                 <td>
                     <span class="info-label">Método</span>
-                    <span class="info-value"><?php echo strtoupper(htmlspecialchars($pedido['metodo_pagamento'] ?: 'N/A')); ?></span>
+                    <span class="info-value"><?php echo strtoupper(htmlspecialchars($pedido['metodo'] ?? $pedido['metodo_pagamento'] ?? 'N/A')); ?></span>
                 </td>
                 <td>
                     <span class="info-label">Data</span>

@@ -16,21 +16,27 @@ $stmt->execute([$id_usuario]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Busca pedidos em andamento (pendente, pago ou enviado)
-$sql_pedidos_andamento = "SELECT p.*, pr.nome as nome_produto, pr.imagem as imagem_produto
+// Observação: no novo SQL os itens ficam em pedido_itens, e o pagamento em pagamentos.
+$sql_pedidos_andamento = "SELECT p.*, pr.nome as nome_produto, pr.imagem as imagem_produto, pi.quantidade, pi.preco_unitario
         FROM pedidos p
-        JOIN produtos pr ON p.id_produto = pr.id_produto
+        LEFT JOIN pedido_itens pi ON p.id_pedido = pi.id_pedido
+        LEFT JOIN produtos pr ON pi.id_produto = pr.id_produto
         WHERE p.id_usuario = ? AND p.status IN ('pendente', 'pago', 'enviado')
         ORDER BY p.data_pedido DESC";
 $stmt = $pdo->prepare($sql_pedidos_andamento);
 $stmt->execute([$id_usuario]);
 $pedidos_andamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Busca pagamentos pendentes
-$sql_pagamentos_pendentes = "SELECT p.*, pr.nome as nome_produto
-        FROM pedidos p
-        JOIN produtos pr ON p.id_produto = pr.id_produto
-        WHERE p.id_usuario = ? AND p.status = 'pendente'
-        ORDER BY p.data_pedido DESC";
+// Busca pagamentos pendentes (novo SQL)
+$sql_pagamentos_pendentes = "SELECT pa.*, ped.data_pedido, ped.status as pedido_status,
+        pr.nome as nome_produto, pi.quantidade, pr.imagem as imagem_produto,
+        pa.valor as total
+        FROM pagamentos pa
+        JOIN pedidos ped ON pa.id_pedido = ped.id_pedido
+        LEFT JOIN pedido_itens pi ON ped.id_pedido = pi.id_pedido
+        LEFT JOIN produtos pr ON pi.id_produto = pr.id_produto
+        WHERE ped.id_usuario = ? AND pa.status = 'pendente'
+        ORDER BY ped.data_pedido DESC";
 $stmt = $pdo->prepare($sql_pagamentos_pendentes);
 $stmt->execute([$id_usuario]);
 $pagamentos_pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -48,17 +54,16 @@ $msg_erro = '';
 if (isset($_POST['atualizar_perfil'])) {
     $nome = $_POST['nome'];
     $telefone = $_POST['telefone'];
-    $genero = $_POST['genero'];
     
-    $sql_update = "UPDATE usuario SET nome = ?, telefone = ?, genero = ? WHERE id_usuario = ?";
+    $sql_update = "UPDATE usuario SET nome = ?, telefone = ? WHERE id_usuario = ?";
     $stmt = $pdo->prepare($sql_update);
     
-    if ($stmt->execute([$nome, $telefone, $genero, $id_usuario])) {
+
+    if ($stmt->execute([$nome, $telefone, $id_usuario])) {
         $msg_sucesso = 'Perfil atualizado com sucesso!';
         // Atualiza dados locais
         $usuario['nome'] = $nome;
         $usuario['telefone'] = $telefone;
-        $usuario['genero'] = $genero;
     } else {
         $msg_erro = 'Erro ao atualizar perfil.';
     }
@@ -199,7 +204,8 @@ if (isset($_GET['logout'])) {
                                 <p><strong>Quantidade:</strong> <?php echo $pedido['quantidade']; ?></p>
                                 <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
                                 <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
-                                <p><strong>Método de Pagamento:</strong> <?php echo htmlspecialchars($pedido['metodo_pagamento']); ?></p>
+                                <p><strong>Método de Pagamento:</strong> <?php echo htmlspecialchars($pedido['metodo'] ?? ''); ?></p>
+
                                 <div class="actions-row">
                                     <div class="actions-item">
                                         <?php if (($pedido['status'] ?? '') === 'pago'): ?>
@@ -271,15 +277,7 @@ if (isset($_GET['logout'])) {
                         <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone']); ?>" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="genero"><i class="fa-solid fa-venus-mars"></i> Gênero</label>
-                        <select id="genero" name="genero" required>
-                            <option value="Homem" <?php echo $usuario['genero'] == 'Homem' ? 'selected' : ''; ?>>Homem</option>
-                            <option value="Mulher" <?php echo $usuario['genero'] == 'Mulher' ? 'selected' : ''; ?>>Mulher</option>
-                            <option value="Prefiro não dizer" <?php echo $usuario['genero'] == 'Prefiro não dizer' ? 'selected' : ''; ?>>Prefiro não dizer</option>
-                            <option value="Outros" <?php echo $usuario['genero'] == 'Outros' ? 'selected' : ''; ?>>Outros</option>
-                        </select>
-                    </div>
+
                     
                     <button type="submit" name="atualizar_perfil" class="btn-salvar">
                         <i class="fa-solid fa-check"></i> Salvar Alterações

@@ -10,7 +10,9 @@ if (!isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Busca os itens do carrinho
-$sql = "SELECT c.*, p.nome, p.imagem
+$sql = "SELECT c.*, p.nome, p.imagem,
+               p.preco_venda,
+               p.preco_promocional
         FROM carrinho c
         JOIN produtos p ON c.id_produto = p.id_produto
         WHERE c.id_usuario = ?";
@@ -237,7 +239,8 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
                     <?php 
                     $totalGeral = 0;
                     foreach ($produtos as $produto): 
-                        $subtotal = $produto['preco_unitario'] * $produto['quantidade'];
+                        $preco_unitario = $produto['preco_promocional'] !== null ? (float)$produto['preco_promocional'] : (float)$produto['preco_venda'];
+                        $subtotal = $preco_unitario * (int)$produto['quantidade'];
                         $totalGeral += $subtotal;
                     ?>
                     <tr>
@@ -246,7 +249,7 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
                             <?php echo htmlspecialchars($produto['nome']); ?>
                         </td>
                         <td><?php echo $produto['quantidade']; ?></td>
-                        <td>R$ <?php echo number_format($produto['preco_unitario'], 2, ',', '.'); ?></td>
+                        <td>R$ <?php echo number_format($produto['preco_promocional'] !== null ? $produto['preco_promocional'] : $produto['preco_venda'], 2, ',', '.'); ?></td>
                         <td>R$ <?php echo number_format($subtotal, 2, ',', '.'); ?></td>
                         <td>
                             <a href="../../funcoesPHP/removeCarrinho.php?id_item=<?php echo $produto['id_item']; ?>" class="btn-remover">
