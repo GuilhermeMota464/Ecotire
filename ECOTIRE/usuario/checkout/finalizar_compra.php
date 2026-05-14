@@ -143,7 +143,9 @@ if ($id_endereco <= 0) {
 
 try {
     // Verifica se o carrinho tem itens
-    $sql_check = "SELECT c.*, p.nome, p.preco as preco_produto
+    $sql_check = "SELECT c.*, p.nome,
+                          p.preco_venda,
+                          p.preco_promocional
                  FROM carrinho c
                  JOIN produtos p ON c.id_produto = p.id_produto
                  WHERE c.id_usuario = ?";
@@ -174,27 +176,46 @@ try {
     $total_geral = 0;
     $itens_inseridos = [];
 
+    // Inicia a criação do pedido (uma linha em pedidos) e depois cria os itens.
+    $sql_pedido = "INSERT INTO pedidos (id_usuario, id_endereco_entrega, total, status) VALUES (?, ?, ?, 'pendente')";
+    $stmt_pedido = $pdo->prepare($sql_pedido);
+
+    // Primeiro calcula total e armazena subtotal/preço unitário
+    $itens_calculados = [];
     foreach ($itens_carrinho as $item) {
-        $subtotal = $item['preco_unitario'] * $item['quantidade'];
+        $preco_unitario = $item['preco_promocional'] !== null ? (float)$item['preco_promocional'] : (float)$item['preco_venda'];
+        $subtotal = $preco_unitario * (int)$item['quantidade'];
         $total_geral += $subtotal;
+        $itens_calculados[] = [
+            'id_produto' => (int)$item['id_produto'],
+            'quantidade' => (int)$item['quantidade'],
+            'preco_unitario' => $preco_unitario,
+        ];
+    }
 
-        $sql_pedido = "INSERT INTO pedidos 
-                      (id_usuario, id_produto, id_endereco_entrega, quantidade, total, preco_unitario, metodo_pagamento, status) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, 'pendente')";
-        
-        $stmt_pedido = $pdo->prepare($sql_pedido);
-        $stmt_pedido->execute([
-            $id_usuario,
-            $item['id_produto'],
-            $id_endereco,
-            $item['quantidade'],
-            $subtotal,
-            $item['preco_unitario'],
-            $metodo_pagamento
+    $stmt_pedido->execute([$id_usuario, $id_endereco, $total_geral]);
+    $id_pedido_criado = $pdo->lastInsertId();
+
+    // Insere pedido_itens
+    $sql_itens = "INSERT INTO pedido_itens (id_pedido, id_produto, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
+    $stmt_itens = $pdo->prepare($sql_itens);
+    foreach ($itens_calculados as $item_calc) {
+        $stmt_itens->execute([
+            $id_pedido_criado,
+            $item_calc['id_produto'],
+            $item_calc['quantidade'],
+            $item_calc['preco_unitario']
         ]);
-
         $itens_inseridos[] = $pdo->lastInsertId();
     }
+
+    // Insere pagamento (1 linha em pagamentos)
+    $sql_pagamento = "INSERT INTO pagamentos (id_pedido, metodo, valor, status) VALUES (?, ?, ?, 'pendente')";
+    $stmt_pagamento = $pdo->prepare($sql_pagamento);
+    $stmt_pagamento->execute([$id_pedido_criado, $metodo_pagamento, $total_geral]);
+
+    // Mantém variável para compatibilidade com o restante do código
+    $id_pedido_criado = (int)$id_pedido_criado;
 
     // Limpa o carrinho do usuário
     $sql_limpar = "DELETE FROM carrinho WHERE id_usuario = ?";

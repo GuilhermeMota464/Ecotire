@@ -4,108 +4,105 @@ DEFAULT COLLATE utf8mb4_unicode_ci;
 
 USE Ecotire;
 
--- ================= USUARIO =================
-CREATE TABLE if not exists usuario (
+-- ================= USUÁRIO =================
+CREATE TABLE IF NOT EXISTS usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE, -- Adicionado UNIQUE para evitar emails duplicados
-    senha VARCHAR(255) NOT NULL, -- Aumentado para suportar hashes de senha (como Bcrypt)
-    telefone VARCHAR(15) NOT NULL,
-    tipo ENUM('cliente','admin') DEFAULT 'cliente',
-    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP 
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    tipo ENUM('cliente', 'admin') DEFAULT 'cliente',
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- ================= ENDERECO =================
-CREATE TABLE if not exists endereco (
+-- ================= ENDEREÇO =================
+CREATE TABLE IF NOT EXISTS endereco (
     id_endereco INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     cep VARCHAR(9) NOT NULL,
-    numero INT NOT NULL,
-    complemento VARCHAR(50),
+    numero VARCHAR(10) NOT NULL,
+    complemento VARCHAR(100),
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    -- AQUI: Se o usuário sumir, o endereço some
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- ================= PRODUTOS =================
--- Corrigido: Removido a coluna 'avaliacao' física, pois notas devem vir da tabela avaliacoes
-CREATE TABLE if not exists produtos (
+CREATE TABLE IF NOT EXISTS produtos (
     id_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL, -- Aumentado de 30 para 100 caracteres
-    custa DECIMAL (10,2) NOT NULL,
-    preco DECIMAL (10,2) NOT NULL,
-    lucro DECIMAL (10,2) NOT NULL,
-    modelo VARCHAR (50) NOT NULL,
-    promocao enum ('sem','com') default 'sem',
-    promo_valor int,
+    nome VARCHAR(100) NOT NULL,
+    preco_custo DECIMAL(10,2) NOT NULL,
+    preco_venda DECIMAL(10,2) NOT NULL,
+    preco_promocional DECIMAL(10,2) NULL,
+    modelo VARCHAR(50) NOT NULL,
+    estoque INT DEFAULT 0 NOT NULL,
     imagem MEDIUMBLOB,
-    estoque INT DEFAULT 0
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ativo BOOLEAN DEFAULT TRUE
+) ENGINE=InnoDB;
+
+-- ================= CARRINHO =================
+CREATE TABLE IF NOT EXISTS carrinho (
+    id_item INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL CHECK (quantidade > 0),
+    data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
+    UNIQUE KEY uk_usuario_produto (id_usuario, id_produto)
 ) ENGINE=InnoDB;
 
 -- ================= PEDIDOS =================
-CREATE TABLE if not exists pedidos (
+CREATE TABLE IF NOT EXISTS pedidos (
     id_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_endereco_entrega INT NOT NULL,
     data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('pendente','pago','enviado','entregue','cancelado') DEFAULT 'pendente',
+    status ENUM('pendente', 'pago', 'enviado', 'entregue', 'cancelado') DEFAULT 'pendente',
     total DECIMAL(10,2) NOT NULL,
-    preco_unitario DECIMAL(10,2) NOT NULL,
-    -- AQUI: Relacionamentos com cascata
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_endereco_entrega) REFERENCES endereco(id_endereco) ON DELETE CASCADE
+    FOREIGN KEY (id_endereco_entrega) REFERENCES endereco(id_endereco) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
--- ================= CARRINHO =================
-CREATE TABLE if not exists carrinho(
+-- ================= ITENS DO PEDIDO =================
+CREATE TABLE IF NOT EXISTS pedido_itens (
     id_item INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT NOT NULL,
     id_produto INT NOT NULL,
     quantidade INT NOT NULL,
-    estado_produto ENUM('a caminho','entregue', 'pendente', 'cancelado') DEFAULT 'pendente',
     preco_unitario DECIMAL(10,2) NOT NULL,
-    -- AQUI: Se o usuário ou o produto sumirem, limpa o carrinho
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido) ON DELETE CASCADE,
-    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
-CREATE TABLE pagamentos (
-    id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+-- ================= PAGAMENTOS =================
+CREATE TABLE IF NOT EXISTS pagamentos (
+    id_pagamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT NOT NULL,
-    metodo ENUM('PIX','CARTAO','BOLETO') NOT NULL,
+    metodo ENUM('PIX', 'CARTAO', 'BOLETO') NOT NULL,
     valor DECIMAL(10,2) NOT NULL,
-    status ENUM('pendente','aprovado','recusado','cancelado','reembolsado') DEFAULT 'pendente',
+    status ENUM('pendente', 'aprovado', 'recusado', 'cancelado', 'reembolsado') DEFAULT 'pendente',
     codigo_transacao VARCHAR(100),
-    data_pagamento DATETIME,
+    data_pagamento DATETIME NULL,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ================= AVALIACOES =================
-CREATE TABLE if not exists avaliacoes (
+-- ================= AVALIAÇÕES =================
+CREATE TABLE IF NOT EXISTS avaliacoes (
     id_avaliacao INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_produto INT NOT NULL,
-    nota INT NOT NULL,
-    comentario TEXT, -- Mudado para TEXT para maior flexibilidade
+    nota INT NOT NULL CHECK (nota BETWEEN 1 AND 5),
+    comentario TEXT,
     data_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE, 
-    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE,
-    CHECK (nota BETWEEN 1 AND 5)
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ================= CONTATO =================
-CREATE TABLE if not exists contato (
-    id_email INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    msg TEXT NOT NULL,
-    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
-) ENGINE=InnoDB;
-
--- ================= Favoritos =================
+-- ================= FAVORITOS =================
 CREATE TABLE IF NOT EXISTS favoritos (
-    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_favorito INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_produto INT NOT NULL,
     data_adicionado DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -114,6 +111,14 @@ CREATE TABLE IF NOT EXISTS favoritos (
     UNIQUE KEY uk_usuario_produto (id_usuario, id_produto)
 ) ENGINE=InnoDB;
 
+-- ================= CONTATO / MENSAGENS =================
+CREATE TABLE IF NOT EXISTS contato (
+    id_contato INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB;
 -- 1. Cadastra o Usuário
 INSERT INTO usuario (email, senha, telefone, tipo) 
 VALUES ('ge@ecotire.com', MD5('senha123'), '11999998888', 'cliente');
