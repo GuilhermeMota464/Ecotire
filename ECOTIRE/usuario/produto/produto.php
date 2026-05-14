@@ -25,7 +25,7 @@ $produtos = $stmt->fetchAll();
 <header>
     <div class="header">
      <div class="header-top">
-            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
+            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Ecotire">
           <div class="search-group">               
             <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
             <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                

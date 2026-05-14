@@ -18,7 +18,7 @@
 <header>
     <div class="header">
     <div class="header-top">
-            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
+            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Aruana" onclick="window.location.href='../inicio/index.php'">
             <div class="search-group">               
               <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
               <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
