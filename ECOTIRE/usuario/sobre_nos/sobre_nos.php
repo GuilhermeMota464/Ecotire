@@ -15,7 +15,7 @@
 <header>
     <div class="header">
      <div class="header-top">
-            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire">
+            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Ecotire">
           <div class="search-group">               
             <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
             <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
@@ -23,8 +23,8 @@
           </div>
           
           <div class="header-actions">
-            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-            <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+<i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-user foto_perfil"></i>
+            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
           </div>
 </div>
     <div class="header-bottom">
@@ -153,8 +153,7 @@
       </div>
     </section>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="script.js"></script>  
+<script src="script.js"></script>
   </body>
   </html>
 

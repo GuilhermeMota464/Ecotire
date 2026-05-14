@@ -289,9 +289,12 @@ if (isset($_GET['logout'])) {
                 <div class="danger-zone">
                     <h3><i class="fa-solid fa-triangle-exclamation"></i> Zona de Perigo</h3>
                     <p>Cuidado! Esta ação não pode ser desfeita.</p>
-                    <button class="btn-danger" onclick="if(confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível!')) { window.location.href = '../../funcoesPHP/deletar_usuario.php'; }">
-                        <i class="fa-solid fa-trash"></i> Excluir Minha Conta
-                    </button>
+                    <form method="POST" action="../../funcoesPHP/deletar_usuario.php" class="delete-account-form" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível!')">
+                        <input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>">
+                        <button type="submit" class="btn-danger">
+                            <i class="fa-solid fa-trash"></i> Excluir Minha Conta
+                        </button>
+                    </form>
                 </div>
             </div>
 

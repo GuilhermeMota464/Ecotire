@@ -100,7 +100,6 @@ body {
 .logo {
     cursor: pointer;
     height: 60px;
-    width: auto;
     padding-left: 10px;
     padding-right: 10px;
 }
