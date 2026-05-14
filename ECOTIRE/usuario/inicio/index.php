@@ -4,142 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Ecotire</title>
-    <!-- Link fonte Poppins -->
+    <title>Aruanã | Produtos que cuidam da vida</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <!-- Link API de icones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Google Fonts -->
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
- <body>
-<!-- Cabeçalho -->
+<body>
+
 <header>
     <div class="header">
         <div class="header-top">
-            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Aruana" onclick="window.location.href='../inicio/index.php'">
+            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio/index.php'">
+            
             <div class="search-group">               
-                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
-                <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
+                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
+                <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
                 <div id="resultado"></div>
             </div>
           
             <div class="header-actions">
-                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-user foto_perfil"></i>
-                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
+                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-leaf" title="Meu Carrinho"></i>
             </div>
         </div>
         <div class="header-bottom">
             <nav>
                 <ul class="menu-horizontal" id="menu-links">
-                    <li><a onclick="window.location.href='../inicio/index.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Inicio</a></li>
-                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
+                    <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
+                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre Nós</a></li>
                     <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-                    <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
+                    <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
                 </ul>
             </nav>
         </div>
     </div>
 </header>
-<div class="main-content">
-<!-- Foto que alterna -->
-  <div class="imgAlternada">
-    <div class="Slide">
-      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> 
-      <img src="../../assetsGerais/banner2.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/banner3.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/banner4.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/banner5.webp" alt="Imagem Principal">
-      <img src="../../assetsGerais/banner1.webp" alt="Imagem Principal"> <!-- clone da primeira -->
+
+<main class="main-content">
+    <div class="imgAlternada">
+        <div class="Slide">
+            <img src="../../assetsGerais/banner1.webp" alt="Banner 1"> 
+            <img src="../../assetsGerais/banner2.webp" alt="Banner 2">
+            <img src="../../assetsGerais/banner3.webp" alt="Banner 3">
+            <img src="../../assetsGerais/banner4.webp" alt="Banner 4">
+            <img src="../../assetsGerais/banner5.webp" alt="Banner 5">
+        </div>
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
     </div>
-    <button class="prev">❮</button>
-    <button class="next">❯</button>
-  </div>
-  
-<div class="fale_conosco_container">
- <form class="fale_conosco_form">
-  <div class="form_title">
-   <h2 id="fale_conosco">Fale Conosco</h2>
-  </div>
-  <div class="form_groups">
-  <div class="input_group">
-<div class="conjunto">
-   <label for="nome" title="Nome"><i class="fa-solid fa-user"></i></label>
-   <input type="text" id="nome" name="nome" required placeholder="Nome">
-</div>
-<div class="conjunto">   <label for="email" title="Email"><i class="fa-solid fa-envelope"></i></label>
-   <input type="email" id="email" name="email"  placeholder="E-mail"></div>
-<div class="conjunto">   <label for="telefone"  title="Telefone"><i class="fa-solid fa-phone"></i></label>
-   <input type="tel" id="telefone" name="telefone" required placeholder="Telefone"></div>
-  </div>
-  <div class="mensagem_group">
+    
+    <section class="fale_conosco_container">
+        <form class="fale_conosco_form">
+            <div class="form_title">
+                <h2 id="fale_conosco">Fale Conosco</h2>
+                <p>Conecte-se com a natureza e tire suas dúvidas.</p>
+            </div>
+            
+            <div class="form_groups">
+                <div class="input_group">
+                    <div class="conjunto">
+                        <label for="nome"><i class="fa-solid fa-user"></i></label>
+                        <input type="text" id="nome" name="nome" required placeholder="Seu Nome">
+                    </div>
+                    <div class="conjunto">
+                        <label for="email"><i class="fa-solid fa-envelope"></i></label>
+                        <input type="email" id="email" name="email" placeholder="Seu melhor E-mail">
+                    </div>
+                    <div class="conjunto">
+                        <label for="telefone"><i class="fa-solid fa-phone"></i></label>
+                        <input type="tel" id="telefone" name="telefone" required placeholder="Telefone">
+                    </div>
+                </div>
+                
+                <div class="mensagem_group">
+                    <label for="mensagem" class="message-title"><i class="fa-solid fa-message"></i> Mensagem</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Como podemos ajudar o planeta hoje?"></textarea>
+                </div>
+            </div>
+            <button id="enviar_mensagem" type="submit">Enviar Mensagem</button>
+        </form>
+    </section>
+</main>
 
-    <label for="mensagem" class="message-title"><i class="fa-solid fa-message"></i>Mensagem</label>
-    <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
-
-  </div>
-  </div>
-  <button id="enviar_mensagem" type="submit">Enviar</button>
- </form>
-</div>
-</div>
-<footer>
-<section class="footer">
+<footer class="footer">
       <div class="footer-row">
         <div class="footer-col">
           <h4>Informação</h4>
           <ul class="links">
-            <li><a href="../inicio/index.php">Inicio</a></li>
+            <li><a href="../inicio/index.php">Início</a></li>
             <li><a href="../sobre_nos/sobre_nos.html">Sobre nós</a></li>
             <li><a href="../produto/produto.php">Produtos</a></li>
             <li><a href="#">Contatos</a></li>
-            <li><a href="#">Cadastro</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Explore</h4>
           <ul class="links">
-            <li><a href="../termos/termosdeuso.php">Termos e condição</a></li>
-            <li><a href="#">Contato</a></li>
-            <li><a href="#">Themes</a></li>
-            <li><a href="#">Popular Designs</a></li>
-            <li><a href="#">Art Skills</a></li>
-            <li><a href="#">New Uploads</a></li>
+            <li><a href="../termos/termosdeuso.php">Termos de uso</a></li>
+            <li><a href="#">Políticas</a></li>
+            <li><a href="#">Carreiras</a></li>
           </ul>
         </div>
         <div class="footer-col">
+          <h4>Aruanã</h4>
           <p>
-            RedRoosterTI é um dos principais 
-            fornecedores de serviços de design e 
-            desenvolvimento web. Criamos sites 
-            incríveis que ajudam empresas a 
-            estabelecer uma forte presença online. 
+            Líder em soluções sustentáveis. Criamos caminhos para um futuro onde o consumo e a natureza caminham juntos em harmonia.
           </p>
         </div>
         <div class="footer-col">
           <h4>Newsletter</h4>
-          <p>
-            Subscribe to our newsletter for a weekly dose
-            of news, updates, helpful tips, and
-            exclusive offers.
-          </p>
-          <form action="#">
-            <input type="text" placeholder="Your email" required>
-            <button type="submit">INSCREVA-SE</button>
+          <p>Receba atualizações exclusivas.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Seu e-mail" required>
+            <button type="submit">OK</button>
           </form>
           <div class="icons">
             <i class="fa-brands fa-facebook-f"></i>
             <i class="fa-brands fa-twitter"></i>
             <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-github"></i>
           </div>
         </div>
       </div>
-    </section>
 </footer>
-<script src="script.js"></script>  
+
+<script src="script.js"></script> 
 </body>
 </html>
-

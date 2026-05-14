@@ -17,7 +17,7 @@
     <form action="login.php" method="post" class="card" id="cadastroForm">
 
     <div class="logo">
-        <img src="../../assetsGerais/ecotire.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
+        <img src="../../assetsGerais/aruana.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
     </div>
 
     <h2>Entre na sua conta na Ecotire</h2>

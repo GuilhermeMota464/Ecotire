@@ -1,81 +1,69 @@
 function toggleMenu() {
     const menu = document.getElementById("menu-links");
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "block";
-    };
-
-    if (menu.style.paddingBottom === "0px") {
-        menu.style.paddingBottom = "10px";
-    }else {
-        menu.style.paddingBottom = "0px";
-    };
     const icon = document.getElementById("icon");
-    if (icon.style.backgroundColor === "var(--cor-primaria-escura)") {
-        icon.style.backgroundColor = "var(--cor-primaria)";
-    }else{
-        icon.style.backgroundColor = "var(--cor-primaria-escura)"
-    }   
+    
+    const isVisible = menu.style.display === "block";
+    
+    menu.style.display = isVisible ? "none" : "block";
+    menu.style.paddingBottom = isVisible ? "0px" : "10px";
+
+    if (icon) {
+        if (!isVisible) {
+            icon.style.backgroundColor = "var(--cor-primaria-escura)";
+        } else {
+            icon.style.backgroundColor = "var(--cor-primaria)";
+        }
+    }
 }
 
-
-document.getElementById("telefone").addEventListener("input", function () {
-
-    this.value = this.value.replace(/\D/g, "");
-    if (this.value.length > 11) {
-        this.value = this.value.slice(0, 11);
-    }
-    let formattedValue = this.value;
-    if (formattedValue.length > 0) {
-        formattedValue = "(" + formattedValue;
-    }
-    if (formattedValue.length > 3) {
-        formattedValue = formattedValue.slice(0, 3) + ") " + formattedValue.slice(3);
-    }
-    if (formattedValue.length > 10) {
-        formattedValue = formattedValue.slice(0, 10) + "-" + formattedValue.slice(10);
-    }
-    this.value = formattedValue;
+document.getElementById("telefone").addEventListener("input", function (e) {
+    let x = e.target.value.replace(/\D/g, "").match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+    
+    e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
 });
 
-let slides = document.querySelector(".Slide");
-let index = 0;
+let slidesContainer = document.querySelector(".Slide");
+let slideImages = document.querySelectorAll(".Slide img");
+let currentIndex = 0;
+const totalSlides = slideImages.length;
 
-const total = slides.children.length;
+const step = 100 / totalSlides;
 
-let intervalo = setInterval(proximoSlide, 3000);
+let slideInterval = setInterval(proximoSlide, 3000);
+
+function moverSlide() {
+    slidesContainer.style.transition = "transform 0.8s ease-in-out";
+    slidesContainer.style.transform = `translateX(-${currentIndex * step}%)`;
+}
 
 function proximoSlide() {
-    index++;
-    moverSlide();
+    currentIndex++;
+    
+    if (currentIndex >= totalSlides) {
+        slidesContainer.style.transition = "none";
+        currentIndex = 0;
+        slidesContainer.style.transform = "translateX(0)";
+        setTimeout(() => {
+            currentIndex = 1;
+            moverSlide();
+        }, 50);
+    } else {
+        moverSlide();
+    }
 }
 
 function slideAnterior() {
-    index--;
-    if (index < 0) index = total - 2; // volta pro último real
+    currentIndex--;
+    if (currentIndex < 0) {
+        currentIndex = totalSlides - 1;
+    }
     moverSlide();
 }
 
-function moverSlide() {
-    slides.style.transition = "transform 0.8s ease-in-out";
-    slides.style.transform = `translateX(-${index * 25}%)`;
-
-    // loop infinito (clone)
-    if (index === total - 1) {
-        setTimeout(() => {
-            slides.style.transition = "none";
-            slides.style.transform = "translateX(0)";
-            index = 0;
-        }, 800);
-    }
-}
-
 function resetIntervalo() {
-    clearInterval(intervalo);
-    intervalo = setInterval(proximoSlide, 3000);
+    clearInterval(slideInterval);
+    slideInterval = setInterval(proximoSlide, 3000);
 }
-
 document.querySelector(".next").addEventListener("click", () => {
     proximoSlide();
     resetIntervalo();
@@ -86,60 +74,56 @@ document.querySelector(".prev").addEventListener("click", () => {
     resetIntervalo();
 });
 
-// Pesquisa auto 
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
 const iconeLupa = document.getElementById('lupa');
 
-inputBusca.addEventListener('input', async () => {
-    const query = inputBusca.value;
-    if(query.length < 2){
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-        return;
-    }
-    // AJAX
-    const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
-    const htmlResultados = await response.text();
-    
-    if (htmlResultados && htmlResultados.trim() !== 'Nenhum resultado encontrado') {
-        divResultado.innerHTML = htmlResultados;
-        divResultado.style.display = 'block';
-        inputBusca.classList.add('busca-ativa-input');
-        iconeLupa.classList.add('busca-ativa-icone');
-    } else {
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-    }
-
-});
-
-document.getElementById('botaoCarrinho').addEventListener('click', function() {
-    fetch('../../funcoesPHP/verificarSessao.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.logado) {
-            window.location.href = '../carrinho/carrinho.php';
-        } else {
-            Swal.fire({
-                title: 'Acesso Restrito',
-                text: 'Você precisa fazer login para ver seu carrinho.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Fazer Login',
-                cancelButtonText: 'Depois'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../carrinho/carrinho.php';
-                }
-            });
+if (inputBusca) {
+    inputBusca.addEventListener('input', async () => {
+        const query = inputBusca.value.trim();
+        
+        // Se a busca for pequena, limpa os resultados e sai da função
+        if (query.length < 2) {
+            fecharBusca();
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Erro ao verificar sessão:', error);
+
+        try {
+            // Verifica se o caminho do arquivo PHP está correto (../../funcoesPHP/busca.php)
+            const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
+            
+            if (!response.ok) throw new Error('Erro na requisição');
+
+            const htmlResultados = await response.text();
+            
+            // Se o PHP retornar algo válido
+            if (htmlResultados.trim() !== '' && !htmlResultados.includes('Nenhum resultado encontrado')) {
+                divResultado.innerHTML = htmlResultados;
+                divResultado.style.display = 'block';
+                
+                // Adiciona as classes de estilo ativo
+                inputBusca.classList.add('busca-ativa-input');
+                if (iconeLupa) iconeLupa.classList.add('busca-ativa-icone');
+            } else {
+                fecharBusca();
+            }
+        } catch (error) {
+            console.error("Erro ao buscar dados:", error);
+            fecharBusca();
+        }
     });
+}
+
+// Função para limpar a busca quando estiver vazia
+function fecharBusca() {
+    if (divResultado) divResultado.style.display = 'none';
+    if (inputBusca) inputBusca.classList.remove('busca-ativa-input');
+    if (iconeLupa) iconeLupa.classList.remove('busca-ativa-icone');
+}
+
+// Fechar a busca se o usuário clicar fora dela
+document.addEventListener('click', (e) => {
+    if (inputBusca && !inputBusca.contains(e.target) && !divResultado.contains(e.target)) {
+        fecharBusca();
+    }
 });

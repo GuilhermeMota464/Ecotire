@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <form action="cadastro.php" method="post" class="card" id="cadastroForm">
         <div class="logo">
-            <img src="../../assetsGerais/ecotire.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
+            <img src="../../assetsGerais/aruana.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
         </div>
 
         <h2>Crie sua conta na Ecotire</h2>
