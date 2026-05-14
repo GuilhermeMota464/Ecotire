@@ -22,11 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['usuario_nome'] = $usuario['nome'];
             
             header("Location: ../../usuario/inicio/index.php");
-            exit; // Sempre use exit após um header de redirecionamento
+            exit;
             
         } else {
-            // Falha! Usuário não encontrado ou senha incorreta
-            // É boa prática dar uma mensagem genérica para não dar dicas a invasores
             echo "E-mail ou senha incorretos!";
         }
         

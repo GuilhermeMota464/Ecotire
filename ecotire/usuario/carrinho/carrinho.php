@@ -2,10 +2,6 @@
 session_start();
 include '../../funcoesPHP/connection.php';
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: ../login/login.php"); 
-    exit();
-}
 
 $id_usuario = $_SESSION['id_usuario'];
 

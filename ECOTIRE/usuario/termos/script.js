@@ -66,7 +66,7 @@ document.getElementById('botaoCarrinho').addEventListener('click', function() {
                 cancelButtonText: 'Depois'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '../login/login.php';
+                    window.location.href = '../carrinho/carrinho.php';
                 }
             });
         }

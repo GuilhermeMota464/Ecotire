@@ -26,11 +26,12 @@
             <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
             <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
           </div>
+</div>
     <div class="header-bottom">
         <nav>
           <ul class="menu-horizontal" id="menu-links">
             <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
-            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Sobre</a></li>
+            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
             <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
             <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
           </ul>

@@ -2,7 +2,7 @@
 session_start();
 include 'connection.php';
 
-if (!isset($_SESSION['usuario_id'])) {
+if (!isset($_SESSION['id_usuario'])) {
     // Define o status HTTP como 401 (Não autorizado)
     http_response_code(401);
     echo json_encode(['erro' => 'usuario_nao_logado']);
