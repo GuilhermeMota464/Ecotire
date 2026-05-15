@@ -10,15 +10,14 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
     padding: 0;
+    margin: 0;
     font-family: "Poppins", sans-serif;
 }
 
 body {
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
-    overflow-x: hidden;
 }
 
 /* --- Header Otimizado --- */
@@ -29,6 +28,7 @@ body {
     justify-content: center;
     padding: 10px 5%;
     border-bottom: 4px solid var(--cor-ondas);
+    min-height: 90px;
 }
 
 .logo {
@@ -65,6 +65,12 @@ body {
     color: var(--cor-primaria);
     font-size: 1.1rem;
 }
+
+#lupa {
+    height: 18px;
+    width: 18px;
+}
+
 .busca-ativa-input {
     border-bottom-left-radius: 0 !important;
     border: 2px solid var(--cor-ondas) !important;
@@ -119,7 +125,7 @@ body {
 
 .menu-horizontal a:hover, .menu-horizontal a.ativo {
     background-color: var(--cor-ondas);
-}
+}   
 
 /* --- Banner Estilizado --- */
 .main-content {

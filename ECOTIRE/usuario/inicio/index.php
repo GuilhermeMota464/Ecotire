@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Aruanã | Produtos que cuidam da vida</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      <link rel="stylesheet" href="style.css">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Aruanã</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body>
-
+<!-- Cabeçalho -->
 <header>
     <div class="header">
         <div class="header-top">
@@ -25,9 +25,10 @@
           
             <div class="header-actions">
                 <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
-                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-leaf" title="Meu Carrinho"></i>
+                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
             </div>
         </div>
+
         <div class="header-bottom">
             <nav>
                 <ul class="menu-horizontal" id="menu-links">
@@ -65,11 +66,11 @@
                 <div class="input_group">
                     <div class="conjunto">
                         <label for="nome"><i class="fa-solid fa-user"></i></label>
-                        <input type="text" id="nome" name="nome" required placeholder="Seu Nome">
+                        <input type="text" id="nome" name="nome" required placeholder="Nome">
                     </div>
                     <div class="conjunto">
                         <label for="email"><i class="fa-solid fa-envelope"></i></label>
-                        <input type="email" id="email" name="email" placeholder="Seu melhor E-mail">
+                        <input type="email" id="email" name="email" placeholder="E-mail">
                     </div>
                     <div class="conjunto">
                         <label for="telefone"><i class="fa-solid fa-phone"></i></label>
@@ -79,7 +80,7 @@
                 
                 <div class="mensagem_group">
                     <label for="mensagem" class="message-title"><i class="fa-solid fa-message"></i> Mensagem</label>
-                    <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Como podemos ajudar o planeta hoje?"></textarea>
+                    <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Inserir nome."></textarea>
                 </div>
             </div>
             <button id="enviar_mensagem" type="submit">Enviar Mensagem</button>

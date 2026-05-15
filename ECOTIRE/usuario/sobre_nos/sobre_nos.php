@@ -14,90 +14,44 @@
   <!-- Cabeçalho -->
 <header>
     <div class="header">
-     <div class="header-top">
-            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Ecotire">
-          <div class="search-group">               
-            <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
-            <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
-            <div id="resultado"></div>
-          </div>
-          
-          <div class="header-actions">
-<i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-user foto_perfil"></i>
-            <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
-          </div>
-</div>
-    <div class="header-bottom">
-        <nav>
-          <ul class="menu-horizontal" id="menu-links">
-            <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
-            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre</a></li>
-            <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-            <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
-          </ul>
-        </nav>
+        <div class="header-top">
+            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio/index.php'">
+            
+            <div class="search-group">               
+                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
+                <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
+                <div id="resultado"></div>
+            </div>
+ 
+            <div class="header-actions">
+                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
+                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav>
+                <ul class="menu-horizontal" id="menu-links">
+                    <li><a onclick="window.location.href='../inicio/index.php'">Início</a></li>
+                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" class="ativo">Sobre Nós</a></li>
+                    <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
+                    <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </header>
 
-  <main>
-      <section>
-  <h1>Sobre nós</h1>
-
-  <div class="sobre_nos">
-      <p class="texto_sn texto-desktop">Somos uma equipe apaixonada por design sustentável e inovação com propósito. Acreditamos que é possível repensar a forma como produzimos e consumimos, dando novos significados a materiais que, de outra forma, seriam descartados.
-
-  É por isso que criamos estojos ecológicos feitos com câmaras de ar de pneus reutilizadas.<br> Cada peça que produzimos carrega uma história: de transformação, consciência ambiental e respeito pelo planeta.
-
-  Nosso processo é totalmente artesanal, valorizando o trabalho manual, a originalidade e o cuidado com os detalhes. Ao escolher um dos nossos produtos, você apoia um movimento que une sustentabilidade, criatividade e responsabilidade social.
-
-  Mais do que estojos, criamos soluções com impacto positivo — para o meio ambiente e para as pessoas</p>
-
-    <p class="texto_sn texto-mobile">Somos uma marca de design sustentável que transforma câmaras de ar de pneus em estojos ecológicos. Através de um processo artesanal e original, unimos criatividade e responsabilidade ambiental para criar produtos com impacto positivo e propósito.</p>
-    
-  </div>
-  <img src="../../assetsGerais/placeholder.webp" height="300px" width="400px" class="foto_equipe">        
-      </section>
-
-  <section class="equipe">
-    <h2>Nossa Equipe</h2>
-    <div class="container-equipe">
-      <div class="membro">
-        <img src="../../assetsGerais/rafaela.webp" alt="Foto do membro da equipe">
-        <h3>Rafaela Teles</h3>
-        <p>Diretora Geral</p>
-      </div>
-      <div class="membro">
-        <img src="../../assetsGerais/clara.webp" alt="Foto do membro da equipe">
-        <h3>Clara</h3>
-        <p>Marketing</p>
-      </div>
-      <div class="membro">
-        <img src="../../assetsGerais/andre.webp" alt="Foto do membro da equipe">
-        <h3>André Victor</h3>
-        <p>Financeiro </p>
-      </div>
-      <div class="membro">
-        <img src="../../assetsGerais/miguel.webp" alt="Foto do membro da equipe">
-        <h3>Miguel Valada</h3>
-        <p>Distribuição </p>
-      </div>
-            <div class="membro">
-        <img src="../../assetsGerais/emily.webp" alt="Foto do membro da equipe">
-        <h3>Emily</h3>
-        <p>Designer </p>
-      </div>
-            <div class="membro">
-        <img src="../../assetsGerais/adriele.webp" alt="Foto do membro da equipe">
-        <h3>Adriele</h3>
-        <p>Vendas</p>
-      </div>
-            <div class="membro">
-        <img src="../../assetsGerais/livia.webp" alt="Foto do membro da equipe">
-        <h3>Livia</h3>
-        <p>Montagem</p>
-      </div>
-  </section>
-  </main>
+<main>
+    <section class="sobre_container">
+        <div class="texto_sn">
+            <h1>Sobre nós</h1>
+            <p>Somos uma equipe apaixonada por design sustentável e inovação com propósito. Acreditamos que é possível repensar a forma como produzimos e consumimos, dando novos significados a materiais que seriam descartados.</p>
+            <br>
+            <p>Criamos estojos ecológicos feitos com câmaras de ar de pneus reutilizadas. Cada peça carrega uma história de transformação e respeito pelo planeta.</p>
+        </div>
+        <img src="../../assetsGerais/placeholder.webp" class="foto_equipe" alt="Foto da nossa equipe">
+    </section>
+</main>
 
 <footer>
     <section class="footer">

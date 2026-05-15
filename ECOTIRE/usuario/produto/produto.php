@@ -24,52 +24,52 @@ $produtos = $stmt->fetchAll();
 <!-- Cabeçalho -->
 <header>
     <div class="header">
-     <div class="header-top">
-            <img src="../../assetsGerais/aruanaCabecario.png" class="logo" alt="Logo Ecotire">
-          <div class="search-group">               
-            <input type="text" class="search-bar" id="busca" placeholder="Pesquisar...">
-            <i class="fa-solid fa-magnifying-glass" id="lupa"></i>                
-            <div id="resultado"></div>
-          </div>
+        <div class="header-top">
+            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio/index.php'">
+            
+            <div class="search-group">               
+                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
+                <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
+                <div id="resultado"></div>
+            </div>
           
-          <div class="header-actions">
-            <i onclick= "window.location.href = '../login/login.php'" class="fa-solid fa-user foto_perfil"></i>
-            <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
-          </div>       
-     </div>
-    <div class="header-bottom">
-        <nav>
-          <ul class="menu-horizontal" id="menu-links">
-            <li><a onclick="window.location.href='../inicio/index.php'">Inicio</a></li>
-            <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" >Sobre</a></li>
-            <li><a onclick="window.location.href='../produto/produto.php'" style="background-color: rgb(222, 217, 217); border-radius: 5px;">Produtos</a></li>
-            <li class="contato" onclick="window.location.href='../inicio/index.php #fale_conosco'"><a>Contato</a></li>
-          </ul>
-        </nav>
+            <div class="header-actions">
+                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
+                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <nav>
+                <ul class="menu-horizontal" id="menu-links">
+                    <li><a onclick="window.location.href='../inicio/index.php'">Início</a></li>
+                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre Nós</a></li>
+                    <li><a onclick="window.location.href='../produto/produto.php'" class="ativo">Produtos</a></li>
+                    <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </header>
 
 <main class="container">
- <h1 class="main-title">Estojos</h1>
+    <h1 class="main-title">Nossos Produtos Sustentáveis</h1>
   
     <section class="products-grid">
         <?php foreach ($produtos as $produto): ?>
-            <article class="product-card" onclick="window.location.href='../pagina-produto-usuario/pagina-produto-usuario.php?produto=<?php echo urlencode($produto['nome']); ?>&id=<?php echo $produto['id_produto']; ?>'">
+            <article class="product-card" onclick="location.href='../pagina-produto-usuario/pagina-produto-usuario.php?id=<?php echo $produto['id_produto']; ?>'">
                 <div class="image-container">
-                    <i class="fa-regular fa-heart wishlist" onclick="favoritarProduto(this)"></i>
-                    <img src="Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" alt="<?php echo $produto['nome']; ?>">
-                   <div class="product-info">
+                    <img src="Assets/<?php echo $produto['imagem']; ?>_1.webp" alt="<?php echo $produto['nome']; ?>">
+                </div>
+                <div class="product-info">
                     <h2 class="product-name"><?php echo $produto['nome']; ?></h2>
                     <p class="price-pix">
-                        <?php echo $produto['preco']; ?> <span>no Pix</span>
+                        R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?> <span>no Pix</span>
                     </p>
                     <p class="price-full">
-                        ou <?php echo $produto['preco']; ?> em 12x de <?php echo 'R$', number_format(floatval(str_replace(['R$', ','], ['', '.'], $produto['preco'])) / 12, 2, ',', '.'); ?>
+                        ou 12x de R$ <?php echo number_format($produto['preco'] / 12, 2, ',', '.'); ?>
                     </p>
-                 </div>
                 </div>
             </article>
-
         <?php endforeach; ?>
     </section>
 </main>
