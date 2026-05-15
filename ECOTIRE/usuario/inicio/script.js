@@ -27,9 +27,9 @@ let slideImages = document.querySelectorAll(".Slide img");
 let currentIndex = 0;
 const totalSlides = slideImages.length;
 
-const step = 100 / totalSlides;
+const step = 500 / totalSlides;
 
-let slideInterval = setInterval(proximoSlide, 3000);
+let slideInterval = setInterval(proximoSlide, 6000);
 
 function moverSlide() {
     slidesContainer.style.transition = "transform 0.8s ease-in-out";
@@ -76,40 +76,23 @@ document.querySelector(".prev").addEventListener("click", () => {
 
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
-const iconeLupa = document.getElementById('lupa');
 
-if (inputBusca) {
+if (inputBusca && divResultado) {
     inputBusca.addEventListener('input', async () => {
         const query = inputBusca.value.trim();
-        
-        // Se a busca for pequena, limpa os resultados e sai da função
+        console.log(query);
         if (query.length < 2) {
-            fecharBusca();
+            divResultado.style.display = 'none';
             return;
         }
-
         try {
-            // Verifica se o caminho do arquivo PHP está correto (../../funcoesPHP/busca.php)
-            const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
-            
-            if (!response.ok) throw new Error('Erro na requisição');
-
-            const htmlResultados = await response.text();
-            
-            // Se o PHP retornar algo válido
-            if (htmlResultados.trim() !== '' && !htmlResultados.includes('Nenhum resultado encontrado')) {
-                divResultado.innerHTML = htmlResultados;
-                divResultado.style.display = 'block';
-                
-                // Adiciona as classes de estilo ativo
-                inputBusca.classList.add('busca-ativa-input');
-                if (iconeLupa) iconeLupa.classList.add('busca-ativa-icone');
-            } else {
-                fecharBusca();
-            }
-        } catch (error) {
-            console.error("Erro ao buscar dados:", error);
-            fecharBusca();
+            const response = await fetch(`/ecotire/ecotire/funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
+            const html = await response.text();
+            console.log(html);
+            divResultado.innerHTML = html;
+            divResultado.style.display = 'block';
+        } catch (erro) {
+            console.log(erro);
         }
     });
 }

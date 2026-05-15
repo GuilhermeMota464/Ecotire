@@ -49,7 +49,7 @@
             <img src="../../assetsGerais/banner2.webp" alt="Banner 2">
             <img src="../../assetsGerais/banner3.webp" alt="Banner 3">
             <img src="../../assetsGerais/banner4.webp" alt="Banner 4">
-            <img src="../../assetsGerais/banner5.webp" alt="Banner 5">
+            <img src="../../assetsGerais/banner5.webp" alt="Banner 5"> 
         </div>
         <button class="prev">❮</button>
         <button class="next">❯</button>
