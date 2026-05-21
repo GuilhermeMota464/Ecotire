@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS Ecotire
+CREATE DATABASE IF NOT EXISTS Aruana
 DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_unicode_ci;
 
-USE Ecotire;
+USE Aruana;
 
 -- ================= USUÁRIO =================
 CREATE TABLE IF NOT EXISTS usuario (
