@@ -2,8 +2,12 @@
 session_start();
 include '../../funcoesPHP/connection.php';
 
+if (!isset($_SESSION['id_usuario'])) {
+    header ("Location: ../login/login.php");
+    exit();
+};
 
-$id_usuario = $_SESSION['id_usuario'];
+$id_usuario = $_SESSION['id_usuario'] ?? null;
 
 // Busca os itens do carrinho
 $sql = "SELECT c.*, p.nome, p.imagem,
