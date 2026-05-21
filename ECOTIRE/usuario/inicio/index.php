@@ -46,7 +46,7 @@
     <div class="imgAlternada">
         <div class="Slide">
             <img src="../../assetsGerais/banner1.webp" alt="Banner 1"> 
-            <img src="../../assetsGerais/banner2.webp" alt="Banner 2">
+            <img src="../../assetsGerais/banner2.png" alt="Banner 2">
             <img src="../../assetsGerais/banner3.webp" alt="Banner 3">
             <img src="../../assetsGerais/banner4.webp" alt="Banner 4">
             <img src="../../assetsGerais/banner5.webp" alt="Banner 5"> 

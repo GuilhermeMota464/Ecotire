@@ -4,7 +4,7 @@
     --cor-ondas: #a2ff00;
     --cor-fundo: #f4f1e1;
     --cor-texto: #2b3a1a;
-    --branco: #ffffff;
+    --branco: #fbfbfb;
     --transicao: all 0.3s ease;
 }
 
@@ -113,7 +113,7 @@ body {
 .header-actions {
     display: flex;
     gap: 25px;
-    align-items: center;
+    align-items: center; 
 }
 
 .header-actions i {

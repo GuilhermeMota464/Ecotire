@@ -14,42 +14,50 @@
     <title>Ecotire</title>
 </head>
 <body>
-    <form action="login.php" method="post" class="card" id="cadastroForm">
+    <main class="container">
+        <section class="login-card">
+            <header class="card-header">
+                <div class="logo">
+                    <img src="../../assetsGerais/aruana.webp" alt="Aruana logo" class="logo">
+                </div>
+                <h2>Bem-vindo de volta</h2>
+                <p>Entre para continuar comprando consciente.</p>
+            </header>
 
-    <div class="logo">
-        <img src="../../assetsGerais/aruana.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
+            <form>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="voce@ecoemail.com">
+                </div>
+
+                <div class="input-group">
+                    <div class="label-row">
+                        <label for="password">Senha</label>
+                        <a href="#" class="forgot-password">Esqueci a senha</a>
+                    </div>
+                    <input type="password" id="password" placeholder="********">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">Eu li e concordo com os <span>Termos e Condições</span> da EcoVenda.</label>
+                </div>
+
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+
+            <footer class="card-footer">
+                <p>Novo por aqui? <a href="#">Criar uma conta</a></p>
+            </footer>
+        </section>
+    </main>
+
+    <div class="area-ondas">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path fill="var(--cor-primaria)" d="M0,224L120,213.3C240,203,480,181,720,186.7C960,192,1200,224,1320,240L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+        
+        <path fill="var(--cor-ondas)" fill-opacity="1" d="M0,256L120,266.7C240,277,480,299,720,288C960,277,1200,235,1320,213.3L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+    </svg>
     </div>
-
-    <h2>Entre na sua conta na Ecotire</h2>
-    <p>Insira suas informações.</p>
-
-    <div class="row">
-        <input name="email" id="email" type="text" placeholder="Email" required>
-        <select id="domain" name="domain">
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@hotmail.com">@hotmail.com</option>
-                <option value="@yahoo.com">@yahoo.com</option>
-                <option value="@outlook.com">@outlook.com</option>
-                <option value="@icloud.com">@icloud.com</option>
-                <option value="outro">Outro...</option>
-        </select>
-    </div>
-
-    <div class="row">
-        <input name="senha" type="password" id="senha" placeholder="Insira sua senha" required>
-    </div>
-
-
-    <input type="checkbox" id="terms" required>
-    <label for="terms">Eu aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">termos e condições</span></label>
-    <?php include "../../funcoesPHP/login.php" ?>
-    <button type="submit">Entrar</button>
-
-    <a href="../cadastro/cadastro.php">Cadastrar-se</a>
-
-</form>
-
-<script src="script.js"></script>
-
 </body>
 </html> 
