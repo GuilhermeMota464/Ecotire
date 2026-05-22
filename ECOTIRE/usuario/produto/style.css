@@ -59,7 +59,7 @@ body {
     background: var(--cor-ondas);
     border: none;
     height: 45px;
-    padding: 0 20px;
+    padding: 0 15px;
     border-radius: 0 25px 25px 0;
     cursor: pointer;
     color: var(--cor-primaria);
@@ -98,6 +98,16 @@ body {
     transform: translateY(-2px);
 }
 
+/* Classe para a página ativa (Estilo Botão Verde-Limão) */
+.menu-horizontal li a.ativo {
+    background-color: var(--cor-ondas);
+    color: var(--branco);
+}
+
+.menu-horizontal li a:hover:not(.ativo) {
+    background-color: #f0f0f0;
+}
+
 /* --- Menu Centralizado --- */
 .header-bottom {
     background: var(--branco);
@@ -123,8 +133,9 @@ body {
     cursor: pointer;
 }
 
-.menu-horizontal a:hover, .menu-horizontal a.ativo {
+.menu-horizontal a.ativo {
     background-color: var(--cor-ondas);
+    color: var(--branco)
 }
 
 /* --- GRID DE PRODUTOS --- */

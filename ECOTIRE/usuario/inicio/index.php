@@ -88,7 +88,7 @@
                     <div class="mensagem_group">
                         <label for="mensagem" class="message-title"><i class="fa-solid fa-message"></i> Mensagem</label>
                         <textarea id="mensagem" name="mensagem" rows="5" required
-                            placeholder="Inserir nome."></textarea>
+                            placeholder="Inserir nome"></textarea>
                     </div>
                 </div>
                 <button id="enviar_mensagem" type="submit">Enviar Mensagem</button>

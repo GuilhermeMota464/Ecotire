@@ -1,5 +1,6 @@
 :root {
     --cor-primaria: #2c9b2a;
+    --cor-primaria-escura: #1e6b1d;
     --cor-gradiente: linear-gradient(75deg, rgba(44, 155, 42, 1) 0%, rgba(35, 199, 32, 1) 100%);
     --cor-ondas: #82ce00;
     --cor-fundo: #f4f1e1;
@@ -58,7 +59,7 @@ body {
     background: var(--cor-ondas);
     border: none;
     height: 45px;
-    padding: 0 20px;
+    padding: 0 15px;
     border-radius: 0 25px 25px 0;
     cursor: pointer;
     color: var(--cor-primaria);
@@ -153,9 +154,20 @@ body {
     cursor: pointer;
 }
 
-.menu-horizontal a:hover, .menu-horizontal a.ativo {
+.menu-horizontal a.ativo {
     background-color: var(--cor-ondas);
-}   
+    color: var(--branco);
+} 
+
+/* Classe para a página ativa (Estilo Botão Verde-Limão) */
+.menu-horizontal li a.ativo {
+    background-color: var(--cor-ondas);
+}
+
+.menu-horizontal li a:hover:not(.ativo) {
+    background-color: #f0f0f0;
+}
+
 
 /* --- Banner Estilizado --- */
 .main-content {
@@ -202,17 +214,31 @@ body {
     text-align: center;
 }
 
+.form_title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .form_groups {
     display: flex;
     gap: 40px;
     margin-top: 30px;
 }
 
-.input_group, .mensagem_group { flex: 1; }
+.input_group{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 20px;
+}
+
+.mensagem_group {
+    flex: 1;
+}
 
 .conjunto {
     display: flex;
-    margin-bottom: 20px;
 }
 
 .conjunto label {
@@ -239,11 +265,12 @@ body {
 
 #mensagem {
     width: 100%;
-    padding: 15px;
+    padding: 10px 15px;
     border: 1px solid #eee;
     border-radius: 0 0 15px 15px;
     resize: none;
     outline: none;
+    height: 157px;
 }
 
 #enviar_mensagem {
@@ -261,7 +288,7 @@ body {
 }
 
 #enviar_mensagem:hover {
-    background: var(--cor-ondas);
+    background: var(--cor-primaria-escura);
     transform: scale(1.03);
 }
 
