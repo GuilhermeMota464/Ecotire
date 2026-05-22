@@ -14,50 +14,52 @@
     <title>Ecotire</title>
 </head>
 <body>
-    <main class="container">
-        <section class="login-card">
-            <header class="card-header">
-                <div class="logo">
-                    <img src="../../assetsGerais/aruana.webp" alt="Aruana logo" class="logo">
+        <section class="side-panel">
+            <div class="side-content">
+                <div class="logo-wrapper">
+                    <img src="../../assetsGerais/aruana.webp" alt="Aruana logo" class="logo-img">
                 </div>
-                <h2>Bem-vindo de volta</h2>
-                <p>Entre para continuar comprando consciente.</p>
-            </header>
-
-            <form>
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="voce@ecoemail.com">
-                </div>
-
-                <div class="input-group">
-                    <div class="label-row">
-                        <label for="password">Senha</label>
-                        <a href="#" class="forgot-password">Esqueci a senha</a>
-                    </div>
-                    <input type="password" id="password" placeholder="********">
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms">
-                    <label for="terms">Eu li e concordo com os <span>Termos e Condições</span> da EcoVenda.</label>
-                </div>
-
-                <button type="submit" class="btn-submit">Entrar</button>
-            </form>
-
-            <footer class="card-footer">
-                <p>Novo por aqui? <a href="#">Criar uma conta</a></p>
-            </footer>
+                <h1>Bem-vindo à <br><span>Aruanã</span></h1>
+                <p>Onde a tecnologia encontra a sustentabilidade. Junte-se a nós para uma jornada mais verde.</p>
+            </div>
+            <div class="creator-footer">
+                <span>ARUANA | SUSTENTABILIDADE</span>
+            </div>
         </section>
-    </main>
 
-    <div class="area-ondas">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <path fill="var(--cor-primaria)" d="M0,224L120,213.3C240,203,480,181,720,186.7C960,192,1200,224,1320,240L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-        
-        <path fill="var(--cor-ondas)" fill-opacity="1" d="M0,256L120,266.7C240,277,480,299,720,288C960,277,1200,235,1320,213.3L1440,192L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
-    </svg>
-    </div>
+        <section class="form-panel">
+            <div class="form-container">
+                <h2>Entre na sua conta</h2>
+                
+                <form>
+                    <div class="input-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" placeholder="Seu nome completo">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="Digite seu email">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" placeholder="Digite sua senha">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms">
+                        <label for="terms">Eu li e concordo com os 
+                        <span>Termos e Condições</span>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" class="btn-submit">Entrar</button>
+                        <button type="button" class="btn-outline">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </section>
 </body>
-</html> 
+</html>
