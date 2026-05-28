@@ -55,10 +55,10 @@
 
                     <div class="actions">
                         <button type="submit" class="btn-submit">Entrar</button>
-                        <button type="button" class="btn-outline">Cadastrar</button>
+                        <a href="../cadastro/cadastro.php" class="btn-outline">Cadastrar</a>
                     </div>
                 </form>
             </div>
         </section>
-</body>
+    </body>
 </html>
