@@ -41,16 +41,61 @@
     </div>
 </header>
 
-<main>
-    <section class="sobre_container">
-        <div class="texto_sn">
-            <h1>Sobre nós</h1>
-            <p>Somos uma equipe apaixonada por design sustentável e inovação com propósito. Acreditamos que é possível repensar a forma como produzimos e consumimos, dando novos significados a materiais que seriam descartados.</p>
-            <br>
-            <p>Criamos estojos ecológicos feitos com câmaras de ar de pneus reutilizadas. Cada peça carrega uma história de transformação e respeito pelo planeta.</p>
+<main class="container-sobre">
+    <section class="about-section">
+        <div class="about-content">
+            <span class="subtitle">SOBRE NÓS</span>
+            <h1>Ajudando empresas<br>a crescer com <span>sustentabilidade.</span></h1>
+            <p>
+              A Aruanã não é apenas uma loja; é um movimento. Curamos e entregamos as melhores 
+              soluções sustentáveis para que você e sua empresa possam prosperar sem abrir mão 
+              do cuidado com o planeta.
+            </p>
+            <button class="btn-cta" onclick="window.location.href='../produto/produto.php'">Ver Nossas Soluções</button>
         </div>
-        <img src="../../assetsGerais/placeholder.webp" class="foto_equipe" alt="Foto da nossa equipe">
+
+        <div class="about-image-wrapper">
+            <div class="shape-bg"></div>
+            <div class="image-container">
+                <img src="equipe.png" alt="Nossa Equipe">
+            </div>
+            <div class="dots-pattern"></div>
+        </div>
     </section>
+
+  <section class="reviews-section">
+      <div class="reviews-header">
+          <h2>O que nossos clientes dizem</h2>
+          <p>A confiança de quem já transformou seu consumo com a Aruanã.</p>
+      </div>
+
+      <div class="reviews-container">
+          <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <h4>"Experiência incrível!"</h4>
+              <p>"Fiquei impressionada com o cuidado da Aruanã em cada detalhe. O produto tem um acabamento impecável e une estética com materiais sustentáveis."</p>
+              <span class="review-author">Mariana Silva</span>
+              <span class="author-job">Designer de Interiores</span>
+          </div>
+
+          <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <h4>"Rapidez e Consciência"</h4>
+              <p>"Comprei soluções para o meu escritório e a entrega foi rápida, com embalagem eco-friendly. Atendimento humano e muito eficiente."</p>
+              <span class="review-author">Ricardo Gomes</span>
+              <span class="author-job">Empreendedor</span>
+          </div>
+
+          <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <h4>"Consumo com Propósito"</h4>
+              <p>"É difícil encontrar um site de vendas com uma curadoria tão criteriosa. Sinto que cada centavo investido aqui apoia um futuro mais verde."</p>
+              <span class="review-author">Beatriz Soares</span>
+              <span class="author-job">Consultora Ambiental</span>
+          </div>
+      </div>
+  </section>
+
 </main>
 
 <footer>

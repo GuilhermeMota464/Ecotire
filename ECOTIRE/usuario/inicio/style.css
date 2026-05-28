@@ -46,8 +46,13 @@ body {
     margin: 0 20px;
 }
 
+.search-actions {
+    display: flex;
+    flex-direction: row;
+}
+
 .search-bar {
-    width: 100%;
+    width: 452px;
     height: 45px;
     padding: 0 20px;
     border: none;
@@ -113,7 +118,7 @@ body {
 
 .header-actions {
     display: flex;
-    gap: 10px;
+    gap: 25px;
     align-items: center; 
 }
 
@@ -373,7 +378,7 @@ body {
 }
 
 /* ===== Responsividade ===== */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .header-top { 
         flex-direction: column; 
         gap: 15px; 
