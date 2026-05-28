@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS Aruana
 DEFAULT CHARACTER SET utf8mb4
 DEFAULT COLLATE utf8mb4_unicode_ci;
 
-USE Aruna;
+USE Aruana;
 
 -- ================= USUÁRIO =================2
 CREATE TABLE IF NOT EXISTS usuario (
