@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 
@@ -21,7 +21,7 @@
             <div class="header-top">
                 <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã"
                     onclick="window.location.href='../inicio/index.php'">
-
+            <div class='search-actions'>
                 <div class="search-group">
                     <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
                     <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
@@ -35,8 +35,12 @@
                         title="Meu Carrinho"></i>
                 </div>
             </div>
+            </div>
+        <div class="header-bottom">
+                <button id="icon" class="hamburger" aria-label="Abrir menu" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
 
-            <div class="header-bottom">
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
                         <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
