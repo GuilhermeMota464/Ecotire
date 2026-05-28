@@ -16,9 +16,10 @@
 <body>
         <section class="side-panel">
             <div class="side-content">
+                <div class="seta-wrapper"><a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"></i></a></div>
                 <div class="logo-wrapper">
                     <img src="../../assetsGerais/aruana.webp" alt="Aruana logo" class="logo-img">
-                </div>
+            </div>
                 <h1>Bem-vindo à <br><span>Aruanã</span></h1>
                 <p>Onde a tecnologia encontra a sustentabilidade. Junte-se a nós para uma jornada mais verde.</p>
             </div>
@@ -49,14 +50,12 @@
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms">
-                        <label for="terms">Eu li e concordo com os 
-                        <span>Termos e Condições</span>
-                        </label>
+                        <label for="terms">Eu li e concordo com os<span>&nbspTermos e Condições</span></label>
                     </div>
 
                     <div class="actions">
                         <button type="submit" class="btn-submit">Entrar</button>
-                        <button type="button" class="btn-outline">Sign In</button>
+                        <button type="button" class="btn-outline">Cadastrar</button>
                     </div>
                 </form>
             </div>
