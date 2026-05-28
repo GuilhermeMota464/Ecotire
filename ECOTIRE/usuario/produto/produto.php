@@ -1,7 +1,7 @@
 <?php
 include '../../funcoesPHP/connection.php';
 
-$stmt = $pdo->query("SELECT id_produto, nome, preco_venda, estoque, imagem FROM produtos");
+$stmt = $pdo->query("SELECT id_produto, nome, preco_venda, preco_promocional, estoque, imagem FROM produtos");
 $produtos = $stmt->fetchAll();
 
 ?>
@@ -74,12 +74,24 @@ $produtos = $stmt->fetchAll();
                     </div>
                     <div class="product-info">
                         <h2 class="product-name"><?php echo $produto['nome']; ?></h2>
-                        <p class="price-pix">
-                            R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?> <span>no Pix</span>
-                        </p>
-                        <p class="price-full">
-                            ou 12x de R$ <?php echo number_format($produto['preco'] / 12, 2, ',', '.'); ?>
-                        </p>
+                            <?php if (!empty($produto['preco_promocional']) && $produto['preco_promocional'] < $produto['preco_venda']): ?>
+                            <p class="price-old" style="text-decoration: line-through; color: #777; font-size: 0.9em; margin-bottom: 2px;">
+                                De: R$ <?php echo number_format($produto['preco_venda'], 2, ',', '.'); ?>
+                            </p>
+                            <p class="price-current" style="font-weight: bold; color: #2e7d32; margin-top: 0;">
+                                Por: R$ <?php echo number_format($produto['preco_promocional'], 2, ',', '.'); ?>
+                            </p>    
+                            <p class="price-full">
+                                ou 12x de R$ <?php echo number_format($produto['preco_promocional'] / 12, 2, ',', '.'); ?>
+                            </p>
+                            <?php else: ?>
+                            <p class="price-current" style="font-weight: bold; color: #2e7d32;">
+                                R$ <?php echo number_format($produto['preco_venda'], 2, ',', '.'); ?>
+                            </p>
+                            <p class="price-full">
+                                ou 12x de R$ <?php echo number_format($produto['preco_venda'] / 12, 2, ',', '.'); ?>
+                            </p>
+                        <?php endif; ?>      
                     </div>
                 </article>
                 <?php endforeach; ?>
