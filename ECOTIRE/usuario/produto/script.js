@@ -12,34 +12,41 @@ function favoritarProduto(coracao) {
     }
 }
 
-// Pesquisa auto 
+//pesquisa
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
-const iconeLupa = document.getElementById('lupa');
 
-inputBusca.addEventListener('input', async () => {
-    const query = inputBusca.value;
-    if(query.length < 2){
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-        return;
+if (inputBusca && divResultado) {
+    inputBusca.addEventListener('input', async () => {
+        const query = inputBusca.value.trim();
+        console.log(query);
+        if (query.length < 2) {
+            divResultado.style.display = 'none';
+            return;
+        }
+        try {
+            const response = await fetch(`/ecotire/ecotire/funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
+            const html = await response.text();
+            console.log(html);
+            divResultado.innerHTML = html;
+            divResultado.style.display = 'block';
+        } catch (erro) {
+            console.log(erro);
+        }
+    });
+}
+
+function fecharBusca() {
+    if (divResultado) divResultado.style.display = 'none';
+    if (inputBusca) inputBusca.classList.remove('busca-ativa-input');
+    if (iconeLupa) iconeLupa.classList.remove('busca-ativa-icone');
+}
+
+document.addEventListener('click', (e) => {
+    if (inputBusca && !inputBusca.contains(e.target) && !divResultado.contains(e.target)) {
+        fecharBusca();
     }
-    // AJAX
-    const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
-    const htmlResultados = await response.text();
-    
-    if (htmlResultados && htmlResultados.trim() !== 'Nenhum resultado encontrado') {
-        divResultado.innerHTML = htmlResultados;
-        divResultado.style.display = 'block';
-        inputBusca.classList.add('busca-ativa-input');
-        iconeLupa.classList.add('busca-ativa-icone');
-    } else {
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-    }
-})
+});
 
 document.getElementById('botaoCarrinho').addEventListener('click', function() {
     fetch('../../funcoesPHP/verificarSessao.php')

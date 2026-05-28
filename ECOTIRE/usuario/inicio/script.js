@@ -1,17 +1,18 @@
 function toggleMenu() {
     const menu = document.getElementById("menu-links");
-    const icon = document.querySelector("#icon i");
+    const icon = document.getElementById("icon");
     
-    // Alterna a classe 'mostrar' criada no CSS
-    menu.classList.toggle("mostrar");
+    const isVisible = menu.style.display === "block";
+    
+    menu.style.display = isVisible ? "none" : "block";
+    menu.style.paddingBottom = isVisible ? "0px" : "10px";
 
-    // Muda o ícone de barras (hambúrguer) para 'X' ao abrir o menu
-    if (menu.classList.contains("mostrar")) {
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-    } else {
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+    if (icon) {
+        if (!isVisible) {
+            icon.style.backgroundColor = "var(--cor-primaria-escura)";
+        } else {
+            icon.style.backgroundColor = "var(--cor-primaria)";
+        }
     }
 }
 
@@ -72,7 +73,7 @@ document.querySelector(".prev").addEventListener("click", () => {
     slideAnterior();
     resetIntervalo();
 });
-
+//pesquisa
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
 
