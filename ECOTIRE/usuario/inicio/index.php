@@ -21,7 +21,7 @@
             <div class="header-top">
                 <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã"
                     onclick="window.location.href='../inicio/index.php'">
-            <div class='search-actions'>
+
                 <div class="search-group">
                     <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
                     <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
@@ -35,12 +35,8 @@
                         title="Meu Carrinho"></i>
                 </div>
             </div>
-            </div>
-        <div class="header-bottom">
-                <button id="icon" class="hamburger" aria-label="Abrir menu" onclick="toggleMenu()">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
 
+            <div class="header-bottom">
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
                         <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
