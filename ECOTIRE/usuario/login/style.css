@@ -144,9 +144,17 @@ input:focus { border-bottom-color: var(--cor-primaria); }
     color: white;
     border: none;
     border-radius: 25px;
+    font-size: 1rem;            /* 🌟 Define o tamanho padrão da fonte */
     font-weight: bold;
+    font-family: inherit;       /* Garante que puxe o Poppins do body */
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(44, 155, 42, 0.3);
+    transition: var(--transicao); /* Adicionado para suavizar o hover */
+    
+    /* Alinhamento igual ao do link */
+    display: flex;            
+    align-items: center;      
+    justify-content: center;
 }
 
 .btn-outline {
@@ -156,8 +164,27 @@ input:focus { border-bottom-color: var(--cor-primaria); }
     color: #999;
     border: 1.5px solid var(--cinza-suave);
     border-radius: 25px;
+    font-size: 1rem;            /* 🌟 Mesmo tamanho do botão submit */
     font-weight: bold;
+    font-family: inherit;       /* Garante que puxe o Poppins do body */
+    text-decoration: none;      /* Remove sublinhados nativos de links */
     cursor: pointer;
+    
+    display: flex;            
+    align-items: center;      
+    justify-content: center;
+    transition: var(--transicao);
+}
+
+/* Efeitos de Hover para manter o padrão visual idêntico */
+.btn-submit:hover {
+    transform: scale(1.02);     
+}
+
+.btn-outline:hover {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    transform: scale(1.02);
 }
 
 a {

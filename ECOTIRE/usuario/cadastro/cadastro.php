@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefone   = $_POST['telefone'];
     $senha      = $_POST['senha'];
 
-    $full_email = $email_part . $dominio;
+    $full_email = ($dominio === 'outro') ? $email_part : $email_part . $dominio;
 
     try {
         $checkSql = "SELECT id_usuario FROM usuario WHERE email = :email";
@@ -19,10 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $checkStmt->execute([':email' => $full_email]);
 
         if ($checkStmt->fetch()) {
-            $feedback = "<p style='color: #dc3545; text-align: center;'>O email '$full_email' já está registrado. Insira outro.</p>";
-
+            $feedback = "<div class='error'>O email '$full_email' já está registrado. Insira outro.</div>";
         } else {
-
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
             $insertSql = "INSERT INTO usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
@@ -36,14 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]);
 
             if ($sucesso) {
-                $feedback = "<p style='color: #28a745; text-align: center;'>Cadastro realizado com sucesso!</p>";
+                $feedback = "<div class='error' style='color: #2c9b2a;'>Cadastro realizado com sucesso!</div>";
             } else {
-                $feedback = "<p style='color: #dc3545; text-align: center;'>Erro ao cadastrar.</p>";
+                $feedback = "<div class='error'>Erro ao cadastrar seu perfil.</div>";
             }
         }
 
     } catch (PDOException $e) {
-        $feedback = "<p style='color: #dc3545; text-align: center;'>Erro no sistema: " . $e->getMessage() . "</p>";
+        $feedback = "<div class='error'>Erro no sistema: " . $e->getMessage() . "</div>";
     }
 }
 ?>
@@ -56,55 +54,87 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
-    <title>Ecotire</title>
+    <title>Aruanã - Cadastro</title>
 </head>
 <body>
 
-    <form action="cadastro.php" method="post" class="card" id="cadastroForm">
-        <div class="logo">
-            <img src="../../assetsGerais/aruana.webp" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
-        </div>
+    <main class="main-wrapper">
+        <section class="side-panel">
+            <a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"></i></a>
+            
+            <div class="side-content">
+                <div class="logo-wrapper">
+                    <img src="../../assetsGerais/aruana.webp" alt="Aruanã logo" class="logo-img">
+                </div>
+                <h1>Crie sua <br><span>Conta</span></h1>
+                <p>Junte-se à Aruanã e faça parte de uma jornada tecnológica voltada para um futuro mais sustentável.</p>
+            </div>
+            
+            <div class="creator-footer">
+                <span>ARUANÃ | SUSTENTABILIDADE</span>
+            </div>
+        </section>
 
-        <h2>Crie sua conta na Ecotire</h2>
-        
-        <?php echo $feedback; ?>
+        <section class="form-panel">
+            <div class="form-container">
+                <h2>Cadastre-se</h2>
+                <p>Preencha os campos abaixo para criar seu perfil.</p>
+                
+                <?php echo $feedback; ?>
 
-        <p>Insira seu endereço de email.</p>
+                <form action="cadastro.php" method="post" id="cadastroForm">
+                    
+                    <div class="input-group">
+                        <label for="nome">Nome Completo</label>
+                        <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
+                    </div>
 
-        <div class="row">
-            <input name="email" id="email" type="text" placeholder="Email" required>
-            <select id="domain" name="domain">
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@hotmail.com">@hotmail.com</option>
-                <option value="@yahoo.com">@yahoo.com</option>
-                <option value="@outlook.com">@outlook.com</option>
-                <option value="@icloud.com">@icloud.com</option>
-                <option value="outro">Outro...</option>
-            </select>
-        </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="email">E-mail</label>
+                            <input name="email" id="email" type="text" placeholder="Nome do usuário" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="domain">Domínio</label>
+                            <select id="domain" name="domain">
+                                <option value="@gmail.com">@gmail.com</option>
+                                <option value="@hotmail.com">@hotmail.com</option>
+                                <option value="@yahoo.com">@yahoo.com</option>
+                                <option value="@outlook.com">@outlook.com</option>
+                                <option value="@icloud.com">@icloud.com</option>
+                                <option value="outro">Outro...</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <div class="row">
-            <input name="senha" type="password" id="senha" placeholder="Crie uma senha" required>
-        </div>
+                    <div class="input-group">
+                        <label for="tele">Telefone</label>
+                        <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" required>
+                    </div>
 
-        <div class="row">
-            <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
-        </div>
+                    <div class="input-group">
+                        <label for="senha">Senha</label>
+                        <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" required>
+                    </div>
 
-        <div class="row">
-            <input name="telefone" type="tel" id="tele" placeholder="Telefone" required>
-        </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            Eu li e aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">&nbsp;termos e condições</span>
+                        </label>
+                    </div>
 
-    <input type="checkbox" id="terms" required>
-    <label for="terms">Eu aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">termos e condições</span></label>
-
-        <button type="submit">Cadastrar</button>
-
-        <a href="../login/login.php">Entrar</a>
-    </form>
+                    <div class="actions">
+                        <button type="submit" class="btn-submit">Cadastrar</button>
+                        <a href="../login/login.php" class="btn-outline">Entrar</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
