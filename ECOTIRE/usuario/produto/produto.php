@@ -33,10 +33,8 @@ $produtos = $stmt->fetchAll();
                         onclick="window.location.href='../inicio/index.php'">
 
                     <div class="search-group">
-                        <input type="text" class="search-bar" id="busca"
-                            placeholder="Pesquisar soluções sustentáveis...">
-                        <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass"
-                                id="lupa"></i></button>
+                        <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
+                        <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
                         <div id="resultado"></div>
                     </div>
 

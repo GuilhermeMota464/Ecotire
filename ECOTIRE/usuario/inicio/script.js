@@ -72,7 +72,7 @@ document.querySelector(".prev").addEventListener("click", () => {
     slideAnterior();
     resetIntervalo();
 });
-
+//pesquisa
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
 

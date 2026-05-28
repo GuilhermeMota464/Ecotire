@@ -65,6 +65,7 @@ body {
     color: var(--cor-primaria);
     font-size: 1.1rem;
 }
+
 #lupa {
     height: 18px;
     width: 18px;
@@ -77,6 +78,37 @@ body {
 .busca-ativa-icone {
     color: white !important;
     background-color: var(--cor-primaria) !important;
+} 
+/* ===== BUSCA ===== */
+
+.search-group{
+    position: relative;
+}
+
+#resultado{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    z-index: 9999;
+    display: none;
+    overflow: hidden;
+}
+
+.resultado-item{
+    display: block;
+    padding: 12px 15px;
+    color: rgb(43, 109, 77);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+}
+
+.resultado-item:hover{
+    background-color: #f5f5f5;
 }
 
 .header-actions {
