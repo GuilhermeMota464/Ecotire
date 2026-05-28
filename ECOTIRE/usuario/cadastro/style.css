@@ -1,0 +1,338 @@
+/* ==================== CONFIGURAÇÃO DE VARIÁVEIS ==================== */
+:root {
+    --cor-primaria: #2c9b2a;
+    --cor-primaria-escura: #1e6b1d;
+    --cor-gradiente: linear-gradient(135deg, rgba(44, 155, 42, 1) 0%, rgb(136 231 19) 100%);
+    --cor-fundo: #f4f1e1;
+    --cor-texto: #2b3a1a;
+    --cor-texto-claro: #6a7b55;
+    --branco: #ffffff;
+    --cinza-suave: #e0e0e0;
+    --transicao: all 0.3s ease;
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Força tela cheia exata igual à tela de login */
+html, body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--branco);
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+/* ==================== ESTRUTURA DO PAINEL DUPLO TELA CHEIA ==================== */
+.main-wrapper {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: var(--branco);
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* --- Painel Esquerdo (Idêntico ao Login) --- */
+.side-panel {
+    flex: 1;
+    background: var(--cor-gradiente);
+    color: var(--branco);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border-radius: 0 80px 150px 0;
+    z-index: 2;
+    height: 100vh;
+}
+
+.side-content {
+    max-width: 300px;
+}
+
+.logo-wrapper {
+    background: white;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo-img { 
+    width: 150px; 
+}
+
+.side-panel h1 { 
+    font-size: 2.5rem; 
+    line-height: 1.1; 
+    margin-bottom: 20px; 
+}
+
+.side-panel h1 span { 
+    font-weight: 300; 
+}
+
+.side-panel p { 
+    font-size: 0.9rem; 
+    opacity: 0.9; 
+    line-height: 1.6; 
+}
+
+.creator-footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+/* --- Painel Direito (Idêntico ao Login) --- */
+.form-panel {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: white;
+}
+
+.form-container { 
+    width: 100%; 
+    max-width: 350px; 
+}
+
+.form-container h2 {
+    color: var(--cor-texto);
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+/* ==================== ESTILIZAÇÃO DOS CAMPOS DE INPUT ==================== */
+.input-group { 
+    margin-bottom: 25px; 
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--cor-texto);
+}
+
+/* Inputs de Linha Minimalistas */
+input[type="text"], 
+input[type="email"], 
+input[type="password"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1.5px solid var(--cinza-suave);
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--cor-texto);
+    transition: var(--transicao);
+}
+
+input:focus, select:focus { 
+    border-bottom-color: var(--cor-primaria); 
+}
+
+/* Linha Combinada: Email + Domínio */
+.row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.row .input-group {
+    margin-bottom: 0;
+}
+
+.row .input-group:nth-child(1) { flex: 1.5; }
+.row .input-group:nth-child(2) { flex: 1; }
+
+/* Bloco de erros do PHP */
+.error {
+    color: #c7342f;
+    font-size: 0.75rem;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+/* ==================== ELEMENTOS DE SELEÇÃO E LINKS ==================== */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    font-size: 0.75rem;
+    color: var(--cor-texto);
+}
+
+/* Caixa customizada */
+.checkbox-group label::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Símbolo do Visto */
+.checkbox-group label::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+input[type="checkbox"]:checked + label::before {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+input[type="checkbox"]:checked + label::after {
+    opacity: 1;
+}
+
+#termos {
+    color: var(--cor-primaria);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* ==================== BOTÕES E AÇÕES (MESMA ESCALA) ==================== */
+.actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-submit {
+    flex: 1;
+    padding: 12px;
+    background: var(--cor-gradiente);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(44, 155, 42, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transicao);
+}
+
+.btn-outline {
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    color: #999;
+    border: 1.5px solid var(--cinza-suave);
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transicao);
+}
+
+.btn-submit:hover {
+    transform: scale(1.02);
+}
+
+.btn-outline:hover {
+    color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    transform: scale(1.02);
+}
+
+/* Seta de Voltar */
+#seta {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    scale: 2;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: var(--transicao);
+}
+
+#seta:hover {
+    background-color: rgba(178, 255, 179, 0.11);
+    border-radius: 50%;
+}
+
+/* ==================== DIRETIVAS DE RESPONSIVIDADE ==================== */
+@media (max-width: 768px) {
+    html, body {
+        overflow-y: auto; 
+    }
+    .main-wrapper { 
+        flex-direction: column; 
+        height: auto; 
+        width: 95vw; 
+    }
+    .side-panel { 
+        border-radius: 0 0 50px 50px; 
+        padding: 60px 40px; 
+        height: auto;
+    }
+    .row {
+        flex-direction: column;
+        gap: 25px;
+    }
+}

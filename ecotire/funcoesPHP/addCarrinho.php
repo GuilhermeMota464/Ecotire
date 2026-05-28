@@ -1,0 +1,37 @@
+<?php
+session_start();
+include 'connection.php';
+
+if (!isset($_SESSION['id_usuario'])) {
+    // Define o status HTTP como 401 (Não autorizado)
+    http_response_code(401);
+    echo json_encode(['erro' => 'usuario_nao_logado']);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $id_usuario = $_SESSION['id_usuario'];
+    $id_produto = $_POST['id_produto'];
+    $quantidade = 1;
+
+    $sql = "INSERT INTO carrinho (id_usuario, id_produto, quantidade)
+            VALUES (:user, :prod, :qtd)
+            ON DUPLICATE KEY UPDATE quantidade = quantidade + 1";
+    $stmt = $pdo -> prepare($sql);
+
+    try {
+        $stmt->execute([
+            ':user' => $id_usuario ,
+            ':prod'  => $id_produto,
+        
+            ':qtd'   => $quantidade
+        ]);
+
+        http_response_code(200);
+        echo "Adicionado com sucesso";
+    } catch (PDOException $e){
+        http_response_code(500);
+        echo "Erro ao adicionar: " . $e->getMessage();
+    }
+}
+?>

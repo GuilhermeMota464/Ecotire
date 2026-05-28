@@ -1,0 +1,777 @@
+:root{
+    --cor-primaria: rgb(43, 109, 77);
+    --cor-primaria-escura: rgb(34, 86, 61);
+    --fundo: rgb(241, 234, 234);
+    --borda: rgb(180, 175, 175);
+    --fundo-input: rgb(255, 255, 255);
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+body {
+    margin: 0;
+    background-color: var(--fundo);
+    width: 100%;
+    height: max-content;
+}
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h1, h2 {
+    color: var(--cor-primaria);
+    font-size: 3vw;
+}
+/* Cabeçalho geral */
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+/* Botões */
+.menu-horizontal { 
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(241, 234, 234);
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+/* Orientação dos botões */
+.menu-horizontal li {
+  border-radius: 5px;
+  display: inline-block; /* ou float: left; */
+  margin-right: 15px; /* Espaçamento entre os itens */
+}
+/* Formatação dos botões */
+.menu-horizontal a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000000;
+}
+/* Efeito hover nos botões */
+.menu-horizontal a:hover {
+  border-radius: 5px;
+  background-color: rgb(222, 217, 217);
+    cursor: pointer;
+}
+/* Logo */
+.logo {
+    cursor: pointer;
+    height: 60px;
+    width: auto;
+    padding-left:10px;
+    padding-right: 10px;
+}
+
+.foto_perfil {
+    display: flex;
+    width: 60px;
+    padding-top: 5px;
+    margin-left : 5px;
+    margin-right : 10px;
+    justify-content: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor : pointer;
+}
+
+/* Parte superior do cabeçalho */
+.header-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: var(--cor-primaria);
+    margin-bottom: 10px
+}
+/* Parte inferior do cabeçalho */
+.header-bottom {
+    text-align: center;
+    justify-content: center;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-y: hidden;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* Barra de Filtros */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+
+.sort-by {
+    cursor: pointer;
+}
+
+/* Informações do Produto */
+.product-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Grid de Produtos */
+.products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+    padding: 20px;
+    background-color: #f5f5f5;
+
+    /* Esconder no Firefox */
+    scrollbar-width: none;
+
+    /* Esconder no Internet Explorer e Edge antigo */
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Card Individual */
+.product-card {
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #eee;
+    width: 100%;
+}
+
+.product-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    scale: 1.01;
+    transition: 0.3s ease;
+}
+
+.tag-mais-vendido {
+    background-color: #00a650;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    width: fit-content;
+}
+
+.price-old {
+    font-size: 12px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.discount-tag {
+    color: #00a650;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.shipping-info {
+    color: #00a650;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.price-current {
+    font-size: 22px;
+    color: #333;
+}
+
+.product-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 5px 0;
+}
+
+/* Área da Imagem */
+.image-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.image-container img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.div-botoes {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    height: 30px;
+    width: 120px;
+}
+.edit-button {
+    background-color: var(--cor-primaria);
+}
+.edit-button:hover {
+    background-color: var(--cor-primaria-escura);
+}
+.delete-button {
+    background-color: rgb(200, 0, 0);
+}
+.delete-button:hover {
+    background-color: rgb(150, 0, 0);
+}
+/* Configuração Geral do Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    
+    width: 90%;
+    max-height: 90%; /* LIMITE VERTICAL CRUCIAL */
+    
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    z-index: 1001;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal.open {
+    display: flex;
+    flex-direction: column;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.modal-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Faz a coluna da direita descer no mobile */
+    gap: 30px;
+    width: 100%;
+}
+/* Coluna da Direita */
+.modal-column-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%; /* Garante que ocupe o espaço disponível */
+    min-width: 300px; /* Evita que fique muito estreita antes de quebrar a linha */
+}
+/* Colunas do Formulário */
+.modal-column-left, 
+.modal-column-right {
+    height: 65vh;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.modal-column-left {
+    gap: 3vh
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.input {
+    height: 9vh !important;
+}
+label {
+    font-family: "Poppins", sans-serif;
+}
+#inserir-imagem {
+    display: none;
+}
+#input-div {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+}
+.label-input {
+    display: flex;
+    flex-direction: column;
+}
+/* Foto */
+.picture {
+    width: 15vw;
+    height: 15vw;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Corta o que sobrar da imagem */
+    border: 2px dashed var(--borda);
+    cursor: pointer;
+}
+.picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.picture:hover {
+  color: #777;
+  background: #ccc;
+}
+.picture:active {
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria);
+  background: #eee;
+}
+.picture:focus {
+  color: #777;
+  background: #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+/* Garante que a imagem preencha o container do modal sem distorcer */
+.preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a foto ocupar todo o espaço cortando as sobras */
+    display: block;
+}
+/* Colunas de Input */
+#input-group-left, #input-group-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* Botão Submit (Verde conforme o desenho) */
+.btn-submit {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-escura));
+    color: white;
+    border: none;
+    padding: 15px;
+    height: 60px;
+    width: 100%;
+    flex-basis: 100%;
+    border-radius: 8px;
+    font-size: 2vw;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
+    flex-shrink: 0;  
+}
+
+.btn-submit:hover {
+    background-color: var(--cor-primaria-escura);
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(43,109,77,0.6); 
+}
+
+/* Adicionar Produto Button */
+.add-product-btn {
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(43,109,77,0.4);
+    transition: all 0.3s ease;
+}
+
+.add-product-btn:hover {
+    background: var(--cor-primaria-escura); 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43,109,77,0.6);
+}
+
+.modal-close {
+    position: sticky; /* Muda de absolute para sticky */
+    top: 0;           /* Gruda no topo do modal ao scrollar */
+    align-self: flex-end; /* Garante que ele fique na direita se o modal for flex */
+    margin-bottom: -60px; /* Truque para ele não empurrar o título para baixo */
+    z-index: 1002;
+    
+    /* Mantenha o resto das suas estilizações (cores, bordas, etc) */
+    background: rgba(200,0,0,0.8);
+    color: white;
+    border: none;
+    width: 60px; /* Recomendo usar px ou rem fixo para evitar distorção no scroll */
+    min-height: 60px;
+    border-radius: 50%;
+    font-size: 3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: rgba(150,0,0,0.9);
+    transform: scale(1.1);
+}
+/* Modern Field Containers */
+.field-container {
+    height: 10%;
+    position: relative;
+    margin-top: 15px; /* Espaço para o label subir */
+    display: flex;
+    flex-direction: column;
+}
+
+.field-container textarea {
+    padding: 15px 12px !important;
+    min-height: 30vh;
+    resize: none;
+    width: 100%;
+    border: 2px solid var(--borda);
+    border-radius: 12px;
+    background: var(--fundo-input);
+    font-family: inherit;
+}
+
+.field-container label {
+    position: absolute;
+    left: 0.9vw;
+    top: 60%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Centraliza verticalmente sobre o input */
+    font-size: 3vh;
+    color: #888;
+    transition: all 0.2s ease;
+    pointer-events: none; /* Garante que clicar no label foque o input */
+    background-color: var(--fundo-input); /* Evita que a linha do input passe por trás do texto */
+    padding: 0 4px;
+}
+
+.input, #descricao_imagem {
+    border: 0.1vh solid var(--borda);
+    border-radius: 0.9vw;
+    font-size: 1.5vw;
+    background: var(--fundo-input);
+    padding: 1vw;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input:focus, #descricao_imagem:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(43,109,77,0.1);
+    background: var(--fundo-input);
+}
+
+#label-descricao-imagem {
+    top: 2vh; /* Posição inicial responsiva dentro do textarea */
+    left: 0.9vw;
+    position: absolute;
+    transition: all 0.2s ease;
+    top: 50%;
+    background-color: var(--fundo-input); /* Importante para cobrir a borda */
+    padding: 0 0.5vw;
+    pointer-events: none;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria) !important;
+}
+
+/* Seletor unificado para todas as labels que devem subir e diminuir */
+/* Seletor unificado para Nome, Preço, Estoque e Descrição */
+.input:focus + label,
+.input:not(:placeholder-shown) + label,
+#preco_promo:focus + label,
+#preco_promo:not(:placeholder-shown) + label,
+#descricao_imagem:focus + label,
+#descricao_imagem:not(:placeholder-shown) + label {
+    top: 0 !important;
+    transform: translateY(-50%); /* Centraliza na borda superior usando valor relativo */
+    font-size: 1vw !important;
+    color: var(--cor-primaria);
+    font-weight: bold;
+    background-color: var(--fundo-input);
+    padding: 0 0.4vw;
+}
+
+.picture-image {
+    font-size: 4vw;
+    color: var(--cor-primaria);
+}
+
+/* Custom Promo Checkbox */
+.promo-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;     
+    height: 70px;
+    margin-top: 10px;
+}
+
+.promo-box input[type="checkbox"] {
+    appearance: none;
+    width: 6vw;
+    height: 6vh;
+    background: #ddd;
+    border-radius: 1.5vw;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.promo-box input[type="checkbox"]:checked {
+    background: var(--cor-primaria);
+}
+
+.promo-box input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 5.6vh;
+    height: 5.6vh;
+    border-radius: 50%;
+    background: white;
+    top: 0.23vh;
+    left: 0.23vh;
+    transition: transform 0.3s ease;
+}
+
+.promo-box input[type="checkbox"]:checked::before {
+    transform: translateX(80%);
+}
+
+.promo-box label {
+    font-size: 1rem !important;
+    margin-left: 1rem;
+}
+.promo-box label[for="promo"] {
+    position: static;         /* Impede que este label específico flutue */
+    transform: none;
+    font-size: 1.7vw !important;
+    color: var(--cor-primaria);
+    font-weight: bold;
+    margin-left: 0;
+    white-space: nowrap;      /* Evita que o texto quebre em duas linhas */
+}
+/* Container para posicionar o símbolo */
+.percentage-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* O símbolo de porcentagem */
+.percentage-wrapper::after {
+    content: "%";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-weight: bold;
+    pointer-events: none; /* Não atrapalha o clique */
+    transition: all 0.3s ease;
+}
+
+/* Ajuste para o texto não ficar em cima do símbolo */
+#preco_promo {
+    padding-right: 35px !important;
+    width: 224px;
+}
+#label_promo {
+    left: 0px;
+}
+/* Quando o input estiver vazio ou o label subir, podemos dar destaque ao % */
+#preco_promo:focus ~ ::after {
+    color: var(--cor-primaria);
+}
+
+#container-preco-promo {
+    margin-top: 0 !important; /* Remove margens que desalinhariam o campo */
+    display: none;            /* Mantém escondido por padrão (controlado pelo JS) */
+    flex: 1;                  /* Permite que o campo cresça conforme o espaço */
+    max-width: 150px;         /* Limita a largura para manter a estética */
+}
+#preco_promo {
+    width: 100% !important;
+    height: 45px !important;
+}
+@media (max-width: 768px) {
+    /* 1. Títulos e Textos */
+    h1, h2 {
+        font-size: 8vw; /* Maior no celular */
+        text-align: center;
+    }
+
+    /* 2. O Modal */
+    .modal.open {
+        width: 95%;
+        max-height: 95vh;
+        padding: 1.5rem;
+        overflow-y: auto; /* Permite rolar o formulário se for longo */
+        border-radius: 15px;
+    }
+
+    .modal form {
+        flex-direction: column; /* Coluna única */
+        gap: 15px;
+    }
+
+    /* 3. Inputs e Labels (Aumentar área de toque) */
+    .input, #descricao_imagem {
+        font-size: 1rem !important; /* Unidade fixa para legibilidade */
+        padding: 15px !important;
+        height: 60px !important; /* Altura confortável para o dedo */
+        border-radius: 5vw;
+        width: 80vw;
+    }
+
+    #descricao_imagem {
+        min-height: 150px; /* Menor que no desktop */
+    }
+
+    .field-container label {
+        font-size: 1rem !important;
+        top: 50%;      
+    } 
+    #label-descricao-imagem {
+        font-size: 1rem !important;
+        top: 15%;
+    }
+
+    /* Efeito da label subindo no mobile */
+    .input:focus + label,
+    .input:not(:placeholder-shown) + label,
+    #descricao_imagem:focus + label,
+    #descricao_imagem:not(:placeholder-shown) + label {
+        top: 0 !important;
+        font-size: 0.8rem !important;
+        transform: translateY(-50%);
+    }
+
+    /* 4. Imagem (Centralizar e Ajustar) */
+    .picture {
+        width: 150px; /* Tamanho fixo centralizado */
+        height: 150px;
+        margin: 0 auto;
+    }
+
+    .picture-image {
+        font-size: 2rem;
+    }
+
+    /* 5. Checkbox de Promoção */
+    .promo-box {
+        justify-content: center;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .promo-box input[type="checkbox"] {
+        width: 80px;
+        border-radius: 20px;
+        height:40px;
+    }
+
+    .promo-box input[type="checkbox"]::before {
+        width: 36.5px;
+        height: 36.5px
+    }
+
+    .promo-box input[type="checkbox"]:checked::before {
+        transform: translateX(38.5px);
+    }
+    
+    .modal-column-left {
+        align-items: flex-start;
+    }
+
+    .promo-box label[for="promo"] {
+        font-size: 1rem !important;
+    }
+
+    /* 6. Botão de Enviar */
+    .btn-submit {
+        font-size: 1.2rem;
+        height: 60px;
+        margin-top: 10px;
+    }
+
+    /* 7. Botão Fechar (X) */
+    .modal-close {
+        position: sticky;
+        width: 60px;
+        height: 60px;
+        font-size: 3rem;
+        top: 5px;
+        left: 5px;
+    }
+
+    /* 8. Grid de Produtos (1 card por linha em telas bem pequenas) */
+    .products-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}
