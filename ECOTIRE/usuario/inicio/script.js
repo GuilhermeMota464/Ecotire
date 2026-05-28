@@ -1,18 +1,17 @@
 function toggleMenu() {
     const menu = document.getElementById("menu-links");
-    const icon = document.getElementById("icon");
+    const icon = document.querySelector("#icon i");
     
-    const isVisible = menu.style.display === "block";
-    
-    menu.style.display = isVisible ? "none" : "block";
-    menu.style.paddingBottom = isVisible ? "0px" : "10px";
+    // Alterna a classe 'mostrar' criada no CSS
+    menu.classList.toggle("mostrar");
 
-    if (icon) {
-        if (!isVisible) {
-            icon.style.backgroundColor = "var(--cor-primaria-escura)";
-        } else {
-            icon.style.backgroundColor = "var(--cor-primaria)";
-        }
+    // Muda o ícone de barras (hambúrguer) para 'X' ao abrir o menu
+    if (menu.classList.contains("mostrar")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
+    } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
     }
 }
 
