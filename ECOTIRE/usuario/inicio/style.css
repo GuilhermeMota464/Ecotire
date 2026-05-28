@@ -113,7 +113,7 @@ body {
 
 .header-actions {
     display: flex;
-    gap: 10px;
+    gap: 25px;
     align-items: center; 
 }
 
@@ -357,83 +357,3 @@ body {
     .header-top { flex-direction: column; gap: 15px; text-align: center; }
     .search-group { width: 100%; }
 }
-
-
-.hamburger {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--cor-primaria);
-    font-size: 28px;
-    cursor: pointer;
-    padding: 15px 5%;
-    width: 100%;
-    text-align: left;
-    transition: var(--transicao);
-}
-
-/* ===== Responsividade ===== */
-@media (max-width: 900px) {
-    .header-top { 
-        flex-direction: column; 
-        gap: 15px; 
-        text-align: center; 
-        padding: 20px 5%;
-    }
-    
-    .search-group { 
-        width: 100%; 
-        margin: 10px 0; 
-        flex: 1;
-    }
-
-    .form_groups { 
-        flex-direction: column; 
-    }
-
-    /* Ajustes do Menu Hambúrguer */
-    .hamburger {
-        display: block; /* Mostra o botão do hambúrguer no celular */
-    }
-
-    .menu-horizontal {
-        display: none; /* Oculta o menu por padrão no mobile */
-        flex-direction: column;
-        width: 100%;
-        background-color: var(--branco);
-        padding: 0;
-    }
-
-    /* Essa classe será ativada pelo JavaScript */
-    .menu-horizontal.mostrar {
-        display: flex;
-    }
-
-    .menu-horizontal li { 
-        margin: 0; 
-        width: 100%;
-        border-top: 1px solid #eee;
-    }
-
-    .menu-horizontal a {
-        display: block;
-        padding: 15px 20px;
-        border-radius: 0;
-        text-align: center;
-    }
-
-    .imgAlternada {
-        border-radius: 20px;
-        height: auto;
-    }
-
-    .Slide img {
-        height: 300px; /* Reduz a altura do banner no celular */
-    }
-    .search-actions {
-        display: flex;
-        flex-direction: row;
-        gap: 20px
-    }
-}
-
