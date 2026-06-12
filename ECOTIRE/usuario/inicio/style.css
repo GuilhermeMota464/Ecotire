@@ -356,29 +356,8 @@ body {
 
 .icons i:hover { color: var(--cor-ondas); transform: scale(1.2); }
 
-/* Responsividade */
-@media (max-width: 900px) {
-    .form_groups { flex-direction: column; }
-    .header-top { flex-direction: column; gap: 15px; text-align: center; }
-    .search-group { width: 100%; }
-}
-
-
-.hamburger {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--cor-primaria);
-    font-size: 28px;
-    cursor: pointer;
-    padding: 15px 5%;
-    width: 100%;
-    text-align: left;
-    transition: var(--transicao);
-}
-
 /* ===== Responsividade ===== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .header-top { 
         flex-direction: column; 
         gap: 15px; 
@@ -435,10 +414,18 @@ body {
     .Slide img {
         height: 300px; /* Reduz a altura do banner no celular */
     }
-    .search-actions {
-        display: flex;
-        flex-direction: row;
-        gap: 20px
-    }
+
 }
 
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--cor-primaria);
+    font-size: 28px;
+    cursor: pointer;
+    padding: 15px 5%;
+    width: 100%;
+    text-align: left;
+    transition: var(--transicao);
+}

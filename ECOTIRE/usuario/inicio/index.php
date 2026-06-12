@@ -36,7 +36,10 @@
                 </div>
             </div>
 
-            <div class="header-bottom">
+<div class="header-bottom">
+                <button id="icon" class="hamburger" aria-label="Abrir menu" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
                         <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
