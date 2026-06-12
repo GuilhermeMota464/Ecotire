@@ -46,8 +46,13 @@ body {
     margin: 0 20px;
 }
 
+.search-actions {
+    display: flex;
+    flex-direction: row;
+}
+
 .search-bar {
-    width: 100%;
+    width: 452px;
     height: 45px;
     padding: 0 20px;
     border: none;

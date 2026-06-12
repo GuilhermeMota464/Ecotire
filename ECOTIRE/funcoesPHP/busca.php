@@ -18,7 +18,7 @@ if(isset($_GET['busca'])){
             "<a href='../pagina-produto-usuario/pagina-produto-usuario.php?produto=".urlencode($produto['nome'])."&id=".$produto['id_produto']."' 
             class='resultado-item' style='color:rgb(43, 109, 77); text-decoration:none;'>
             <div class='resultado-item'>
-                ".$produto['nome']." - R$ ".$produto['preco']."
+                ".$produto['nome']." - R$ ".$produto['preco_venda']."
             </div>
             </a>";
         } 
