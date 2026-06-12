@@ -57,7 +57,7 @@
         <div class="about-image-wrapper">
             <div class="shape-bg"></div>
             <div class="image-container">
-                <img src="equipe.png" alt="Nossa Equipe">
+                <img src="equipe.jpg" alt="Nossa Equipe">
             </div>
             <div class="dots-pattern"></div>
         </div>

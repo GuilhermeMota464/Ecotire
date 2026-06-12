@@ -1,42 +1,78 @@
-// Validação do formulário antes do envio
-document.getElementById("cadastroForm").addEventListener("submit", function (event) {
-    const email = document.getElementById("email").value;
-    const domain = document.getElementById("domain").value;
-    const fullEmail = email + domain;
-    const senha = document.getElementById("senha").value;
-    const errorDiv = document.getElementById("error");
-    errorDiv.innerHTML = "";
-    let errors = [];
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(fullEmail)) {
-        errors.push("Email inválido.");
-    }
-    if (senha.length < 6) {
-        errors.push("A senha deve ter pelo menos 6 caracteres.");
-    }
-    if (errors.length > 0) {
+const loginForm = document.getElementById('loginForm');
+
+if (loginForm) {
+    loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        errorDiv.innerHTML = errors.join("<br>");
-    }
-});
 
-// Ajustar largura do select de domínio ao escolher "Outro..."
-const domainSelect = document.getElementById("domain");
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const terms = document.getElementById('terms').checked;
 
-domainSelect.addEventListener("change", () => {
-    if (domainSelect.value === "outro") {
-        domainSelect.style.width = "10px";
-        domainSelect.style.paddingLeft = "5px";
-    } else {
-        domainSelect.style.width = "420px"; // volta ao normal
-    }
-});
+        if (!name || !email || !password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor, preencha todos os campos!',
+                confirmButtonColor: '#2b8a3e'
+            });
+            return; 
+        } 
+        
+        if (!terms) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atenção',
+                text: 'Você precisa aceitar os Termos e Condições para continuar.',
+                confirmButtonColor: '#2b8a3e'
+            });
+            return; 
+        }
 
-// Evitar que o usuário digite o domínio quando não for "Outro..."
-const emailInput = document.getElementById("email");
+        Swal.fire({
+            title: 'Verificando dados...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
 
-emailInput.addEventListener("input", function () {
-    if (domainSelect.value !== "outro") {
-        this.value = this.value.replace(/@.*/, '');
-    }
-});
+        const formData = new FormData(loginForm);
+
+        fetch('../funcoesPHP/login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text()) 
+        .then(text => {
+            console.log("Resposta bruta do servidor:", text); // Olhe o console do navegador (F12)
+            const data = JSON.parse(text);
+            if (data.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Login realizado com sucesso! Redirecionando...',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.href = '../../usuario/inicio/index.php'; 
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao entrar',
+                    text: data.message,
+                    confirmButtonColor: '#2b8a3e'
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro de conexão',
+                text: 'Não foi possível conectar ao servidor.',
+                confirmButtonColor: '#2b8a3e'
+            });
+        });
+    });
+}

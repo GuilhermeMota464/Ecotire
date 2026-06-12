@@ -67,8 +67,7 @@ $produtos = $stmt->fetchAll();
                 <article class="product-card"
                     onclick="location.href='../pagina-produto-usuario/pagina-produto-usuario.php?id=<?php echo $produto['id_produto']; ?>'">
                     <div class="image-container">
-                        <img src="Assets/<?php echo $produto['imagem']; ?>_1.webp"
-                            alt="<?php echo $produto['nome']; ?>">
+                        <img src="../../assetsProdutos/<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>">
                     </div>
                     <div class="product-info">
                         <h2 class="product-name"><?php echo $produto['nome']; ?></h2>
