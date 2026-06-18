@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS endereco (
     id_endereco INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     cep VARCHAR(9) NOT NULL,
-    numero VARCHAR(10) NOT NULL,
+    numero VARCHAR(10) NOT NULL,/
     complemento VARCHAR(100),
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
