@@ -23,14 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-            $insertSql = "INSERT INTO usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
+            $insertSql = "INSERT INTO usuario (nome, email, senha, telefone, genero) VALUES (:nome, :email, :senha, :telefone, :genero)";
             $stmt = $pdo->prepare($insertSql);
+
             
+            $genero = $_POST['genero'] ?? 'prefiro_nao_dizer';
+
             $sucesso = $stmt->execute([
                 ':nome'     => $nome,
                 ':email'    => $full_email,
                 ':senha'    => $senha_hash,
-                ':telefone' => $telefone
+                ':telefone' => $telefone,
+                ':genero'   => $genero
             ]);
 
             if ($sucesso) {
@@ -38,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $feedback = "<div class='error'>Erro ao cadastrar seu perfil.</div>";
             }
+
         }
 
     } catch (PDOException $e) {
@@ -127,6 +132,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </label>
                     </div>
 
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="genero">Gênero</label>
+                            <select id="genero" name="genero" required>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outros">Outros</option>
+                                <option value="prefiro_nao_dizer">Prefiro não dizer</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="actions">
                         <button type="submit" class="btn-submit">Cadastrar</button>
                         <a href="../login/login.php" class="btn-outline">Entrar</a>
@@ -139,3 +156,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="script.js"></script>
 </body>
 </html>
+
