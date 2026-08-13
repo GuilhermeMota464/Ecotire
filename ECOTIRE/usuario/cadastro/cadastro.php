@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <title>Aruanã - Cadastro</title>
 </head>
@@ -81,14 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <section class="form-panel">
             <div class="form-container">
                 <h2>Cadastre-se</h2>
-                <p>Preencha os campos abaixo para criar seu perfil.</p>
                 
                 <?php echo $feedback; ?>
 
                 <form action="cadastro.php" method="post" id="cadastroForm">
                     
                     <div class="input-group">
-                        <label for="nome">Nome Completo</label>
+                        <label for="nome">Nome</label>
                         <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
                     </div>
 
@@ -123,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
-                            Eu li e aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">&nbsp;termos e condições</span>
+                            Eu li e concordo com os&nbsp;<span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">Termos e condições</span>
                         </label>
                     </div>
 

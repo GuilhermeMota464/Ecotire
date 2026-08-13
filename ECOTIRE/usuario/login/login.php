@@ -24,7 +24,7 @@
                 <p>Onde a tecnologia encontra a sustentabilidade. Junte-se a nós para uma jornada mais verde.</p>
             </div>
             <div class="creator-footer">
-                <span>ARUANA | SUSTENTABILIDADE</span>
+                <span>ARUANÃ | SUSTENTABILIDADE</span>
             </div>
         </section>
 
@@ -35,21 +35,21 @@
                 <form>
                     <div class="input-group">
                         <label for="name">Nome</label>
-                        <input type="text" id="name" placeholder="Seu nome completo">
+                        <input type="text" id="name" placeholder="Seu nome completo" required>
                     </div>
 
                     <div class="input-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" placeholder="Digite seu email">
+                        <input type="email" id="email" placeholder="Digite seu email" required>
                     </div>
 
                     <div class="input-group">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" placeholder="Digite sua senha">
+                        <input type="password" id="password" placeholder="Digite sua senha" required>
                     </div>
 
                     <div class="checkbox-group">
-                        <input type="checkbox" id="terms">
+                        <input type="checkbox" id="terms" required>
                         <label for="terms">Eu li e concordo com os<span>&nbspTermos e Condições</span></label>
                     </div>
 
