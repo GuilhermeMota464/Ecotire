@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS usuario (
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    tipo ENUM('cliente', 'admin') DEFAULT 'cliente',
+    genero Enum ('Masculino', 'Feminino', 'Prefiro não dizer', 'Outros') not null,
+    tipo ENUM('cliente', 'admin') DEFAULT 'cliente' not null,
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS pagamentos (
     id_pedido INT NOT NULL,
     metodo ENUM('PIX', 'CARTAO', 'BOLETO') NOT NULL,
     valor DECIMAL(10,2) NOT NULL,
-    status ENUM('pendente', 'aprovado', 'recusado', 'cancelado', 'reembolsado') DEFAULT 'pendente',
+    Condicao ENUM('pendente', 'aprovado', 'recusado', 'cancelado', 'reembolsado') DEFAULT 'pendente',
     codigo_transacao VARCHAR(100),
     data_pagamento DATETIME NULL,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,

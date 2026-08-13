@@ -56,6 +56,13 @@ domainSelect.addEventListener("change", () => {
     }
 });
 
+// Garante que o campo de gênero exista antes de manipular (evita erro se mudar UI)
+const generoSelect = document.getElementById('genero');
+if (generoSelect) {
+    // Sem formatação extra; apenas mantém a seleção e evita comportamento inesperado
+}
+
+
 // Evitar que o usuário digite o domínio quando não for "Outro..."
 const emailInput = document.getElementById("email");
 
