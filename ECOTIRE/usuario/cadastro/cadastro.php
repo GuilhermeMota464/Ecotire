@@ -1,56 +1,8 @@
 <?php
-require '../../funcoesPHP/connection.php';
-
-$feedback = ""; 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome       = $_POST['nome'];
-    $email_part = $_POST['email'];
-    $dominio    = $_POST['domain']; 
-    $telefone   = $_POST['telefone'];
-    $senha      = $_POST['senha'];
-
-    $full_email = ($dominio === 'outro') ? $email_part : $email_part . $dominio;
-
-    try {
-        $checkSql = "SELECT id_usuario FROM usuario WHERE email = :email";
-        $checkStmt = $pdo->prepare($checkSql);
-        
-        $checkStmt->execute([':email' => $full_email]);
-
-        if ($checkStmt->fetch()) {
-            $feedback = "<div class='error'>O email '$full_email' já está registrado. Insira outro.</div>";
-        } else {
-            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-            $insertSql = "INSERT INTO usuario (nome, email, senha, telefone, genero) VALUES (:nome, :email, :senha, :telefone, :genero)";
-            $stmt = $pdo->prepare($insertSql);
-
-            
-            $genero = $_POST['genero'] ?? 'prefiro_nao_dizer';
-
-            $sucesso = $stmt->execute([
-                ':nome'     => $nome,
-                ':email'    => $full_email,
-                ':senha'    => $senha_hash,
-                ':telefone' => $telefone,
-                ':genero'   => $genero
-            ]);
-
-            if ($sucesso) {
-                $feedback = "<div class='error' style='color: #2c9b2a;'>Cadastro realizado com sucesso!</div>";
-            } else {
-                $feedback = "<div class='error'>Erro ao cadastrar seu perfil.</div>";
-            }
-
-        }
-
-    } catch (PDOException $e) {
-        $feedback = "<div class='error'>Erro no sistema: " . $e->getMessage() . "</div>";
-    }
-}
+session_start();
+$feedback = $_SESSION['feedback'] ?? '';
+unset($_SESSION['feedback']);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -61,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
     <title>Aruanã - Cadastro</title>
 </head>
 <body>
@@ -88,9 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h2>Cadastre-se</h2>
                 <p>Preencha os campos abaixo para criar seu perfil.</p>
                 
+                <div id="error" class="error"></div>
                 <?php echo $feedback; ?>
 
-                <form action="cadastro.php" method="post" id="cadastroForm">
+                <form action="../../funcoesPHP/cadastro.php" method="post" id="cadastroForm">
                     
                     <div class="input-group">
                         <label for="nome">Nome Completo</label>
@@ -125,23 +77,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" required>
                     </div>
 
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="terms" required>
-                        <label for="terms">
-                            Eu li e aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">&nbsp;termos e condições</span>
-                        </label>
-                    </div>
-
                     <div class="row">
-                        <div class="input-group">
+                        <div class="input-group" style="flex: 1;">
                             <label for="genero">Gênero</label>
                             <select id="genero" name="genero" required>
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
                                 <option value="outros">Outros</option>
-                                <option value="prefiro_nao_dizer">Prefiro não dizer</option>
+                                <option value="prefiro_nao_dizer" selected>Prefiro não dizer</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            Eu li e aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">&nbsp;termos e condições</span>
+                        </label>
                     </div>
 
                     <div class="actions">
@@ -156,4 +108,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="script.js"></script>
 </body>
 </html>
-
