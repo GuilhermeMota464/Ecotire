@@ -277,5 +277,7 @@ input[type="checkbox"] {
 /* Responsividade Básica */
 @media (max-width: 768px) {
     .main-wrapper { flex-direction: column; height: auto; width: 95vw; }
-    .side-panel { border-radius: 0 0 50px 50px; padding: 60px 40px; }
+    .side-panel { border-radius: 0 0 50px 50px; padding: 60px 40px; height: auto; }
 }
+
+

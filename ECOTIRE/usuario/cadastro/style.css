@@ -32,8 +32,9 @@ body {
 
 .main-wrapper {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
     background: var(--branco);
     overflow: hidden;
 }
@@ -148,12 +149,16 @@ select {
     padding: 5px 0;
     border: none;
     border-bottom: 1.5px solid var(--cinza-suave);
-    background: transparent;
     outline: none;
     font-family: inherit;
     font-size: 0.82rem;
     color: var(--cor-texto);
     transition: var(--transicao);
+}
+
+select {
+    max-width: 150px;
+    min-width: 143px;
 }
 
 input:focus, select:focus { 

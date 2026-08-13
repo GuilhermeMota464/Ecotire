@@ -24,7 +24,7 @@
                 <p>Onde a tecnologia encontra a sustentabilidade. Junte-se a nós para uma jornada mais verde.</p>
             </div>
             <div class="creator-footer">
-                <span>ARUANA | SUSTENTABILIDADE</span>
+                <span>ARUANÃ | SUSTENTABILIDADE</span>
             </div>
         </section>
 
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="checkbox-group">
-                        <input type="checkbox" id="terms">
+                        <input type="checkbox" id="terms" required>
                         <label for="terms">Eu li e concordo com os<span>&nbspTermos e Condições</span></label>
                     </div>
 

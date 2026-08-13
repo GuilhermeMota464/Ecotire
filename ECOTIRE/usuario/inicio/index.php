@@ -99,49 +99,48 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="footer-row">
-            <div class="footer-col">
-                <h4>Informação</h4>
-                <ul class="links">
-                    <li><a href="../inicio/index.php">Início</a></li>
-                    <li><a href="../sobre_nos/sobre_nos.html">Sobre nós</a></li>
-                    <li><a href="../produto/produto.php">Produtos</a></li>
-                    <li><a href="#">Contatos</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Explore</h4>
-                <ul class="links">
-                    <li><a href="../termos/termosdeuso.php">Termos de uso</a></li>
-                    <li><a href="#">Políticas</a></li>
-                    <li><a href="#">Carreiras</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Aruanã</h4>
-                <p>
-                    Líder em soluções sustentáveis. Criamos caminhos para um futuro onde o consumo e a natureza caminham
-                    juntos em harmonia.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Newsletter</h4>
-                <p>Receba atualizações exclusivas.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Seu e-mail" required>
-                    <button type="submit">OK</button>
-                </form>
-                <div class="icons">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                </div>
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-left">
+            <h2>
+                O futuro começa nas escolhas de hoje.<br>
+                A Aruanã oferece soluções sustentáveis para um dia a dia mais responsável.
+            </h2>
+
+            <div class="footer-logo">
+                <img src="../../assetsGerais/aruanaCabecario.webp">   
             </div>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
+        <div class="footer-right">
+
+            <nav>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Produtos</a></li>
+                    <li><a href="#">Contato</a></li>
+                    <li><a href="#">Perfil</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="footer-bottom">
+                <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
+
+                <div class="footer-links">
+                    <a href="#">Termos de uso</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </body>
 
 </html>
