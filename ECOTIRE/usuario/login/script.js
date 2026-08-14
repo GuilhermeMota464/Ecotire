@@ -4,12 +4,10 @@ if (loginForm) {
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value.trim();
-        const terms = document.getElementById('terms').checked;
 
-        if (!name || !email || !password) {
+        if (!email || !password) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -18,16 +16,6 @@ if (loginForm) {
             });
             return; 
         } 
-        
-        if (!terms) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Atenção',
-                text: 'Você precisa aceitar os Termos e Condições para continuar.',
-                confirmButtonColor: '#2b8a3e'
-            });
-            return; 
-        }
 
         Swal.fire({
             title: 'Verificando dados...',
@@ -39,13 +27,12 @@ if (loginForm) {
 
         const formData = new FormData(loginForm);
 
-        fetch('../funcoesPHP/login.php', {
+        fetch('../../funcoesPHP/login.php', {
             method: 'POST',
             body: formData
         })
         .then(response => response.text()) 
         .then(text => {
-            console.log("Resposta bruta do servidor:", text); // Olhe o console do navegador (F12)
             const data = JSON.parse(text);
             if (data.status === 'success') {
                 Swal.fire({
