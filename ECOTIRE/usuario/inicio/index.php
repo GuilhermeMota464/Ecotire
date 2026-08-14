@@ -117,11 +117,11 @@
 
             <nav>
                 <ul>
-                    <li><a href="#">Início</a></li>
-                    <li><a href="#">Sobre nós</a></li>
-                    <li><a href="#">Produtos</a></li>
-                    <li><a href="#">Contato</a></li>
-                    <li><a href="#">Perfil</a></li>
+                    <li><a href='../inicio/index.php'>Início</a></li>
+                    <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
+                    <li><a href="'../produto/produto.php'">Produtos</a></li>
+                    <li><a href="#fale_conosco">Contato</a></li>
+                    <li><a href= '../perfil/perfil.php'>Perfil</a></li>
                 </ul>
             </nav>
 
@@ -130,7 +130,7 @@
                 <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
 
                 <div class="footer-links">
-                    <a href="#">Termos de uso</a>
+                    <a href="../termos/termosdeuso.php">Termos de uso</a>
                 </div>
             </div>
 

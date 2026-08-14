@@ -52,7 +52,7 @@ $produtos = $stmt->fetchAll();
                             <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre Nós</a></li>
                             <li><a onclick="window.location.href='../produto/produto.php'" class="ativo">Produtos</a>
                             </li>
-                            <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
+                            <li class="contato-btn"><a href="../inicio/index.php#fale_conosco">Contato</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -96,60 +96,46 @@ $produtos = $stmt->fetchAll();
         </main>
 
 
-        <footer>
-            <section class="footer">
-                <div class="footer-row">
-                    <div class="footer-col">
-                        <h4>Informação</h4>
-                        <ul class="links">
-                            <li><a href="../inicio/index.php">Inicio</a></li>
-                            <li><a href="../sobre_nos/sobre_nos.html">Sobre nós</a></li>
-                            <li><a href="#">Produtos</a></li>
-                            <li><a href="#">Contatos</a></li>
-                            <li><a href="#">Cadastro</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Explore</h4>
-                        <ul class="links">
-                            <li><a href="#">Free Designs</a></li>
-                            <li><a href="#">Latest Designs</a></li>
-                            <li><a href="#">Themes</a></li>
-                            <li><a href="#">Popular Designs</a></li>
-                            <li><a href="#">Art Skills</a></li>
-                            <li><a href="#">New Uploads</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <p>
-                            RedRoosterTI é um dos principais
-                            fornecedores de serviços de design e
-                            desenvolvimento web. Criamos sites
-                            incríveis que ajudam empresas a
-                            estabelecer uma forte presença online.
-                        </p>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Newsletter</h4>
-                        <p>
-                            Subscribe to our newsletter for a weekly dose
-                            of news, updates, helpful tips, and
-                            exclusive offers.
-                        </p>
-                        <form action="#">
-                            <input type="text" placeholder="Your email" required>
-                            <button type="submit">INSCREVA-SE</button>
-                        </form>
-                        <div class="icons">
-                            <i class="fa-brands fa-facebook-f"></i>
-                            <i class="fa-brands fa-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
-                            <i class="fa-brands fa-github"></i>
-                        </div>
-                    </div>
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-left">
+            <h2>
+                O futuro começa nas escolhas de hoje.<br>
+                A Aruanã oferece soluções sustentáveis para um dia a dia mais responsável.
+            </h2>
+
+            <div class="footer-logo">
+                <img src="../../assetsGerais/aruanaCabecario.webp">   
+            </div>
+        </div>
+
+        <div class="footer-right">
+
+            <nav>
+                <ul>
+                    <li><a href='../inicio/index.php'>Início</a></li>
+                    <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
+                    <li><a href="'../produto/produto.php'">Produtos</a></li>
+                    <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
+                    <li><a href= '../perfil/perfil.php'>Perfil</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="footer-bottom">
+                <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
+
+                <div class="footer-links">
+                    <a href="../termos/termosdeuso.php">Termos de uso</a>
                 </div>
-            </section>
-        </footer>
+            </div>
+
+        </div>
+
+    </div>
+</footer>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="script.js"></script>
 </body>

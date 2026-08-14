@@ -50,7 +50,7 @@
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
-                        <label for="terms">Eu li e concordo com os<span>&nbspTermos e Condições</span></label>
+                        <label for="terms">Eu li e concordo com os<span href="../termos/termosdeuso.php">&nbspTermos e Condições</span></label>
                     </div>
 
                     <div class="actions">
