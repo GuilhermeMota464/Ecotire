@@ -5,7 +5,7 @@ include 'connection.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'] ?? '';
+    $email = trim($_POST['email'] ?? '');
     $senhaDigitada = $_POST['senha'] ?? '';
 
     try {
@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
     
-        $usuario = $stmt->fetch();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario && password_verify($senhaDigitada, $usuario['senha'])) {
+        if ($usuario && (password_verify($senhaDigitada, $usuario['senha']) || $senhaDigitada === $usuario['senha'])) {
             $_SESSION['id_usuario'] = $usuario['id_usuario'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
             echo json_encode(['status' => 'success']);
@@ -30,4 +30,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 }
-?>
