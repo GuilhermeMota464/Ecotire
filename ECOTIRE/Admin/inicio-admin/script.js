@@ -1,94 +1,79 @@
-// ===== GRÁFICO TABELA DE VENDAS (dinâmico) =====
-(async function initSalesChart() {
-  const chartEl = document.querySelector("#sales-chart");
-  if (!chartEl) return;
+document.addEventListener('DOMContentLoaded', () => {
+    const InputFile = document.querySelector("#inserir-imagem");
+    const PictureContainer = document.querySelector(".picture");
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const productModal = document.getElementById('productModal');
+    const modalClose = document.getElementById('closeModalBtn');
+    const form = document.getElementById('form-produto');
+    const promoCheckbox = document.getElementById('promo');
+    const precoPromoContainer = document.getElementById('container-preco-promo');
+    const precoPromoInput = document.getElementById('preco_promo');
 
-  try {
-    const resp = await fetch('api_graficos.php');
-    const payload = await resp.json();
+    // Pré-visualização da imagem no Modal
+    if (InputFile && PictureContainer) {
+        InputFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const pictureImage = PictureContainer.querySelector('.picture-image');
 
-    const meses = payload.meses || [];
-    const faturamento = payload.faturamento_mensal || [];
-    const acessos = payload.acessos || [];
-    const abandono = payload.abandono || [];
+            if (file) {
+                const reader = new FileReader();
+                reader.addEventListener('load', function(e) {
+                    const oldImg = PictureContainer.querySelector('img');
+                    if (oldImg) oldImg.remove();
 
-    const options = {
-      colors: ['rgb(43, 109, 77)', '#36A2EB', 'rgb(255, 0, 55)'],
-      series: [
-        { name: 'Faturamento mensal', data: faturamento },
-        { name: 'Acessos ao site', data: acessos },
-        { name: 'Abandono de carrinho', data: abandono }
-      ],
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: { enabled: false }
-      },
-      stroke: {
-        width: [3, 3, 3],
-        curve: 'straight'
-      },
-      legend: {
-        tooltipHoverFormatter: function(val, opts) {
-          return val + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>';
-        }
-      },
-      xaxis: {
-        categories: meses
-      },
-      grid: {
-        borderColor: 'rgb(184, 190, 195)'
-      }
-    };
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'preview-img';
 
-    new ApexCharts(chartEl, options).render();
-  } catch (e) {
-    console.error('Falha ao carregar dados dos gráficos:', e);
-  }
-})();
+                    if (pictureImage) pictureImage.style.display = 'none';
+                    PictureContainer.appendChild(img);
+                });
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
-// ===== GRÁFICO DE PIZZA GÊNERO (dinâmico) =====
-(async function initGenderChart() {
-  const chartEl = document.querySelector("#gender-chart");
-  if (!chartEl) return;
+    // Abertura do Modal
+    function openModal() {
+        form.reset();
+        const pictureImage = PictureContainer.querySelector('.picture-image');
+        const existingImg = PictureContainer.querySelector('img');
+        
+        if (existingImg) existingImg.remove();
+        if (pictureImage) pictureImage.style.display = 'block';
 
-  try {
-    const resp = await fetch('api_graficos.php');
-    const payload = await resp.json();
+        precoPromoContainer.style.display = 'none';
+        precoPromoInput.removeAttribute('required');
 
-    const generoLabels = payload?.genero?.labels || ['Feminino','Masculino','Outros','Prefiro não dizer'];
-    const generoSeries = payload?.genero?.series || [0,0,0,0];
+        modalBackdrop.classList.add('open');
+        productModal.classList.add('open');
+    }
 
-    const options = {
-      series: generoSeries,
-      chart: {
-        width: 380,
-        type: 'pie'
-      },
-      plotOptions: {
-        pie: { expandOnClick: false }
-      },
-      states: {
-        hover: { filter: { type: 'none' } },
-        active: { filter: { type: 'darken', value: 0.1 } }
-      },
-      labels: generoLabels,
-      colors: ['#FF6384', '#36A2EB', '#FFCE56', 'rgb(175, 175, 175)'],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: { width: 200 },
-            legend: { position: 'bottom' }
-          }
-        }
-      ]
-    };
+    // Fechamento do Modal
+    function closeModal() {
+        modalBackdrop.classList.remove('open');
+        productModal.classList.remove('open');
+    }
 
-    new ApexCharts(chartEl, options).render();
-  } catch (e) {
-    console.error('Falha ao carregar dados do gênero:', e);
-  }
-})();
+    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+    if (modalClose) modalClose.addEventListener('click', closeModal);
 
+    modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) closeModal();
+    });
 
+    // Exibição do campo de preço promocional
+    if (promoCheckbox) {
+        promoCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                precoPromoContainer.style.display = 'block';
+                precoPromoInput.setAttribute('required', 'true');
+            } else {
+                precoPromoContainer.style.display = 'none';
+                precoPromoInput.removeAttribute('required');
+                precoPromoInput.value = '';
+            }
+        });
+    }
+});

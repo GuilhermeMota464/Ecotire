@@ -7,10 +7,11 @@ $now = new DateTime();
 $year = (int)$now->format('Y');
 $monthNow = (int)$now->format('n');
 
-$meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+$meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 $meses_ate_agora = array_slice($meses, 0, $monthNow);
 
 try {
+    // 1. Consulta Faturamento Mensal
     $sql = "
         SELECT MONTH(data_pedido) AS mes,
                SUM(total) AS faturamento
@@ -29,41 +30,38 @@ try {
     foreach ($rows as $r) {
         $mes = (int)$r['mes'];
         if ($mes >= 1 && $mes <= $monthNow) {
-            $index = $mes - 1;
-            $faturamento_por_mes[$index] = (float)$r['faturamento'];
+            $faturamento_por_mes[$mes - 1] = (float)$r['faturamento'];
         }
     }
 
-    // Sem tabelas específicas para acessos/abandono no schema atual.
     $acessos_por_mes = array_fill(0, $monthNow, 0);
     $abandono_por_mes = array_fill(0, $monthNow, 0);
 
-    // Gênero dos clientes (usuários)
-    // Espera-se que a coluna usuario.genero exista com valores:
-    // masculino, feminino, outros, prefiro_nao_dizer
-    $generos = ['feminino','masculino','outros','prefiro_nao_dizer'];
+    // 2. Consulta Gênero dos Clientes
+    $generos = ['feminino', 'masculino', 'outros', 'prefiro_nao_dizer'];
     $genero_counts = array_fill_keys($generos, 0);
 
     try {
         $sqlGenero = "SELECT genero, COUNT(*) AS qtd FROM usuario GROUP BY genero";
         $stmtGenero = $pdo->query($sqlGenero);
         $rowsGenero = $stmtGenero->fetchAll(PDO::FETCH_ASSOC);
+        
         foreach ($rowsGenero as $row) {
-            $g = $row['genero'] ?? null;
+            $g = strtolower($row['genero'] ?? '');
             $qtd = (int)($row['qtd'] ?? 0);
-            if ($g && array_key_exists($g, $genero_counts)) {
+            if (array_key_exists($g, $genero_counts)) {
                 $genero_counts[$g] = $qtd;
             }
         }
     } catch (Throwable $e) {
-        // Caso a coluna ainda não exista, mantém zeros.
+        // Mantém os zeros caso a coluna ou tabela não existam
     }
 
     $series_genero = [
-        (int)($genero_counts['feminino'] ?? 0),
-        (int)($genero_counts['masculino'] ?? 0),
-        (int)($genero_counts['outros'] ?? 0),
-        (int)($genero_counts['prefiro_nao_dizer'] ?? 0),
+        $genero_counts['feminino'],
+        $genero_counts['masculino'],
+        $genero_counts['outros'],
+        $genero_counts['prefiro_nao_dizer'],
     ];
 
     echo json_encode([
@@ -72,7 +70,7 @@ try {
         'acessos' => $acessos_por_mes,
         'abandono' => $abandono_por_mes,
         'genero' => [
-            'labels' => ['Feminino','Masculino','Outros','Prefiro não dizer'],
+            'labels' => ['Feminino', 'Masculino', 'Outros', 'Prefiro não dizer'],
             'series' => $series_genero
         ],
         'ano' => $year
@@ -85,5 +83,3 @@ try {
         'details' => $e->getMessage()
     ]);
 }
-
-

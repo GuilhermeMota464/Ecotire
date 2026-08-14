@@ -1,54 +1,51 @@
 <?php
-include 'connection.php'; 
+include 'connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-    $nome = $_POST['nome'];
-    $preco = floatval($_POST['preco']);
-    $estoque   = intval($_POST['estoque']);
-    $descricao = $_POST['descricao'] ?? '';
-    $promoCheck = isset($_POST['promo']);
-    $preco_promocional = isset($_POST['preco_promocional']) && $_POST['preco_promocional'] !== '' ? floatval($_POST['preco_promocional']) : null;
-    $modelo = $_POST['modelo'] ?? $nome;
-    $ativo = 1;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Resgata os dados alinhados exatamente aos name="..." do formulário HTML
+    $nome              = $_POST['nome'] ?? '';
+    $modelo            = $_POST['modelo'] ?? '';
+    $preco_custo       = floatval($_POST['preco_custo'] ?? 0);
+    $preco_venda       = floatval($_POST['preco_venda'] ?? 0);
+    $estoque           = intval($_POST['estoque'] ?? 0);
+    $descricao         = $_POST['descricao'] ?? '';
+    $promoCheck        = isset($_POST['promo']);
+    $preco_promocional = ($promoCheck && !empty($_POST['preco_promocional'])) ? floatval($_POST['preco_promocional']) : null;
+    $ativo             = 1;
+
+    // Tratamento da imagem binária (MEDIUMBLOB)
+    $imagemBinaria = null;
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        $imagemBinaria = file_get_contents($_FILES['imagem']['tmp_name']);
+    }
 
     try {
-        $sql = "INSERT INTO produtos (nome, preco_custo, preco_venda, preco_promocional, modelo, estoque, imagem, ativo)
-                VALUES (:nome, :preco_custo, :preco_venda, :preco_promocional, :modelo, :estoque, :imagem, :ativo)";
+        // Query com a coluna descricao inclusa
+        $sql = "INSERT INTO produtos (nome, preco_custo, preco_venda, preco_promocional, modelo, estoque, imagem, descricao, ativo)
+                VALUES (:nome, :preco_custo, :preco_venda, :preco_promocional, :modelo, :estoque, :imagem, :descricao, :ativo)";
 
         $stmt = $pdo->prepare($sql);
 
-        // imagem: o upload no admin normalmente salva em Assets e usa o nome do arquivo base.
-        // Como este submit.php atual não trata upload, mantemos fallback para null.
-        $imagem = null;
-        // Se promo nao estiver marcado, preco_promocional vira NULL
-        if (!$promoCheck) {
-            $preco_promocional = null;
-        }
+        // Bind explicito para garantir a gravação binária da imagem
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':preco_custo', $preco_custo);
+        $stmt->bindValue(':preco_venda', $preco_venda);
+        $stmt->bindValue(':preco_promocional', $preco_promocional);
+        $stmt->bindValue(':modelo', $modelo);
+        $stmt->bindValue(':estoque', $estoque, PDO::PARAM_INT);
+        $stmt->bindValue(':imagem', $imagemBinaria, PDO::PARAM_LOB);
+        $stmt->bindValue(':descricao', $descricao);
+        $stmt->bindValue(':ativo', $ativo, PDO::PARAM_INT);
 
-        $valores = [
-            ':nome' => $nome,
-            ':preco_custo' => $preco,
-            ':preco_venda' => $preco,
-            ':preco_promocional' => $preco_promocional,
-            ':modelo' => $modelo,
-            ':estoque' => $estoque,
-            ':imagem' => $imagem,
-            ':ativo' => $ativo
-        ];
-
-        if ($stmt->execute($valores)) {
-            echo "Produto cadastrado com sucesso!";
-        } else {
-            echo "Erro ao cadastrar o produto.";
-        }
+        $stmt->execute();
 
     } catch (PDOException $e) {
-        echo "Erro no banco de dados: " . $e->getMessage();
+        die("Erro no banco de dados: " . $e->getMessage());
     }
+
     $pdo = null;
-    header("Location: ../../ECOTIRE/Admin/produtos/produtos-admin.php");
+    header("Location: ../Admin/produtos/produtos-admin.php");
     exit;
 }
 ?>
