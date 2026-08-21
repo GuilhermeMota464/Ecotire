@@ -1,15 +1,17 @@
   <!DOCTYPE html>
   <html lang="pt-br">
-  <head>
-      <link rel="stylesheet" href="style.css">
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Sobre nós</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  </head>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Aruanã</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    </head>
 <body>
   <!-- Cabeçalho -->
 <header>
@@ -24,8 +26,10 @@
             </div>
  
             <div class="header-actions">
-                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
-                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user"
+                    title="Minha Conta"></i>
+                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping"
+                    title="Meu Carrinho"></i>
             </div>
         </div>
         <div class="header-bottom">
@@ -101,38 +105,44 @@
 <footer class="footer">
     <div class="footer-container">
 
-        <div class="footer-left">
-            <h2>
-                O futuro começa nas escolhas de hoje.<br>
-                A Aruanã oferece soluções sustentáveis para um dia a dia mais responsável.
-            </h2>
+        <div class="footer-top">
+            <div class="footer-left">
+                <p class="footer-mensagem">
+                    O futuro começa nas escolhas de hoje.<br>
+                    A Aruanã torna esse caminho mais simples.
+                </p>
+            </div>
 
-            <div class="footer-logo">
-                <img src="../../assetsGerais/aruanaCabecario.webp">   
+            <div class="footer-right">
+                <nav>
+                    <ul>
+                        <li><a href='../inicio/index.php'>Início</a></li>
+                        <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
+                        <li><a href="../produto/produto.php">Produtos</a></li>
+                        <li><a href="#fale_conosco">Contato</a></li>
+                        <li><a href='../perfil/perfil.php'>Perfil</a></li>
+                    </ul>
+                </nav>
+
+                <div class="social">
+                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></i></a>
+                    <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
             </div>
         </div>
 
-        <div class="footer-right">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
+            </div>
 
-            <nav>
-                <ul>
-                    <li><a href='../inicio/index.php'>Início</a></li>
-                    <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
-                    <li><a href="'../produto/produto.php'">Produtos</a></li>
-                    <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
-                    <li><a href= '../perfil/perfil.php'>Perfil</a></li>
-                </ul>
-            </nav>
-
-
-            <div class="footer-bottom">
+            <div class="footer-legal">
                 <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
 
                 <div class="footer-links">
                     <a href="../termos/termosdeuso.php">Termos de uso</a>
                 </div>
             </div>
-
         </div>
 
     </div>

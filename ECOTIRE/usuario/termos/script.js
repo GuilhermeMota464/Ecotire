@@ -1,77 +1,63 @@
-// Obtém o botão
-const btn = document.getElementById("btnTopo");
+function toggleMenu() {
+    const menu = document.getElementById("menu-links");
+    const icon = document.querySelector("#icon i");
 
-// Quando o usuário rolar a página, verifica se deve mostrar o botão
-window.onscroll = function() {
-    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 100) {
-        btn.style.display = "flex"; // Mostra
+    menu.classList.toggle("mostrar");
+
+    if (menu.classList.contains("mostrar")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
     } else {
-        btn.style.display = "none"; // Esconde
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
     }
-};
+}
 
-// Quando o usuário clicar, rola suavemente para o topo
-btn.addEventListener("click", function(){
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-});
-
-// Pesquisa auto 
+// ===== Pesquisa =====
 const inputBusca = document.getElementById('busca');
 const divResultado = document.getElementById('resultado');
-const iconeLupa = document.getElementById('lupa');
 
-inputBusca.addEventListener('input', async () => {
-    const query = inputBusca.value;
-    if(query.length < 2){
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-        return;
-    }
-    // AJAX
-    const response = await fetch(`../../funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
-    const htmlResultados = await response.text();
-    
-    if (htmlResultados && htmlResultados.trim() !== 'Nenhum resultado encontrado') {
-        divResultado.innerHTML = htmlResultados;
-        divResultado.style.display = 'block';
-        inputBusca.classList.add('busca-ativa-input');
-        iconeLupa.classList.add('busca-ativa-icone');
-    } else {
-        divResultado.style.display = 'none';
-        inputBusca.classList.remove('busca-ativa-input');
-        iconeLupa.classList.remove('busca-ativa-icone');
-    }
-
-});
-
-document.getElementById('botaoCarrinho').addEventListener('click', function() {
-    fetch('../../funcoesPHP/verificarSessao.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.logado) {
-            window.location.href = '../carrinho/carrinho.php';
-        } else {
-            Swal.fire({
-                title: 'Acesso Restrito',
-                text: 'Você precisa fazer login para ver seu carrinho.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Fazer Login',
-                cancelButtonText: 'Depois'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../carrinho/carrinho.php';
-                }
-            });
+if (inputBusca && divResultado) {
+    inputBusca.addEventListener('input', async () => {
+        const query = inputBusca.value.trim();
+        if (query.length < 2) {
+            divResultado.style.display = 'none';
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Erro ao verificar sessão:', error);
+        try {
+            const response = await fetch(`/ecotire/ecotire/funcoesPHP/busca.php?busca=${encodeURIComponent(query)}`);
+            const html = await response.text();
+            divResultado.innerHTML = html;
+            divResultado.style.display = 'block';
+        } catch (erro) {
+            console.log(erro);
+        }
     });
+}
+
+function fecharBusca() {
+    if (divResultado) divResultado.style.display = 'none';
+}
+
+document.addEventListener('click', (e) => {
+    if (inputBusca && divResultado && !inputBusca.contains(e.target) && !divResultado.contains(e.target)) {
+        fecharBusca();
+    }
 });
+
+// ===== Botão Voltar ao Topo =====
+const btnTopo = document.getElementById('btnTopo');
+
+if (btnTopo) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTopo.classList.add('mostrar');
+        } else {
+            btnTopo.classList.remove('mostrar');
+        }
+    });
+
+    btnTopo.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}

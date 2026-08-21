@@ -99,38 +99,44 @@ $produtos = $stmt->fetchAll();
 <footer class="footer">
     <div class="footer-container">
 
-        <div class="footer-left">
-            <h2>
-                O futuro começa nas escolhas de hoje.<br>
-                A Aruanã oferece soluções sustentáveis para um dia a dia mais responsável.
-            </h2>
+        <div class="footer-top">
+            <div class="footer-left">
+                <p class="footer-mensagem">
+                    O futuro começa nas escolhas de hoje.<br>
+                    A Aruanã torna esse caminho mais simples.
+                </p>
+            </div>
 
-            <div class="footer-logo">
-                <img src="../../assetsGerais/aruanaCabecario.webp">   
+            <div class="footer-right">
+                <nav>
+                    <ul>
+                        <li><a href='../inicio/index.php'>Início</a></li>
+                        <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
+                        <li><a href="../produto/produto.php">Produtos</a></li>
+                        <li><a href="#fale_conosco">Contato</a></li>
+                        <li><a href='../perfil/perfil.php'>Perfil</a></li>
+                    </ul>
+                </nav>
+
+                <div class="social">
+                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></i></a>
+                    <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
             </div>
         </div>
 
-        <div class="footer-right">
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
+            </div>
 
-            <nav>
-                <ul>
-                    <li><a href='../inicio/index.php'>Início</a></li>
-                    <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
-                    <li><a href="'../produto/produto.php'">Produtos</a></li>
-                    <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
-                    <li><a href= '../perfil/perfil.php'>Perfil</a></li>
-                </ul>
-            </nav>
-
-
-            <div class="footer-bottom">
+            <div class="footer-legal">
                 <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
 
                 <div class="footer-links">
                     <a href="../termos/termosdeuso.php">Termos de uso</a>
                 </div>
             </div>
-
         </div>
 
     </div>
