@@ -1,3 +1,20 @@
+function toggleMenu() {
+    const menu = document.getElementById("menu-links");
+    const icon = document.querySelector("#icon i");
+    
+    // Alterna a classe 'mostrar' criada no CSS
+    menu.classList.toggle("mostrar");
+
+    // Muda o ícone de barras (hambúrguer) para 'X' ao abrir o menu
+    if (menu.classList.contains("mostrar")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
+    } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
+    }
+}
+
 function favoritarProduto(coracao) {
     coracao.classList.toggle('liked');
 

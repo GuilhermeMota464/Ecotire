@@ -28,6 +28,9 @@
             <div class="header-actions">
                 <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user"
                     title="Minha Conta"></i>
+                    <button id="icon" class="hamburger" aria-label="Abrir menu" onclick="toggleMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping"
                     title="Meu Carrinho"></i>
             </div>

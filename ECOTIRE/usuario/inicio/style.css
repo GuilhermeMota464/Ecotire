@@ -795,4 +795,179 @@ body {
         flex-wrap:wrap;
     }
 
+    body {
+        overflow-x: hidden;
+    }
+
+    /* HEADER - Ajuste para 2 linhas no topo */
+    .header-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .logo {
+        order: 1;
+        height: 40px;
+    }
+
+    /* Ícones no topo direito: Carrinho e Hambúrguer */
+    .header-actions {
+        order: 2;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .icone-perfil {
+        display: none; /* Mantém oculto no topo */
+    }
+
+    .hamburger {
+        display: flex;
+        background: none;
+        border: none;
+        color: var(--branco);
+        font-size: 22px;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .hamburger i {
+        font-size: 22px;
+    }
+
+    /* Campo de busca ocupando a 2ª linha por inteiro */
+    .search-group {
+        order: 3;
+        width: 100%;
+        flex: 0 0 100%;
+        margin-top: 5px;
+    }
+
+    .search-bar {
+        width: 100%;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 14px;
+        padding: 0 15px 0 40px;
+    }
+
+    #btn-busca {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 30px;
+        width: 30px;
+        background: transparent;
+        color: #8a8a8a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* MENU DROPDOWN */
+    .header-bottom {
+        position: relative;
+    }
+
+    .header-bottom nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        background: var(--branco);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-horizontal {
+        display: none;
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .menu-horizontal.mostrar {
+        display: flex;
+    }
+
+    .menu-horizontal li {
+        margin: 0;
+        width: 100%;
+    }
+
+    .menu-horizontal a {
+        display: block;
+        border-radius: 0;
+        padding: 12px 20px;
+        text-align: center;
+    }
+
+    /* BANNER */
+    .main-content {
+        padding: 15px 10px;
+        align-items: stretch;
+    }
+
+    .imgAlternada {
+        height: 200px;
+        border-radius: 20px;
+        border: 4px solid var(--branco);
+    }
+
+    .Slide img {
+        height: 200px;
+    }
+
+   .fale_conosco_container {
+        padding: 20px 15px; /* Reduzido para ocupar menos espaço de tela no celular */
+        border-radius: 20px;
+        margin-top: 20px;
+    }
+
+    .form_groups {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #enviar_mensagem {
+        width: 100%;
+    }
+
+    /* FOOTER */
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .footer-container {
+        gap: 30px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-left,
+    .footer-right {
+        width: 100%;
+        flex: none;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .footer-legal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px; /* Removeu o espaçamento excessivo do desktop */
+        text-align: left;
+    }
 }
