@@ -35,7 +35,7 @@ $sql_pagamentos_pendentes = "SELECT pa.*, ped.data_pedido, ped.status as pedido_
         JOIN pedidos ped ON pa.id_pedido = ped.id_pedido
         LEFT JOIN pedido_itens pi ON ped.id_pedido = pi.id_pedido
         LEFT JOIN produtos pr ON pi.id_produto = pr.id_produto
-        WHERE ped.id_usuario = ? AND pa.status = 'pendente'
+        WHERE ped.id_usuario = ? AND ped.status = 'pendente'
         ORDER BY ped.data_pedido DESC";
 $stmt = $pdo->prepare($sql_pagamentos_pendentes);
 $stmt->execute([$id_usuario]);
@@ -208,7 +208,7 @@ if (isset($_GET['logout'])) {
 
                                 <div class="actions-row">
                                     <div class="actions-item">
-                                        <?php if (($pedido['status'] ?? '') === 'pago'): ?>
+                                        <?php if (($pedido['pedido_status'] ?? '') === 'pago'): ?>
                                             <button type="button" class="btn-pago" disabled style="cursor:not-allowed;">
                                                 <i class="fa-solid fa-check"></i> Pago
                                             </button>
@@ -226,7 +226,7 @@ if (isset($_GET['logout'])) {
                                         <form method="POST" action="../checkout/finalizar_compra.php" style="margin:0;">
                                             <input type="hidden" name="cancelar_pedido" value="1">
                                             <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                            <?php if (($pedido['status'] ?? '') === 'pago'): ?>
+                                            <?php if (($pedido['pedido_status'] ?? '') === 'pago'): ?>
                                                 <button type="button" class="btn-cancelar" disabled>
                                                     <i class="fa-solid fa-ban"></i> Cancelar
                                                 </button>
