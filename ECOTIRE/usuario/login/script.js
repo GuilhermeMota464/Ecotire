@@ -25,15 +25,16 @@ if (loginForm) {
             }
         });
 
-        const formData = new FormData(loginForm);
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('senha', password);
 
         fetch('../../funcoesPHP/login.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.text()) 
-        .then(text => {
-            const data = JSON.parse(text);
+        .then(response => response.json()) // Lê diretamente como JSON
+        .then(data => {
             if (data.status === 'success') {
                 Swal.fire({
                     icon: 'success',
@@ -42,7 +43,8 @@ if (loginForm) {
                     showConfirmButton: false,
                     timer: 2000
                 }).then(() => {
-                    window.location.href = '../../usuario/inicio/index.php'; 
+                    // Redireciona dinamicamente para o caminho retornado pelo servidor
+                    window.location.href = data.redirect; 
                 });
             } else {
                 Swal.fire({
@@ -54,6 +56,7 @@ if (loginForm) {
             }
         })
         .catch(error => {
+            console.error('Erro:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Erro de conexão',

@@ -38,7 +38,7 @@
 
                     <div class="input-group">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" name="senha" placeholder="Digite sua senha">
+                        <input type="password" id="password" name="senha" placeholder="Digite sua senha" required>
                     </div>
 
                     <div class="checkbox-group">
