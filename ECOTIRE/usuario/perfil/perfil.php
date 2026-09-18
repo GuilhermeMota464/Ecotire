@@ -113,7 +113,7 @@ if (isset($_GET['logout'])) {
     <!-- Cabeçalho -->
     <header>
         <div class="header">
-            <img src="../../assetsGerais/ecotire.webp" class="logo" alt="Logo Ecotire" onclick="window.location.href='../inicio/index.php'">
+            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruana" onclick="window.location.href='../inicio/index.php'">
             <div class="header-actions">
                 <i onclick="window.location.href = '../inicio/index.php'" class="fa-solid fa-house" title="Início"></i>
                 <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
