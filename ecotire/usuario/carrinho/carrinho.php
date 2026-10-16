@@ -422,4 +422,5 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
 </body>
+    <script src="script.js"></script>
 </html>

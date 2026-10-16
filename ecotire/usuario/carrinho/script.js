@@ -264,3 +264,51 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Pedido realizado com sucesso!');
     }
 });
+
+// Aplica máscara de CEP no formato 00000-000
+function applyCepMaskTo(input) {
+    if (!input) return;
+    // Set maxlength for formatted CEP: 00000-000 => 9 chars
+    try { input.setAttribute('maxlength', '9'); } catch (e) {}
+    try { input.setAttribute('inputmode', 'numeric'); } catch (e) {}
+    input.addEventListener('input', function (e) {
+        var v = e.target.value.replace(/\D/g, '');
+        if (v.length > 8) v = v.slice(0,8);
+        if (v.length <= 5) e.target.value = v;
+        else e.target.value = v.slice(0,5) + '-' + v.slice(5,8);
+    });
+}
+
+// Capitaliza primeiras letras de cada palavra (endereço/complemento)
+function applyCapitalizeOnBlur(input) {
+    if (!input) return;
+    input.addEventListener('blur', function (e) {
+        var s = e.target.value.trim().toLowerCase();
+        e.target.value = s.replace(/\b\w/g, function(ch){ return ch.toUpperCase(); });
+    });
+}
+
+// Inicializa máscaras em campos comuns quando este script estiver disponível
+(function initMasksAndCartIcons() {
+    // Phone inputs: any tel input or named telefone
+    var phoneInputs = [].slice.call(document.querySelectorAll('input[type="tel"], input[name="telefone"], #telefone'));
+    phoneInputs.forEach(function(inp){ applyPhoneMaskTo(inp); });
+
+    // CEP fields (by common ids or name)
+    var cepInputs = [].slice.call(document.querySelectorAll('input[name="cep"], input#novo_cep, input[name="cep_novo"]'));
+    cepInputs.forEach(function(inp){ applyCepMaskTo(inp); });
+
+    // Complement/address formatting
+    var addrFields = [].slice.call(document.querySelectorAll('input[name="complemento"], input#novo_complemento, input[name="endereco"]'));
+    addrFields.forEach(function(inp){ applyCapitalizeOnBlur(inp); });
+
+    // Make any cart icon clickable to open carrinho (if not already a link)
+    var icons = document.querySelectorAll('.fa-solid.fa-cart-shopping');
+    icons.forEach(function(ic){
+        if (ic.closest('a')) return;
+        ic.style.cursor = 'pointer';
+        ic.addEventListener('click', function(){
+            window.location.href = '../carrinho/carrinho.php';
+        });
+    });
+})();
