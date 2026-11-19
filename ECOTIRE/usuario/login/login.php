@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecotire - Login</title>
+    <title>Aruanã - Login</title>
 
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -22,31 +22,43 @@
     <div class="main-wrapper">
 
         <section class="form-panel">
-            <div class="seta-wrapper">
-                <a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"   ></i></a>
-            </div>
+            <a href="../inicio/index.php" class="voltar" aria-label="Voltar para o início">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
 
             <div class="form-container">
-                <h2>Entre na sua conta</h2>
+                <h1>Entre na sua conta</h1>
                 <p class="subtitle">Bem-vindo de volta à Aruanã.</p>
 
                 <form id="loginForm" method="POST" action="../../funcoesPHP/login.php">
                     <div class="input-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                        <div class="campo">
+                            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                            <input type="email" id="email" name="email" placeholder="Digite seu e-mail"
+                                   autocomplete="email" required>
+                        </div>
                     </div>
 
                     <div class="input-group">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" name="senha" placeholder="Digite sua senha" required>
+                        <div class="campo">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                            <input type="password" id="password" name="senha" placeholder="Digite sua senha"
+                                   autocomplete="current-password" required>
+                            <button type="button" class="olho" id="toggleSenha" aria-label="Mostrar senha">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
-                        <label for="terms">Eu li e concordo com os<span href="../termos/termosdeuso.php">&nbspTermos e Condições</span></label>
+                        <label for="terms">Eu li e concordo com os</label>
+                        <a href="../termos/termosdeuso.php" target="_blank" rel="noopener">Termos e Condições</a>
                     </div>
 
-                    <button type="submit" class="btn-submit">Entrar</button>
+                    <button type="submit" class="btn-submit">Entrar <i class="fa-solid fa-arrow-right"></i></button>
                 </form>
 
                 <div class="divider"><span>ou</span></div>
@@ -64,14 +76,32 @@
         </section>
 
         <section class="image-panel">
-            <img src="../../assetsGerais/imagemLogin.png" alt="Aruanã" class="side-image">
+            <img src="../../assetsGerais/imagemLogin.png" alt="" class="side-image">
+            <div class="image-overlay">
+                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã" class="overlay-logo">
+                <p class="overlay-texto">O futuro começa nas escolhas de hoje.</p>
+            </div>
         </section>
 
     </div>
-    
+
     <script src="script.js"></script>
 
 <script>
+// Mostrar / ocultar senha
+(function () {
+    var botao = document.getElementById('toggleSenha');
+    var campo = document.getElementById('password');
+    if (!botao || !campo) return;
+
+    botao.addEventListener('click', function () {
+        var mostrar = campo.type === 'password';
+        campo.type = mostrar ? 'text' : 'password';
+        botao.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+        botao.querySelector('i').className = mostrar ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+    });
+})();
+
 function handleGoogleLogin(response) {
     fetch('../../funcoesPHP/loginGoogle.php', {
         method: 'POST',
