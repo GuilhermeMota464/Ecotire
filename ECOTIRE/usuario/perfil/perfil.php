@@ -28,19 +28,6 @@ $stmt->execute([$id_usuario]);
 $pedidos_andamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-// Busca pagamentos pendentes (novo SQL)
-$sql_pagamentos_pendentes = "SELECT pa.*, ped.data_pedido, ped.status as pedido_status,
-        pr.nome as nome_produto, pi.quantidade, pr.imagem as imagem_produto,
-        pa.valor as total
-        FROM pagamentos pa
-        JOIN pedidos ped ON pa.id_pedido = ped.id_pedido
-        LEFT JOIN pedido_itens pi ON ped.id_pedido = pi.id_pedido
-        LEFT JOIN produtos pr ON pi.id_produto = pr.id_produto
-        WHERE ped.id_usuario = ? AND ped.status = 'pendente'
-        ORDER BY ped.data_pedido DESC";
-$stmt = $pdo->prepare($sql_pagamentos_pendentes);
-$stmt->execute([$id_usuario]);
-$pagamentos_pendentes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Busca endereço do usuário
 $sql_endereco = "SELECT * FROM endereco WHERE id_usuario = ?";
@@ -135,8 +122,6 @@ if (isset($_GET['logout'])) {
                 <a href="#" class="tab-btn active" data-tab="pedidos">
                     <i class="fa-solid fa-box-open"></i> Meus Pedidos
                 </a>
-                <a href="#" class="tab-btn" data-tab="pagamentos">
-                    <i class="fa-solid fa-credit-card"></i> Pagamentos
                 </a>
                 <a href="#" class="tab-btn" data-tab="conta">
                     <i class="fa-solid fa-gear"></i> Configurações
@@ -176,72 +161,6 @@ if (isset($_GET['logout'])) {
                                 <p><strong>Quantidade:</strong> <?php echo $pedido['quantidade']; ?></p>
                                 <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
                                 <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- Tab: Pagamentos Pendentes -->
-            <div class="tab-content" id="pagamentos">
-                <h2><i class="fa-solid fa-credit-card"></i> Pagamentos Pendentes</h2>
-                
-                <?php if (empty($pagamentos_pendentes)): ?>
-                    <div class="empty-state">
-                        <i class="fa-solid fa-check-circle"></i>
-                        <p>Você não tem pagamentos pendentes.</p>
-                    </div>
-                <?php else: ?>
-                    <div class="orders-list">
-                        <?php foreach ($pagamentos_pendentes as $pedido): ?>
-                        <div class="order-card pending">
-                            <div class="order-header">
-                                <span class="order-id">Pedido #<?php echo $pedido['id_pedido']; ?></span>
-                                <span class="order-status status-pendente">Pendente</span>
-                            </div>
-                            <div class="order-body">
-                                <p><strong>Produto:</strong> <?php echo htmlspecialchars($pedido['nome_produto']); ?></p>
-                                <p><strong>Quantidade:</strong> <?php echo $pedido['quantidade']; ?></p>
-                                <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
-                                <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
-                                <p><strong>Método de Pagamento:</strong> <?php echo htmlspecialchars($pedido['metodo'] ?? ''); ?></p>
-
-                                <div class="actions-row">
-                                    <div class="actions-item">
-                                        <?php if (($pedido['pedido_status'] ?? '') === 'pago'): ?>
-                                            <button type="button" class="btn-pago" disabled style="cursor:not-allowed;">
-                                                <i class="fa-solid fa-check"></i> Pago
-                                            </button>
-                                        <?php else: ?>
-                                            <form method="POST" action="../checkout/finalizar_compra.php" style="margin:0;">
-                                                <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                                <button type="submit" class="btn-pagar">
-                                                    <i class="fa-solid fa-credit-card"></i> Pagar Agora
-                                                </button>
-                                            </form>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="actions-item">
-                                        <form method="POST" action="../checkout/finalizar_compra.php" style="margin:0;">
-                                            <input type="hidden" name="cancelar_pedido" value="1">
-                                            <input type="hidden" name="id_pedido" value="<?php echo $pedido['id_pedido']; ?>">
-                                            <?php if (($pedido['pedido_status'] ?? '') === 'pago'): ?>
-                                                <button type="button" class="btn-cancelar" disabled>
-                                                    <i class="fa-solid fa-ban"></i> Cancelar
-                                                </button>
-                                            <?php else: ?>
-                                                <button type="submit" class="btn-cancelar">
-                                                    <i class="fa-solid fa-ban"></i> Cancelar
-                                                </button>
-                                            <?php endif; ?>
-                                        </form>
-                                    </div>
-                                </div>
-
-
-
                             </div>
                         </div>
                         <?php endforeach; ?>
