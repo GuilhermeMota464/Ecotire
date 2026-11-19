@@ -59,10 +59,10 @@ unset($_SESSION['feedback']);
                     </div>
 
                     <div class="input-group">
-                        <label for="tele">Telefone</label>
+                        <label for="tele">Telefone (opcional)</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" autocomplete="tel" required>
+                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" autocomplete="tel">
                         </div>
                     </div>
 
