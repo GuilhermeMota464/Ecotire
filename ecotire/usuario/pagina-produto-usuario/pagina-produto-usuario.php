@@ -218,7 +218,8 @@ if (!$produto) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
     <!-- Menu, busca e ícone do carrinho do header (mesmo script da página de produtos) -->
     <script src="../produto/script.js"></script>
-    <script src="pagina-produto-usuario.js"></script>
+    <script src="script.js"></script>
+
 </body>
 
 </html>

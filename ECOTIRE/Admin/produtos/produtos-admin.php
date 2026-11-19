@@ -29,20 +29,37 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="main-content">
     <!-- Cabeçalho -->
-    <header>
-        <div class="header">
-            <div class="header-top">
-                <img src="../../assetsGerais/aruana.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio-admin/inicio-admin.php'">           
-                <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de Perfil">
-            </div>
-            <div class="header-bottom">
-                <nav>
-                    <ul class="menu-horizontal">
-                        <li><a onclick="window.location.href='../inicio-admin/inicio-admin.php'">Pedidos</a></li>
-                        <li><a onclick="window.location.href='../produtos/produtos-admin.php'" class="ativo">Produtos</a></li>
-                        <li><a onclick="window.location.href='../usuarios/usuarios.php'">Usuários</a></li>
-                    </ul>
-                </nav>
+    <header class="site-header" id="siteHeader">
+        <div class="header-inner">
+            <a href="../inicio-admin/inicio-admin.php" class="logo-link" aria-label="Ir para o início">
+                <img src="../../assetsGerais/aruana.webp" class="logo" alt="Aruanã">
+            </a>
+
+            <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+                <ul class="menu-horizontal">
+                    <li><a href="../inicio-admin/inicio-admin.php"><i class="fa-solid fa-box-open"></i> Pedidos</a></li>
+                    <li><a href="../produtos/produtos-admin.php" class="ativo" aria-current="page"><i class="fa-solid fa-tags"></i> Produtos</a></li>
+                    <li><a href="../usuarios/usuarios.php"><i class="fa-solid fa-user-group"></i> Usuários</a></li>
+                </ul>
+            </nav>
+
+            <div class="profile" id="profile">
+                <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+                    <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de perfil">
+                    <span class="profile-text">
+                        <span class="profile-name">Administrador</span>
+                        <span class="profile-role">Painel Aruanã</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-down profile-chevron"></i>
+                </button>
+                <div class="profile-menu" id="profileMenu" role="menu">
+                    <!-- Ajuste o caminho do logout conforme o seu projeto -->
+                    <a href="../../funcoesPHP/logout.php" role="menuitem"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+                </div>
             </div>
         </div>
     </header>

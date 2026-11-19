@@ -1,4 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ===== Cabeçalho =====
+    const siteHeader = document.getElementById('siteHeader');
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+
+    // Sombra ao rolar a página
+    if (siteHeader) {
+        const onScroll = () => siteHeader.classList.toggle('scrolled', window.scrollY > 4);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    // Menu mobile
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', () => {
+            const aberto = mainNav.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', aberto);
+            menuToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+        });
+    }
+
+    // Menu do perfil
+    function fecharPerfil() {
+        if (!profileMenu) return;
+        profileMenu.classList.remove('open');
+        profileBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    if (profileBtn && profileMenu) {
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const aberto = profileMenu.classList.toggle('open');
+            profileBtn.setAttribute('aria-expanded', aberto);
+        });
+        document.addEventListener('click', (e) => {
+            if (!profileMenu.contains(e.target)) fecharPerfil();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') fecharPerfil();
+        });
+    }
+
     const InputFile = document.querySelector("#inserir-imagem");
     const PictureContainer = document.querySelector(".picture");
     const openModalBtn = document.getElementById('openModalBtn');
