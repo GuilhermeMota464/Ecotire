@@ -735,6 +735,10 @@ textarea {
     color: #777;
 }
 
+.profile-btn i {
+    font-size: 20px;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .title-action-bar {
@@ -749,5 +753,9 @@ textarea {
 
     .form-row {
         flex-direction: column;
+    }
+
+    .profile-btn{
+        font-size: 20px;
     }
 }
