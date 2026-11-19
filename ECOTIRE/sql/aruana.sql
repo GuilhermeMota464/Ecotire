@@ -9,7 +9,7 @@
 		nome VARCHAR(100) NOT NULL,
 		email VARCHAR(100) NOT NULL UNIQUE,
 		senha VARCHAR(255) NOT NULL,
-		telefone VARCHAR(20) NOT NULL,
+		telefone VARCHAR(20),
 		tipo ENUM('cliente', 'admin') DEFAULT 'cliente',
 		data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 	) ENGINE=InnoDB;
