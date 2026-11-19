@@ -177,7 +177,7 @@ try {
     $itens_inseridos = [];
 
     // Inicia a criação do pedido (uma linha em pedidos) e depois cria os itens.
-    $sql_pedido = "INSERT INTO pedidos (id_usuario, id_endereco_entrega, total, status) VALUES (?, ?, ?, 'pendente')";
+    $sql_pedido = "INSERT INTO pedidos (id_usuario, id_endereco_entrega, total, status) VALUES (?, ?, ?, 'pago')";
     $stmt_pedido = $pdo->prepare($sql_pedido);
 
     // Primeiro calcula total e armazena subtotal/preço unitário
@@ -210,7 +210,7 @@ try {
     }
 
 // Insere pagamento (1 linha em pagamentos)
-$sql_pagamento = "INSERT INTO pagamentos (id_pedido, metodo, valor, Condicao) VALUES (?, ?, ?, 'pendente')";
+$sql_pagamento = "INSERT INTO pagamentos (id_pedido, metodo, valor, Condicao) VALUES (?, ?, ?, 'aprovado')";
 $stmt_pag = $pdo->prepare($sql_pagamento);
 $stmt_pag->execute([$id_pedido_criado, strtoupper($metodo_pagamento), $total_geral]);
 
