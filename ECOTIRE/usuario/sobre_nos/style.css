@@ -1,3 +1,4 @@
+
 /* ==========================================================
    ARUANÃ — página Sobre Nós
    Paleta original mantida. Header e footer preservados.
@@ -46,16 +47,25 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-img { max-width: 100%; }
+img {
+    max-width: 100%;
+}
 
-button, input, textarea { font: inherit; }
+button,
+input,
+textarea {
+    font: inherit;
+}
 
 :where(a, button, input, textarea):focus-visible {
     outline: none;
     box-shadow: var(--foco);
 }
 
-/* --- Header Otimizado --- */
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
 .header-top {
     background: var(--cor-gradiente);
     display: flex;
@@ -72,7 +82,9 @@ button, input, textarea { font: inherit; }
     transition: var(--transicao);
 }
 
-.logo:hover { transform: scale(1.05); }
+.logo:hover {
+    transform: scale(1.05);
+}
 
 .search-group {
     display: flex;
@@ -111,8 +123,8 @@ button, input, textarea { font: inherit; }
     width: 18px;
 }
 
-#lupa:hover{
-    scale:1.1;
+#lupa:hover {
+    scale: 1.1;
     transition: var(--transicao);
 }
 
@@ -120,35 +132,38 @@ button, input, textarea { font: inherit; }
     border-bottom-left-radius: 0 !important;
     border: 2px solid var(--cor-ondas) !important;
 }
+
 .busca-ativa-icone {
     color: white !important;
     background-color: var(--cor-primaria) !important;
-} 
+}
 
 :where(.header-top) {
     gap: clamp(12px, 2vw, 28px);
 }
 
-/* ===== BUSCA ===== */
+/* ==========================================================
+   BUSCA
+   ========================================================== */
 
-.search-group{
+.search-group {
     position: relative;
 }
 
-#resultado{
+#resultado {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
     background: white;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     z-index: 9999;
     display: none;
     overflow: hidden;
 }
 
-.resultado-item{
+.resultado-item {
     display: block;
     padding: 12px 15px;
     color: rgb(43, 109, 77);
@@ -157,14 +172,18 @@ button, input, textarea { font: inherit; }
     transition: 0.2s;
 }
 
-.resultado-item:hover{
+.resultado-item:hover {
     background-color: #f5f5f5;
 }
+
+/* ==========================================================
+   AÇÕES DO CABEÇALHO
+   ========================================================== */
 
 .header-actions {
     display: flex;
     gap: 25px;
-    align-items: center; 
+    align-items: center;
 }
 
 .header-actions i {
@@ -173,7 +192,6 @@ button, input, textarea { font: inherit; }
     cursor: pointer;
     transition: var(--transicao);
 }
-
 
 .header-actions .icone-perfil {
     order: 1;
@@ -188,10 +206,13 @@ button, input, textarea { font: inherit; }
     order: 3;
 }
 
-/* --- Menu Centralizado --- */
+/* ==========================================================
+   MENU DE NAVEGAÇÃO
+   ========================================================== */
+
 .header-bottom {
     background: var(--branco);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .menu-horizontal {
@@ -201,7 +222,9 @@ button, input, textarea { font: inherit; }
     list-style: none;
 }
 
-.menu-horizontal li { margin: 0 15px; }
+.menu-horizontal li {
+    margin: 0 15px;
+}
 
 .menu-horizontal a {
     color: var(--cor-primaria);
@@ -221,6 +244,7 @@ button, input, textarea { font: inherit; }
 /* ==========================================================
    CONTEÚDO PRINCIPAL
    ========================================================== */
+
 .container-sobre {
     width: 100%;
     max-width: var(--largura);
@@ -231,7 +255,10 @@ button, input, textarea { font: inherit; }
     gap: clamp(56px, 8vw, 104px);
 }
 
-/* ---------- Apresentação ---------- */
+/* ==========================================================
+   APRESENTAÇÃO
+   ========================================================== */
+
 .about-section {
     display: grid;
     grid-template-columns: 1.05fr 1fr;
@@ -281,6 +308,7 @@ button, input, textarea { font: inherit; }
 }
 
 /* Foto com bloco lima deslocado atrás */
+
 .about-image-wrapper {
     position: relative;
     padding: 0 0 28px 28px;
@@ -312,7 +340,10 @@ button, input, textarea { font: inherit; }
     display: block;
 }
 
-/* ---------- Avaliações ---------- */
+/* ==========================================================
+   AVALIAÇÕES
+   ========================================================== */
+
 .reviews-section {
     display: flex;
     flex-direction: column;
@@ -363,7 +394,10 @@ button, input, textarea { font: inherit; }
     color: var(--cor-primaria-escura);
 }
 
-.review-card p { color: var(--cor-texto); max-width: 62ch; }
+.review-card p {
+    color: var(--cor-texto);
+    max-width: 62ch;
+}
 
 .review-autor {
     display: flex;
@@ -396,8 +430,9 @@ button, input, textarea { font: inherit; }
 }
 
 /* ==========================================================
-   FOOTER (preservado)
+   FOOTER
    ========================================================== */
+
 .footer {
     margin-top: clamp(64px, 8vw, 100px);
     background: var(--cor-gradiente);
@@ -438,9 +473,13 @@ button, input, textarea { font: inherit; }
     flex-direction: column;
 }
 
-.footer-right ul { list-style: none; }
+.footer-right ul {
+    list-style: none;
+}
 
-.footer-right li { border-bottom: 1px solid white; }
+.footer-right li {
+    border-bottom: 1px solid white;
+}
 
 .footer-right li a {
     display: block;
@@ -473,7 +512,9 @@ button, input, textarea { font: inherit; }
     text-decoration: none;
 }
 
-.social a:hover { scale: 1.2; }
+.social a:hover {
+    scale: 1.2;
+}
 
 .social a i {
     height: 42px;
@@ -517,26 +558,186 @@ button, input, textarea { font: inherit; }
     text-decoration: none;
 }
 
-.footer-links a:hover { text-decoration: underline; }
+.footer-links a:hover {
+    text-decoration: underline;
+}
 
 /* Só apaga os outros links quando o mouse está sobre um deles */
-.footer:has(a:hover) nav a { opacity: 0.4; }
+.footer:has(a:hover) nav a {
+    opacity: 0.4;
+}
+
+/* ==========================================================
+   MENU DO USUÁRIO LOGADO
+   ========================================================== */
+
+.user-menu {
+    position: relative;
+    z-index: 10000;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 12px 4px 6px;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    color: var(--branco);
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.user-greeting:hover {
+    background: rgba(255, 255, 255, .16);
+}
+
+.header-actions .user-avatar {
+    font-size: 30px;
+}
+
+.user-greeting-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+    text-align: left;
+}
+
+.user-greeting-text small {
+    font-size: .72rem;
+    font-weight: 400;
+    opacity: .9;
+}
+
+.user-greeting-text strong {
+    font-size: .95rem;
+    font-weight: 600;
+}
+
+.header-actions .user-chevron {
+    font-size: .65rem;
+    transition: transform .2s;
+}
+
+.user-menu.aberto .user-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown */
+
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 210px;
+    padding: 6px;
+    background: var(--branco);
+    border-radius: var(--raio-sm);
+    box-shadow: 0 12px 30px rgba(35, 70, 30, .22);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity .2s, transform .2s, visibility .2s;
+    z-index: 10001;
+}
+
+.user-menu.aberto .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--cor-texto);
+    font-size: .9rem;
+    text-decoration: none;
+}
+
+.user-dropdown a:hover {
+    background: rgba(44, 155, 42, .10);
+}
+
+.user-dropdown a i {
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+    color: var(--cor-primaria);
+}
+
+.user-dropdown a.sair {
+    margin-top: 4px;
+    border-top: 1px solid var(--cor-borda);
+    border-radius: 0 0 8px 8px;
+    color: #b3261e;
+}
+
+.user-dropdown a.sair i {
+    color: inherit;
+}
+
+.user-dropdown a.sair:hover {
+    background: rgba(179, 38, 30, .08);
+}
+
+/* Botão Entrar */
+
+.btn-entrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: var(--branco);
+    color: var(--cor-primaria-escura);
+    font-size: .9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transicao);
+}
+
+.header-actions .btn-entrar i {
+    font-size: 1rem;
+    color: inherit;
+}
+
+.btn-entrar:hover {
+    background: var(--cor-ondas);
+    color: var(--branco);
+}
 
 /* ==========================================================
    RESPONSIVO
    ========================================================== */
-@media (max-width: 960px) {
-    .about-section,
-    .reviews-section { grid-template-columns: 1fr; }
 
-    .about-image-wrapper { max-width: 560px; }
+@media (max-width: 960px) {
+
+    .about-section,
+    .reviews-section {
+        grid-template-columns: 1fr;
+    }
+
+    .about-image-wrapper {
+        max-width: 560px;
+    }
 }
 
 @media (max-width: 768px) {
+
     .reviews-container {
-    grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
+
     /* ----- Header: 2 linhas (logo + ações / busca) ----- */
+
     .header-top {
         flex-wrap: wrap;
         justify-content: space-between;
@@ -547,7 +748,10 @@ button, input, textarea { font: inherit; }
         border-bottom-width: 3px;
     }
 
-    .logo { order: 1; height: 40px; }
+    .logo {
+        order: 1;
+        height: 40px;
+    }
 
     .header-actions {
         order: 2;
@@ -555,25 +759,29 @@ button, input, textarea { font: inherit; }
         flex-shrink: 0;
     }
 
-    .header-actions i { font-size: 22px; }
+    .header-actions i {
+        font-size: 22px;
+    }
 
-    .icone-perfil { display: none; }
+    .icone-perfil {
+        display: none;
+    }
 
     .header-actions .hamburger {
         display: flex;
         align-items: center;
         justify-content: center;
-
         background: transparent;
         border: none;
         color: white;
-
         font-size: 22px;
         cursor: pointer;
         padding: 8px;
     }
 
-    .hamburger i { font-size: 22px; }
+    .hamburger i {
+        font-size: 22px;
+    }
 
     .search-group {
         order: 3;
@@ -607,7 +815,10 @@ button, input, textarea { font: inherit; }
     }
 
     /* ----- Menu dropdown ----- */
-    .header-bottom { position: relative; }
+
+    .header-bottom {
+        position: relative;
+    }
 
     .header-bottom nav {
         position: absolute;
@@ -625,9 +836,14 @@ button, input, textarea { font: inherit; }
         padding: 10px 0;
     }
 
-    .menu-horizontal.mostrar { display: flex; }
+    .menu-horizontal.mostrar {
+        display: flex;
+    }
 
-    .menu-horizontal li { margin: 0; width: 100%; }
+    .menu-horizontal li {
+        margin: 0;
+        width: 100%;
+    }
 
     .menu-horizontal a {
         display: block;
@@ -637,27 +853,68 @@ button, input, textarea { font: inherit; }
     }
 
     /* ----- Conteúdo ----- */
-    .container-sobre { padding-top: 24px; }
 
-    .about-image-wrapper { padding: 0 0 18px 18px; }
-    .shape-bg { width: calc(100% - 18px); height: calc(100% - 18px); border-radius: 20px 20px 20px 80px; }
-    .image-container { border-radius: 20px 20px 20px 80px; }
+    .container-sobre {
+        padding-top: 24px;
+    }
 
-    .btn { width: 100%; }
+    .about-image-wrapper {
+        padding: 0 0 18px 18px;
+    }
+
+    .shape-bg {
+        width: calc(100% - 18px);
+        height: calc(100% - 18px);
+        border-radius: 20px 20px 20px 80px;
+    }
+
+    .image-container {
+        border-radius: 20px 20px 20px 80px;
+    }
+
+    .btn {
+        width: 100%;
+    }
 
     /* ----- Footer ----- */
-    .footer { padding: 30px 20px; }
-    .footer-container { gap: 30px; }
-    .footer-top { flex-direction: column; gap: 30px; }
+
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .footer-container {
+        gap: 30px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        gap: 30px;
+    }
 
     .footer-left,
-    .footer-right { flex: none; max-width: none; width: 100%; }
+    .footer-right {
+        flex: none;
+        max-width: none;
+        width: 100%;
+    }
 
-    .footer-mensagem { font-size: 1.4rem; }
-    .footer-right li a { font-size: 1.5rem; }
+    .footer-mensagem {
+        font-size: 1.4rem;
+    }
 
-    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .footer-logo img { height: 80px; }
+    .footer-right li a {
+        font-size: 1.5rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .footer-logo img {
+        height: 80px;
+    }
 
     .footer-legal {
         flex-direction: column;
@@ -666,14 +923,45 @@ button, input, textarea { font: inherit; }
         text-align: left;
     }
 
-    .footer-links { flex-wrap: wrap; }
+    .footer-links {
+        flex-wrap: wrap;
+    }
+
+    /* ----- Menu do usuário no mobile ----- */
+
+    .user-greeting-text,
+    .header-actions .user-chevron {
+        display: none;
+    }
+
+    .user-greeting {
+        padding: 0;
+    }
+
+    .header-actions .user-avatar {
+        font-size: 24px;
+    }
+
+    .btn-entrar {
+        padding: 7px 14px;
+        font-size: .85rem;
+    }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+/* ==========================================================
+   ACESSIBILIDADE
+   ========================================================== */
 
-    *, *::before, *::after {
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
     }
-}   
+}
