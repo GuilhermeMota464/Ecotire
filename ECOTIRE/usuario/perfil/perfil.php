@@ -40,28 +40,28 @@ $msg_sucesso = '';
 $msg_erro = '';
 
 if (isset($_POST['atualizar_perfil'])) {
-    $nome = $_POST['nome'];
-    $telefone = $_POST['telefone'];
-    
-    $sql_update = "UPDATE usuario SET nome = ?, telefone = ? WHERE id_usuario = ?";
-    $stmt = $pdo->prepare($sql_update);
-    
+    $nome = trim($_POST['nome'] ?? '');
+    $telefone = trim($_POST['telefone'] ?? '');
+    $digitos_telefone = preg_replace('/\D/', '', $telefone);
 
-    if ($stmt->execute([$nome, $telefone, $id_usuario])) {
-
-        $msg_sucesso = 'Perfil atualizado com sucesso!';
-
-        // Atualiza os dados locais da página
-        $usuario['nome'] = $nome;
-        $usuario['telefone'] = $telefone;
-
-        // Atualiza os dados armazenados na sessão
-        $_SESSION['usuario_nome'] = $nome;
-
+    if (mb_strlen($nome) < 2) {
+        $msg_erro = 'Nome deve ter pelo menos 2 caracteres.';
+    } elseif ($telefone !== '' && (strlen($digitos_telefone) < 10 || strlen($digitos_telefone) > 11)) {
+        $msg_erro = 'Telefone inválido.';
     } else {
+        $telefone_db = ($telefone !== '') ? $telefone : null;
 
-        $msg_erro = 'Erro ao atualizar perfil.';
+        $sql_update = "UPDATE usuario SET nome = ?, telefone = ? WHERE id_usuario = ?";
+        $stmt = $pdo->prepare($sql_update);
 
+        if ($stmt->execute([$nome, $telefone_db, $id_usuario])) {
+            $msg_sucesso = 'Perfil atualizado com sucesso!';
+            $usuario['nome'] = $nome;
+            $usuario['telefone'] = $telefone_db;
+            $_SESSION['usuario_nome'] = $nome;
+        } else {
+            $msg_erro = 'Erro ao atualizar perfil.';
+        }
     }
 }
 
@@ -202,7 +202,7 @@ if (isset($_GET['logout'])) {
                     
                     <div class="form-group">
                         <label for="telefone"><i class="fa-solid fa-phone"></i> Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone']); ?>" required>
+                        <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone']); ?>">
                     </div>
                     
 
