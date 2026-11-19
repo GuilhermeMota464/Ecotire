@@ -209,10 +209,10 @@ try {
         $itens_inseridos[] = $pdo->lastInsertId();
     }
 
-    // Insere pagamento (1 linha em pagamentos)
-    $sql_pagamento = "INSERT INTO pagamentos (id_pedido, metodo, valor, status) VALUES (?, ?, ?, 'pendente')";
-    $stmt_pagamento = $pdo->prepare($sql_pagamento);
-    $stmt_pagamento->execute([$id_pedido_criado, $metodo_pagamento, $total_geral]);
+// Insere pagamento (1 linha em pagamentos)
+$sql_pagamento = "INSERT INTO pagamentos (id_pedido, metodo, valor, Condicao) VALUES (?, ?, ?, 'pendente')";
+$stmt_pag = $pdo->prepare($sql_pagamento);
+$stmt_pag->execute([$id_pedido_criado, strtoupper($metodo_pagamento), $total_geral]);
 
     // Mantém variável para compatibilidade com o restante do código
     $id_pedido_criado = (int)$id_pedido_criado;
@@ -224,17 +224,20 @@ try {
 
     // Confirma a transação
     $pdo->commit();
-
-    // Redireciona para página de sucesso
+    
+// Redireciona para página de sucesso
     $_SESSION['sucesso'] = 'Pedido realizado com sucesso!';
-    $_SESSION['ultimo_pedido'] = $itens_inseridos[0];
+    $_SESSION['ultimo_pedido'] = $id_pedido_criado;
     $_SESSION['total_pedido'] = $total_geral;
     
     // Redireciona para página de pedido realizado
     header("Location: pedido_sucesso.php");
+    exit;
 
 } catch (PDOException $e) {
-    $pdo->rollBack();
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
     $_SESSION['erro'] = 'Erro ao processar pedido: ' . $e->getMessage();
     header("Location: ../carrinho/carrinho.php");
     exit;

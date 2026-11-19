@@ -99,7 +99,7 @@ function brl($valor) {
                 <div class="icone-vazio" aria-hidden="true"><i class="fa-solid fa-basket-shopping"></i></div>
                 <h2>Seu carrinho está vazio</h2>
                 <p>Que tal conhecer nossos produtos e escolher algo para você?</p>
-                <a href="../inicio/index.php" class="btn-voltar">Ver produtos</a>
+                <a href="../produto/produto.php" class="btn-voltar">Ver produtos</a>
             </section>
         <?php else: ?>
             <div class="carrinho-layout">

@@ -42,28 +42,12 @@
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
                         <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
-                        <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
+                        <li><a onclick="window.location.href='../produtos/produtos-admin.php'">Produtos</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-
-    <main class="sales-container">
-        <section class="sales-content">
-            <h1>Relatório Mensal de Vendas</h1>
-            <div class="chart-wrapper">
-                <canvas id="sales-chart"></canvas>
-            </div>
-        </section>
-
-        <section class="gender-content">
-            <h1>Distribuição por Gênero</h1>
-            <div class="chart-wrapper">
-                <canvas id="gender-chart"></canvas>
-            </div>
-        </section>
-    </main>
 
     <footer class="footer">
         <div class="footer-container">
