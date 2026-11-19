@@ -800,7 +800,17 @@ body {
     }
 
     #btn-busca {
-        left: 12px;
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 30px;
+        width: 30px;
+        background: transparent;
+        color: #8a8a8a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 }

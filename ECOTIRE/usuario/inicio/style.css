@@ -760,8 +760,9 @@ button, input, textarea { font: inherit; }
 
     .header-actions {
         order: 2;
-        gap: 18px;
-        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
     .header-actions i { font-size: 22px; }
