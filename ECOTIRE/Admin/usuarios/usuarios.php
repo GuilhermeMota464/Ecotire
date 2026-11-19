@@ -1,12 +1,6 @@
 <?php
+require_once '../auth_admin/auth_admin.php';
 include '../../funcoesPHP/connection.php';
-
-session_start();
-// Bloqueia acesso não autorizado ao painel de admin
-if (!isset($_SESSION['id_usuario']) || ($_SESSION['tipo'] ?? '') !== 'admin') {
-    header('Location: ../../usuario/login/login.php?erro=acesso_negado');
-    exit;
-}
 
 
 $stmt = $pdo->query("SELECT id_usuario, nome, email, senha, tipo FROM usuario");

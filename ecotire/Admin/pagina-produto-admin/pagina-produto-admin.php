@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../auth_admin.php';
 include '../../funcoesPHP/connection.php';
 
 if (isset($_GET['id'])) {

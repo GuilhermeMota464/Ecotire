@@ -1,4 +1,5 @@
 <?php
+require_once '../auth_admin/auth_admin.php';
 include '../../funcoesPHP/connection.php';
 
 // Busca todos os pedidos com informações relacionadas
