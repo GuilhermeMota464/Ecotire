@@ -8,56 +8,49 @@ unset($_SESSION['feedback']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aruanã - Cadastro</title>
+
     <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Script do Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <title>Aruanã - Cadastro</title>
 </head>
 <body>
-
     <main class="main-wrapper">
-        <section class="side-panel">
-            <a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"></i></a>
-            
-            <div class="side-content">
-                <div class="logo-wrapper">
-                    <img src="../../assetsGerais/aruana.webp" alt="Aruanã logo" class="logo-img">
-                </div>
-                <h1>Crie sua <br><span>Conta</span></h1>
-                <p>Junte-se à Aruanã e faça parte de uma jornada tecnológica voltada para um futuro mais sustentável.</p>
-            </div>
-            
-            <div class="creator-footer">
-                <span>ARUANÃ | SUSTENTABILIDADE</span>
-            </div>
-        </section>
 
         <section class="form-panel">
+            <div class="seta-wrapper">
+                <a href="../inicio/index.php" aria-label="Voltar ao início"><i class="fa-solid fa-arrow-left" id="seta"></i></a>
+            </div>
+
             <div class="form-container">
-                <h2>Cadastre-se</h2>
-                
-                <div id="error" class="error"></div>
+                <h2>Crie sua conta</h2>
+                <p class="subtitle">Junte-se à Aruanã e faça parte de um futuro mais sustentável.</p>
+
+                <div id="error" class="error" role="alert"></div>
                 <?php echo $feedback; ?>
 
-                <form action="../../funcoesPHP/cadastro.php" method="post" id="cadastroForm">
-                    
+                <form action="../../funcoesPHP/cadastro.php" method="post" id="cadastroForm" novalidate>
+
+                    <!-- Gênero não é mais escolhido pelo usuário; valor fixo para o cadastro.php continuar funcionando -->
+                    <input type="hidden" name="genero" value="prefiro_nao_dizer">
+
                     <div class="input-group">
                         <label for="nome">Nome</label>
-                        <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
+                        <input name="nome" type="text" id="nome" placeholder="Insira seu nome" autocomplete="name" required>
                     </div>
 
                     <div class="row">
                         <div class="input-group">
                             <label for="email">E-mail</label>
-                            <input name="email" id="email" type="text" placeholder="Nome do usuário" required>
+                            <input name="email" id="email" type="text" placeholder="Nome do usuário" autocomplete="off" required>
                         </div>
                         <div class="input-group">
                             <label for="domain">Domínio</label>
@@ -74,12 +67,19 @@ unset($_SESSION['feedback']);
 
                     <div class="input-group">
                         <label for="tele">Telefone</label>
-                        <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" required>
+                        <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000"
+                               inputmode="tel" autocomplete="tel" required>
                     </div>
 
                     <div class="input-group">
                         <label for="senha">Senha</label>
-                        <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" required>
+                        <div class="password-wrapper">
+                            <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte"
+                                   autocomplete="new-password" required>
+                            <button type="button" class="toggle-senha" id="toggle-senha" aria-label="Mostrar senha">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="checkbox-group">
@@ -89,10 +89,7 @@ unset($_SESSION['feedback']);
                         </label>
                     </div>
 
-                    <div class="actions">
-                        <button type="submit" class="btn-submit">Cadastrar</button>
-                        <a href="../login/login.php" class="btn-outline">Entrar</a>
-                    </div>
+                    <button type="submit" class="btn-submit">Cadastrar</button>
                 </form>
 
                 <div class="divider"><span>ou</span></div>
@@ -104,52 +101,63 @@ unset($_SESSION['feedback']);
                     </div>
                     <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large" data-width="300"></div>
                 </div>
-                
+
+                <p class="switch-auth">Já tem conta? <a href="../login/login.php">Entrar</a></p>
             </div>
         </section>
+
+        <section class="image-panel">
+            <img src="../../assetsGerais/imagemCadastro.webp" alt="Perereca verde sobre um galho de pessegueiro em flor" class="side-image">
+        </section>
+
     </main>
 
     <script src="script.js"></script>
 
 <script>
 function handleGoogleLogin(response) {
+    Swal.fire({
+        title: 'Verificando dados...',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading()
+    });
+
     fetch('../../funcoesPHP/cadastroGoogle.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            credential: response.credential
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: response.credential })
     })
     .then(res => res.json())
     .then(data => {
-
         console.log('Resposta do servidor:', data);
 
         if (data.success) {
-
-            window.location.href =
-                data.redirect || '../inicio/index.php';
-
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Cadastro realizado! Redirecionando...',
+                showConfirmButton: false,
+                timer: 1800
+            }).then(() => {
+                window.location.href = data.redirect || '../inicio/index.php';
+            });
         } else {
-
-            Swal.fire(
-                'Erro',
-                data.message || 'Não foi possível entrar com Google.',
-                'error'
-            );
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: data.message || 'Não foi possível entrar com Google.',
+                confirmButtonColor: '#2c9b2a'
+            });
         }
     })
     .catch(error => {
-
         console.error('Erro:', error);
-
-        Swal.fire(
-            'Erro',
-            'Falha de comunicação com o servidor.',
-            'error'
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro de conexão',
+            text: 'Falha de comunicação com o servidor.',
+            confirmButtonColor: '#2c9b2a'
+        });
     });
 }
 </script>

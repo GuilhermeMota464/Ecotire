@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+$jaLogado     = isset($_SESSION['id_usuario']);
+$primeiroNome = explode(' ', trim($_SESSION['usuario_nome'] ?? ''))[0];
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,18 +21,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <?php if (!$jaLogado): ?>
     <!-- Script do Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <?php endif; ?>
 </head>
 <body>
     <div class="main-wrapper">
 
         <section class="form-panel">
             <div class="seta-wrapper">
-                <a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"   ></i></a>
+                <a href="../inicio/index.php" aria-label="Voltar ao início"><i class="fa-solid fa-arrow-left" id="seta"></i></a>
             </div>
 
             <div class="form-container">
+
+            <?php if ($jaLogado): ?>
+                <!-- Usuário que já está logado -->
+                <div class="logged-card">
+                    <div class="logged-avatar"><i class="fa-solid fa-circle-check"></i></div>
+                    <h2>Você já está conectado</h2>
+                    <p class="subtitle">Conta ativa como <strong><?= htmlspecialchars($primeiroNome) ?></strong>.</p>
+
+                    <a href="../inicio/index.php" class="btn-submit btn-link">Ir para o início</a>
+                    <a href="../../funcoesPHP/logout.php" class="btn-secondary">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair e trocar de conta
+                    </a>
+                </div>
+
+            <?php else: ?>
                 <h2>Entre na sua conta</h2>
                 <p class="subtitle">Bem-vindo de volta à Aruanã.</p>
 
@@ -38,12 +61,17 @@
 
                     <div class="input-group">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" name="senha" placeholder="Digite sua senha" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="senha" placeholder="Digite sua senha" required>
+                            <button type="button" class="toggle-senha" id="toggle-senha" aria-label="Mostrar senha">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
-                        <label for="terms">Eu li e concordo com os<span href="../termos/termosdeuso.php">&nbspTermos e Condições</span></label>
+                        <label for="terms">Eu li e concordo com os<span>&nbsp;Termos e Condições</span></label>
                     </div>
 
                     <button type="submit" class="btn-submit">Entrar</button>
@@ -60,6 +88,8 @@
                 </div>
 
                 <p class="switch-auth">Não tem conta? <a href="../cadastro/cadastro.php">Cadastre-se</a></p>
+            <?php endif; ?>
+
             </div>
         </section>
 
@@ -68,48 +98,56 @@
         </section>
 
     </div>
-    
+
     <script src="script.js"></script>
 
 <script>
 function handleGoogleLogin(response) {
+    Swal.fire({
+        title: 'Verificando dados...',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading()
+    });
+
     fetch('../../funcoesPHP/loginGoogle.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            credential: response.credential
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: response.credential })
     })
     .then(res => res.json())
     .then(data => {
-
         console.log('Resposta do servidor:', data);
 
         if (data.success) {
+            // Avisa a página inicial para mostrar a notificação de boas-vindas
+            sessionStorage.setItem('loginSucesso', '1');
 
-            window.location.href =
-                data.redirect || '../inicio/index.php';
-
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Login realizado com sucesso! Redirecionando...',
+                showConfirmButton: false,
+                timer: 1800
+            }).then(() => {
+                window.location.href = data.redirect || '../inicio/index.php';
+            });
         } else {
-
-            Swal.fire(
-                'Erro',
-                data.message || 'Não foi possível entrar com Google.',
-                'error'
-            );
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao entrar',
+                text: data.message || 'Não foi possível entrar com Google.',
+                confirmButtonColor: '#2c9b2a'
+            });
         }
     })
     .catch(error => {
-
         console.error('Erro:', error);
-
-        Swal.fire(
-            'Erro',
-            'Falha de comunicação com o servidor.',
-            'error'
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro de conexão',
+            text: 'Falha de comunicação com o servidor.',
+            confirmButtonColor: '#2c9b2a'
+        });
     });
 }
 </script>
