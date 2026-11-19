@@ -1,21 +1,19 @@
 <?php
+session_start();
+date_default_timezone_set('America/Sao_Paulo');
 include '../../funcoesPHP/connection.php';
 
-$stmt = $pdo->query("SELECT id_produto, nome, descricao, preco_venda, preco_promocional, estoque, imagem FROM produtos");
+$logado       = isset($_SESSION['id_usuario']);
+$nomeCompleto = $_SESSION['usuario_nome'] ?? '';
+$primeiroNome = explode(' ', trim($nomeCompleto))[0];
+
+$hora = (int) date('H');
+if ($hora < 12)     $saudacao = 'Bom dia';
+elseif ($hora < 18) $saudacao = 'Boa tarde';
+else                $saudacao = 'Boa noite';
+
+$stmt = $pdo->query("SELECT id_produto, nome, preco_venda, preco_promocional, estoque, imagem FROM produtos");
 $produtos = $stmt->fetchAll();
-
-// Escapa texto vindo do banco antes de imprimir no HTML
-function e($valor)
-{
-    return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
-}
-
-function preco($valor)
-{
-    return number_format((float) $valor, 2, ',', '.');
-}
-
-$total = count($produtos);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,11 +23,10 @@ $total = count($produtos);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos | Aruanã</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Link fonte Poppins -->
+    <title>Produtos - Aruanã</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Link API de icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -46,21 +43,44 @@ $total = count($produtos);
                 <div class="search-group">
                     <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis..."
                         aria-label="Pesquisar" autocomplete="off">
-                    <button type="button" id="btn-busca" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
+                    <button type="button" id="btn-busca" aria-label="Pesquisar">
+                        <i class="fa-solid fa-magnifying-glass" id="lupa" aria-hidden="true"></i>
+                    </button>
                     <div id="resultado" aria-live="polite"></div>
                 </div>
 
                 <div class="header-actions">
-                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user icone-perfil"
-                        title="Minha Conta"></i>
+                    <?php if ($logado): ?>
+                        <div class="user-menu" id="user-menu">
+                            <button type="button" class="user-greeting" id="user-toggle"
+                                    aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown">
+                                <i class="fa-solid fa-circle-user user-avatar" aria-hidden="true"></i>
+                                <span class="user-greeting-text">
+                                    <small><?= $saudacao ?>,</small>
+                                    <strong><?= htmlspecialchars($primeiroNome) ?></strong>
+                                </span>
+                                <i class="fa-solid fa-chevron-down user-chevron" aria-hidden="true"></i>
+                            </button>
 
-                    <button id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
+                            <div class="user-dropdown" id="user-dropdown">
+                                <a href="../perfil/perfil.php"><i class="fa-solid fa-user"></i> Meu perfil</a>
+                                <a href="../../funcoesPHP/logout.php" class="sair"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a href="../login/login.php" class="btn-entrar" aria-label="Entrar" title="Entrar">
+                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                        </a>
+                    <?php endif; ?>
+
+                    <button type="button" id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
                         aria-controls="menu-links" onclick="toggleMenu()">
-                        <i class="fa-solid fa-bars"></i>
+                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
                     </button>
 
-                    <i id="botaoCarrinho" class="fa-solid fa-cart-shopping icone-carrinho" title="Meu Carrinho"
-                        role="link" tabindex="0" aria-label="Meu carrinho"></i>
+                    <a href="../carrinho/carrinho.php" id="botaoCarrinho" class="icone-carrinho" aria-label="Meu Carrinho" title="Meu Carrinho">
+                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
 
@@ -77,151 +97,91 @@ $total = count($produtos);
         </div>
     </header>
 
-    <main class="container">
-        <div class="page-head">
-            <div>
-                <h1 class="main-title">Nossos Produtos Sustentáveis</h1>
-                <p class="contagem" id="contagem" aria-live="polite">
-                    <?php echo $total; ?> <?php echo $total === 1 ? 'produto' : 'produtos'; ?>
-                </p>
-            </div>
+    <main class="main-content">
+        <h1 class="main-title">Nossos Produtos Sustentáveis</h1>
 
-            <?php if ($total > 1): ?>
-            <label class="ordenar">
-                Ordenar por
-                <select id="ordenar">
-                    <option value="padrao">Mais recentes</option>
-                    <option value="menor">Menor preço</option>
-                    <option value="maior">Maior preço</option>
-                    <option value="nome">Nome (A–Z)</option>
-                </select>
-            </label>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($total === 0): ?>
-            <div class="vazio">
-                <i class="fa-solid fa-seedling" aria-hidden="true"></i>
-                Nenhum produto disponível no momento. Volte em breve!
-            </div>
-        <?php else: ?>
-        <section class="grade" id="grade" aria-label="Lista de produtos">
-            <?php foreach ($produtos as $i => $produto):
-                $venda = (float) $produto['preco_venda'];
-                $promo = (float) $produto['preco_promocional'];
-                $emPromocao = $promo > 0 && $promo < $venda;
-                $precoFinal = $emPromocao ? $promo : $venda;
-                $estoque = (int) $produto['estoque'];
-
-                // Etiqueta de estoque: ok / pouco / esg
-                if ($estoque <= 0) {
-                    $tagClasse = 'esg';
-                    $tagTexto = 'Esgotado';
-                } elseif ($estoque <= 5) {
-                    $tagClasse = 'pouco';
-                    $tagTexto = 'Poucas unidades';
-                } else {
-                    $tagClasse = 'ok';
-                    $tagTexto = 'Em estoque';
-                }
-            ?>
-            <a class="card"
-                href="../pagina-produto-usuario/pagina-produto-usuario.php?id=<?php echo (int) $produto['id_produto']; ?>"
-                data-ordem="<?php echo $i; ?>"
-                data-preco="<?php echo e($precoFinal); ?>"
-                data-nome="<?php echo e(mb_strtolower($produto['nome'], 'UTF-8')); ?>">
-
-                <?php if (!empty($produto['imagem'])): ?>
-
-                <?php
-                    $mime = (new finfo(FILEINFO_MIME_TYPE))->buffer($produto['imagem']);
-
-                    $imagemBase64 = base64_encode($produto['imagem']);
-                ?>
-
-                <img
-                    src="data:<?php echo e($mime); ?>;base64,<?php echo $imagemBase64; ?>"
-                    class="imagem-produto"
-                    alt="<?php echo e($produto['nome']); ?>"
-                    loading="lazy"
-                >
-
-                <span class="tag <?php echo $tagClasse; ?>">
-                    <?php echo $tagTexto; ?>
-                </span>
-                <?php else: ?>
-                    <div class="imagem-produto" aria-hidden="true">
-                        <i class="fa-solid fa-leaf"></i>
-                        <span class="tag <?php echo $tagClasse; ?>"><?php echo $tagTexto; ?></span>
-                    </div>
-                <?php endif; ?>
-
-                <div class="corpo">
-                    <h2><?php echo e($produto['nome']); ?></h2>
-                    <p class="desc"><?php echo e($produto['descricao'] ?? ''); ?></p>
-
-                    <div class="precos">
-                        <?php if ($emPromocao): ?>
-                            <span class="preco-orig">R$ <?php echo preco($venda); ?></span>
-                        <?php endif; ?>
-                        <span class="preco">R$ <?php echo preco($precoFinal); ?></span>
-                    </div>
-
-                    <span class="btn">Ver produto</span>
+        <section class="products-grid">
+            <?php foreach ($produtos as $produto): ?>
+            <article class="product-card"
+                onclick="location.href='../pagina-produto-usuario/pagina-produto-usuario.php?id=<?= htmlspecialchars((string)$produto['id_produto']) ?>'">
+                <div class="image-container">
+                    <img src="../../assetsProdutos/<?= htmlspecialchars($produto['imagem']) ?>" alt="<?= htmlspecialchars($produto['nome']) ?>">
                 </div>
-            </a>
+                <div class="product-info">
+                    <h2 class="product-name"><?= htmlspecialchars($produto['nome']) ?></h2>
+                    <?php if (!empty($produto['preco_promocional']) && $produto['preco_promocional'] < $produto['preco_venda']): ?>
+                        <p class="price-old">
+                            De: R$ <?= number_format((float)$produto['preco_venda'], 2, ',', '.') ?>
+                        </p>
+                        <p class="price-current">
+                            Por: R$ <?= number_format((float)$produto['preco_promocional'], 2, ',', '.') ?>
+                        </p>
+                        <p class="price-full">
+                            ou 12x de R$ <?= number_format((float)$produto['preco_promocional'] / 12, 2, ',', '.') ?>
+                        </p>
+                    <?php else: ?>
+                        <p class="price-current">
+                            R$ <?= number_format((float)$produto['preco_venda'], 2, ',', '.') ?>
+                        </p>
+                        <p class="price-full">
+                            ou 12x de R$ <?= number_format((float)$produto['preco_venda'] / 12, 2, ',', '.') ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+            </article>
             <?php endforeach; ?>
         </section>
-        <?php endif; ?>
     </main>
 
-<footer class="footer">
-    <div class="footer-container">
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-left">
+                    <p class="footer-mensagem">
+                        O futuro começa nas escolhas de hoje.<br>
+                        A Aruanã torna esse caminho mais simples.
+                    </p>
+                </div>
 
-        <div class="footer-top">
-            <div class="footer-left">
-                <p class="footer-mensagem">
-                    O futuro começa nas escolhas de hoje.<br>
-                    A Aruanã torna esse caminho mais simples.
-                </p>
+                <div class="footer-right">
+                    <nav>
+                        <ul>
+                            <li><a href="../inicio/index.php">Início</a></li>
+                            <li><a href="../sobre_nos/sobre_nos.php">Sobre nós</a></li>
+                            <li><a href="../produto/produto.php">Produtos</a></li>
+                            <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
+                            <li><a href="../perfil/perfil.php">Perfil</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="social">
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram">
+                            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook">
+                            <i class="fa-brands fa-facebook" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <div class="footer-right">
-                <nav>
-                    <ul>
-                        <li><a href='../inicio/index.php'>Início</a></li>
-                        <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
-                        <li><a href="../produto/produto.php">Produtos</a></li>
-                        <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
-                        <li><a href='../perfil/perfil.php'>Perfil</a></li>
-                    </ul>
-                </nav>
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
+                </div>
 
-                <div class="social">
-                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <div class="footer-legal">
+                    <p>©<?= date('Y') ?> todos direitos reservados Aruanã</p>
+
+                    <div class="footer-links">
+                        <a href="../termos/termosdeuso.php">Termos de uso</a>
+                    </div>
                 </div>
             </div>
         </div>
+    </footer>
 
-        <div class="footer-bottom">
-            <div class="footer-logo">
-                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
-            </div>
-
-            <div class="footer-legal">
-                <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
-
-                <div class="footer-links">
-                    <a href="../termos/termosdeuso.php">Termos de uso</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
 </body>
 
