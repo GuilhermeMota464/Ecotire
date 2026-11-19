@@ -17,6 +17,7 @@ unset($_SESSION['feedback']);
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>Aruanã - Cadastro</title>
 </head>
+
 <body>
     <main class="main-wrapper">
         <section class="form-panel">
@@ -44,7 +45,7 @@ unset($_SESSION['feedback']);
                         <div class="email-row">
                             <div class="campo email-user">
                                 <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                                <input name="email" id="email" type="text" placeholder="Seu usuário" required>
+                                <input name="email" id="email" type="text" placeholder="Seu usuário" autocomplete="off" required>
                             </div>
                             <select id="domain" name="domain" aria-label="Domínio do e-mail">
                                 <option value="@gmail.com">@gmail.com</option>
@@ -58,10 +59,10 @@ unset($_SESSION['feedback']);
                     </div>
 
                     <div class="input-group">
-                        <label for="tele">Telefone</label>
+                        <label for="tele">Telefone (opcional)</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" autocomplete="tel" required>
+                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" autocomplete="tel">
                         </div>
                     </div>
 
@@ -97,7 +98,7 @@ unset($_SESSION['feedback']);
         </section>
 
         <section class="image-panel">
-            <img src="../../assetsGerais/imagemLogin.png" alt="" class="side-image">
+            <img src="../../assetsGerais/tugFrog.webp" alt="" class="side-image">
             <div class="image-overlay">
                 <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã" class="overlay-logo">
                 <p class="overlay-texto">O futuro começa nas escolhas de hoje.</p>
@@ -105,7 +106,7 @@ unset($_SESSION['feedback']);
         </section>
     </main>
 
-    <script>
+ <script>
     (function () {
         const button = document.getElementById('toggleSenha');
         const field = document.getElementById('senha');
@@ -117,7 +118,47 @@ unset($_SESSION['feedback']);
             button.querySelector('i').className = show ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
         });
     })();
+
+    async function handleGoogleLogin(response) {
+
+        try {
+            const resultado = await fetch('../../funcoesPHP/cadastroGoogle.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            });
+
+            const texto = await resultado.text();
+
+            console.log("Resposta PHP:", texto);
+
+            const dados = JSON.parse(texto);
+
+            if (dados.success) {
+                window.location.href = dados.redirect;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro no cadastro',
+                    text: dados.message
+                });
+            }
+
+        } catch (erro) {
+            console.error("Erro:", erro);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um problema ao realizar o cadastro com Google.'
+            });
+        }
+    }
     </script>
-    
+    <script src="script.js"></script>
 </body>
 </html>

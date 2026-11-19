@@ -4,25 +4,48 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
     const cadastroForm = document.getElementById("cadastroForm");
 
-    // Máscara dinâmica de telefone
+    // Autoformatação de telefone: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
+    function formatarTelefone(valor) {
+        const digits = valor.replace(/\D/g, "").slice(0, 11);
+
+        if (digits.length === 0) return "";
+        if (digits.length <= 2) return "(" + digits;
+        if (digits.length <= 6) return "(" + digits.slice(0, 2) + ") " + digits.slice(2);
+        if (digits.length <= 10) {
+            return "(" + digits.slice(0, 2) + ") " + digits.slice(2, 6) + "-" + digits.slice(6);
+        }
+        return "(" + digits.slice(0, 2) + ") " + digits.slice(2, 7) + "-" + digits.slice(7, 11);
+    }
+
     if (teleInput) {
         teleInput.addEventListener("input", function () {
-            let value = this.value.replace(/\D/g, "");
-            if (value.length > 11) value = value.slice(0, 11);
-
-            if (value.length > 0) value = "(" + value;
-            if (value.length > 3) value = value.slice(0, 3) + ") " + value.slice(3);
-            if (value.length > 9) value = value.slice(0, 10) + "-" + value.slice(10);
-
-            this.value = value;
+            this.value = formatarTelefone(this.value);
         });
     }
 
-    // Gerenciamento de input de e-mail vs seleção de domínio
+    // Bloqueio de '@' quando um domínio pré-definido estiver selecionado
     if (emailInput && domainSelect) {
+        emailInput.addEventListener("keydown", function (event) {
+            if (event.key === "@") {
+                if (domainSelect.value !== "outro") {
+                    event.preventDefault();
+                } else if (this.value.includes("@")) {
+                    // Impede mais de um '@' mesmo no e-mail customizado
+                    event.preventDefault();
+                }
+            }
+        });
+
         emailInput.addEventListener("input", function () {
             if (domainSelect.value !== "outro") {
-                this.value = this.value.replace(/@.*/, '');
+                // Se colar um e-mail completo, mantém apenas a parte antes do '@' e remove quaisquer '@'
+                this.value = this.value.replace(/@.*/g, "");
+            } else {
+                // No modo customizado, permite apenas o primeiro '@'
+                const partes = this.value.split("@");
+                if (partes.length > 2) {
+                    this.value = partes[0] + "@" + partes.slice(1).join("");
+                }
             }
         });
 
@@ -30,8 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (this.value === "outro") {
                 emailInput.placeholder = "exemplo@dominio.com";
             } else {
-                emailInput.placeholder = "Nome do usuário";
-                emailInput.value = emailInput.value.replace(/@.*/, '');
+                emailInput.placeholder = "Seu usuário";
+                emailInput.value = emailInput.value.replace(/@.*/g, "");
             }
         });
     }
@@ -47,22 +70,21 @@ document.addEventListener("DOMContentLoaded", function () {
             const errorDiv = document.getElementById("error");
 
             errorDiv.innerHTML = "";
-            let errors = [];
+            const errors = [];
 
-            // Validação de Email
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(fullEmail)) {
                 errors.push("Insira um endereço de e-mail válido.");
             }
 
-            // Validação de Senha
             if (senha.length < 6) {
                 errors.push("A senha deve ter no mínimo 6 caracteres.");
             }
 
-            // Validação de Telefone
+            // Validação de Telefone (apenas se preenchido)
+            const telefoneLimpo = telefone.trim();
             const telefonePattern = /^\(\d{2}\) \d{4,5}-\d{4}$/;
-            if (!telefonePattern.test(telefone)) {
+            if (telefoneLimpo !== "" && !telefonePattern.test(telefoneLimpo)) {
                 errors.push("Telefone inválido. Formato esperado: (XX) XXXXX-XXXX");
             }
 
