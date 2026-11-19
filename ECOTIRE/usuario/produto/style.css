@@ -724,3 +724,250 @@ body {
     }
 
 }
+
+/* ==========================================================
+   REFINO VISUAL RESPONSIVO — Ecotire
+   Camada incremental: preserva a paleta e os componentes existentes.
+   ========================================================== */
+:root {
+    --eco-radius-sm: 10px;
+    --eco-radius-md: 16px;
+    --eco-radius-lg: 22px;
+    --eco-shadow-soft: 0 8px 24px rgba(35, 70, 30, .09);
+    --eco-shadow-hover: 0 14px 32px rgba(35, 70, 30, .14);
+    --eco-focus: 0 0 0 3px rgba(44, 155, 42, .22);
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    max-width: 100%;
+    overflow-x: clip;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+img, video, canvas, svg {
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button, [type="button"], [type="submit"], [type="reset"] {
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+button:hover, [type="button"]:hover, [type="submit"]:hover {
+    transform: translateY(-1px);
+}
+
+button:active, [type="button"]:active, [type="submit"]:active {
+    transform: translateY(0);
+}
+
+a {
+    text-underline-offset: .2em;
+    transition: color .18s ease, opacity .18s ease;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: none;
+    box-shadow: var(--eco-focus);
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select, textarea) {
+    max-width: 100%;
+    min-height: 44px;
+    border-radius: var(--eco-radius-sm);
+    transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+:where(input, select, textarea):focus {
+    border-color: var(--cor-primaria, #2c9b2a);
+}
+
+:where(.container, .card, .produto-card, .product-card, .form-container,
+       .formulario, .conteudo, .content, .caixa, .box, .modal-content) {
+    border-radius: var(--eco-radius-md);
+}
+
+:where(.container, .card, .produto-card, .product-card, .modal-content) {
+    box-shadow: var(--eco-shadow-soft);
+}
+
+:where(.container, .conteudo, .content, main, .main-content) {
+    min-width: 0;
+}
+
+:where(.header-top, header) {
+    max-width: 100%;
+}
+
+:where(.header-top) {
+    gap: clamp(12px, 2vw, 28px);
+}
+
+:where(.logo) {
+    max-width: min(100%, 190px);
+    object-fit: contain;
+}
+
+:where(.logo, .produto-card, .product-card, .card) {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+:where(.produto-card, .product-card, .card):hover {
+    box-shadow: var(--eco-shadow-hover);
+}
+
+:where(table) {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+:where(th, td) {
+    overflow-wrap: anywhere;
+}
+
+:where(.btn, .botao, button, input[type="submit"]) {
+    border-radius: var(--eco-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 900px) {
+    :where(.header-top) {
+        flex-wrap: wrap;
+        padding: 14px 4%;
+    }
+
+    :where(.container, .conteudo, .content, main, .main-content) {
+        max-width: 100%;
+    }
+
+    :where(.main-wrapper) {
+        min-height: 100svh;
+        height: auto;
+    }
+
+    :where(.side-panel, .form-panel) {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        font-size: 15px;
+    }
+
+    :where(h1) {
+        font-size: clamp(1.65rem, 7vw, 2.2rem);
+        line-height: 1.2;
+    }
+
+    :where(h2) {
+        font-size: clamp(1.3rem, 5.5vw, 1.7rem);
+        line-height: 1.25;
+    }
+
+    :where(.container) {
+        width: 100%;
+        margin: 16px auto;
+        padding: clamp(16px, 4.5vw, 24px);
+        border-radius: 14px;
+    }
+
+    :where(.header-top) {
+        min-height: 0;
+        gap: 12px;
+    }
+
+    :where(.logo) {
+        height: auto;
+        max-height: 58px;
+    }
+
+    :where(button, .btn, .botao, input[type="submit"]) {
+        max-width: 100%;
+    }
+
+    :where(.actions-row) {
+        gap: 10px;
+    }
+
+    :where(.actions-item) {
+        min-width: min(100%, 130px);
+    }
+
+    :where(table) {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    :where(.main-wrapper) {
+        width: 100%;
+        min-height: 100svh;
+        height: auto;
+        overflow: visible;
+        flex-direction: column;
+    }
+
+    :where(.side-panel, .form-panel) {
+        flex: initial;
+        width: 100%;
+    }
+}
+
+
+/* Permite que formulários e páginas longas rolem em telas menores. */
+html, body {
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+}
+
+.main-wrapper {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+}
+
+@media (max-width: 760px) {
+    .main-wrapper {
+        flex-direction: column;
+        width: 100%;
+        min-height: 100svh;
+        height: auto;
+        overflow: visible;
+    }
+
+    .side-panel, .form-panel {
+        width: 100%;
+        min-width: 0;
+        flex: 0 0 auto;
+    }
+}
