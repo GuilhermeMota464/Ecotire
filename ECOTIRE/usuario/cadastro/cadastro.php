@@ -44,7 +44,7 @@ unset($_SESSION['feedback']);
                         <div class="email-row">
                             <div class="campo email-user">
                                 <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                                <input name="email" id="email" type="text" placeholder="Seu usuário" required>
+                                <input name="email" id="email" type="text" placeholder="Seu usuário" autocomplete="off" required>
                             </div>
                             <select id="domain" name="domain" aria-label="Domínio do e-mail">
                                 <option value="@gmail.com">@gmail.com</option>
@@ -61,7 +61,7 @@ unset($_SESSION['feedback']);
                         <label for="tele">Telefone</label>
                         <div class="campo">
                             <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" autocomplete="tel" required>
+                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" autocomplete="tel" required>
                         </div>
                     </div>
 
@@ -105,7 +105,7 @@ unset($_SESSION['feedback']);
         </section>
     </main>
 
-    <script>
+ <script>
     (function () {
         const button = document.getElementById('toggleSenha');
         const field = document.getElementById('senha');
@@ -118,6 +118,6 @@ unset($_SESSION['feedback']);
         });
     })();
     </script>
-    
+    <script src="script.js"></script>
 </body>
 </html>
