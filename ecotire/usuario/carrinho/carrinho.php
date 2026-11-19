@@ -201,7 +201,6 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-    <script src="script.js"></script>
     <div class="container">
         <h1>Seu Carrinho</h1>
         
@@ -290,7 +289,7 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
                     <form method="POST" action="../../funcoesPHP/adicionar_endereco_simples.php">
                         <div class="form-group">
                             <label>CEP</label>
-                            <input type="text" name="cep" placeholder="00000-000" required>
+                            <input type="text" name="cep" id="cep" placeholder="00000-000" maxlength="9" inputmode="numeric" pattern="\d{5}-\d{3}" required>
                         </div>
                         <div class="form-group">
                             <label>Número</label>
@@ -425,5 +424,6 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
             form.submit();
         }
     </script>
+        <script src="script.js"></script>
 </body>
 </html>
