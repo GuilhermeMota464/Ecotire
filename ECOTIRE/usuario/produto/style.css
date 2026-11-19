@@ -577,10 +577,18 @@ button, input, textarea { font: inherit; }
     .icone-carrinho { order: 2; }
     .hamburger { order: 3; }
 
-    .hamburger {
+    .header-actions .hamburger {
         display: flex;
+        align-items: center;
         justify-content: center;
+
+        background: transparent;
+        border: none;
+        color: white;
+
         font-size: 22px;
+        cursor: pointer;
+        padding: 8px;
     }
 
     .hamburger i { font-size: 22px; }
