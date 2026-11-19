@@ -120,11 +120,58 @@
 	(2, '05422-000', '450', 'Apto 12B - Pinheiros'),
 	(3, '22210-030', '88', 'Casa - Catete');
 
-	INSERT INTO produtos (nome, preco_custo, preco_venda, preco_promocional, modelo, estoque, descricao, ativo) VALUES
-	('Escova de Dente de Bambu', 2.50, 12.90, 9.90, 'BioBrush Adulto', 120, 'Escova de dente 100% biodegradável com cerdas de carvão ativado.', TRUE),
-	('Copo Retrátil de Silicone', 8.00, 35.00, NULL, 'EcoCup 350ml', 45, 'Copo dobrável e reutilizável para bebidas quentes ou frias.', TRUE),
-	('Kit Canudo de Inox', 5.50, 19.90, 15.90, 'EcoStraw Trio', 60, 'Kit com 2 canudos de aço inoxidável e 1 escova de limpeza.', TRUE),
-	('Sabão Ecológico de Coco', 1.80, 7.50, NULL, 'TerraNat 200g', 0, 'Sabão em barra artesanal, livre de químicos agressivos.', TRUE);
+INSERT INTO produtos
+(nome, preco_custo, preco_venda, preco_promocional, modelo, estoque, imagem, descricao, ativo)
+VALUES
+
+(
+    'Escova de Dente de Bambu',
+    2.50,
+    12.90,
+    9.90,
+    'BioBrush Adulto',
+    120,
+    LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/image (3).png'),
+    'Escova de dente 100% biodegradável com cerdas de carvão ativado.',
+    TRUE
+),
+
+(
+    'Copo Retrátil de Silicone',
+    8.00,
+    35.00,
+    NULL,
+    'EcoCup 350ml',
+    45,
+    LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/copo silicone.png'),
+    'Copo dobrável e reutilizável para bebidas quentes ou frias.',
+    TRUE
+),
+
+(
+    'Kit Canudo de Inox',
+    5.50,
+    19.90,
+    15.90,
+    'EcoStraw Trio',
+    60,
+    LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/canudo inox.webp'),
+    'Kit com 2 canudos de aço inoxidável e 1 escova de limpeza.',
+    TRUE
+),
+
+(
+    'Sabão Ecológico de Coco',
+    1.80,
+    7.50,
+    NULL,
+    'TerraNat 200g',
+    0,
+    LOAD_FILE('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/image (2).png'),
+    'Sabão em barra artesanal, livre de químicos agressivos.',
+    TRUE
+);
+
 
 	INSERT INTO carrinho (id_usuario, id_produto, quantidade) VALUES
 	(2, 2, 2),

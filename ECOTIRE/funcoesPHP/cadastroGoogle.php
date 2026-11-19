@@ -169,7 +169,6 @@ try {
             email,
             senha,
             telefone,
-            genero,
             tipo
         )
         VALUES
@@ -178,7 +177,6 @@ try {
             :email,
             :senha,
             :telefone,
-            :genero,
             :tipo
         )
     ");
@@ -188,7 +186,6 @@ try {
         ':email' => $email,
         ':senha' => $senhaHash,
         ':telefone' => '',
-        ':genero' => 'Prefiro_nao_dizer',
         ':tipo' => 'cliente'
     ]);
 

@@ -17,6 +17,7 @@ unset($_SESSION['feedback']);
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>Aruanã - Cadastro</title>
 </head>
+
 <body>
     <main class="main-wrapper">
         <section class="form-panel">
@@ -117,6 +118,46 @@ unset($_SESSION['feedback']);
             button.querySelector('i').className = show ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
         });
     })();
+
+    async function handleGoogleLogin(response) {
+
+        try {
+            const resultado = await fetch('../../funcoesPHP/cadastroGoogle.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            });
+
+            const texto = await resultado.text();
+
+            console.log("Resposta PHP:", texto);
+
+            const dados = JSON.parse(texto);
+
+            if (dados.success) {
+                window.location.href = dados.redirect;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro no cadastro',
+                    text: dados.message
+                });
+            }
+
+        } catch (erro) {
+            console.error("Erro:", erro);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um problema ao realizar o cadastro com Google.'
+            });
+        }
+    }
     </script>
     
 </body>
