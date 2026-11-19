@@ -560,7 +560,7 @@ body {
     .header-actions i,
     .icone-perfil {
         display: inline-block !important; /* Reexibe o perfil que estava oculto */
-        font-size: 22px;
+        font-size: 24px;
         color: #ffffff;
     }
 
@@ -571,7 +571,7 @@ body {
         border: none;
         padding: 0;
         color: #ffffff;
-        font-size: 22px;
+        font-size: 24px;
         cursor: pointer;
     }
 
@@ -726,7 +726,7 @@ body {
 }
 
 /* ==========================================================
-   REFINO VISUAL RESPONSIVO — Ecotire
+   REFINO VISUAL RESPONSIVO — Aruanã
    Camada incremental: preserva a paleta e os componentes existentes.
    ========================================================== */
 :root {
