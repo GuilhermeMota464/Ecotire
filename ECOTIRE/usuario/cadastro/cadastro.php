@@ -97,7 +97,7 @@ unset($_SESSION['feedback']);
         </section>
 
         <section class="image-panel">
-            <img src="../../assetsGerais/imagemLogin.png" alt="" class="side-image">
+            <img src="../../assetsGerais/tugFrog.webp" alt="" class="side-image">
             <div class="image-overlay">
                 <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã" class="overlay-logo">
                 <p class="overlay-texto">O futuro começa nas escolhas de hoje.</p>

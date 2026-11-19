@@ -48,12 +48,20 @@ if (isset($_POST['atualizar_perfil'])) {
     
 
     if ($stmt->execute([$nome, $telefone, $id_usuario])) {
+
         $msg_sucesso = 'Perfil atualizado com sucesso!';
-        // Atualiza dados locais
+
+        // Atualiza os dados locais da página
         $usuario['nome'] = $nome;
         $usuario['telefone'] = $telefone;
+
+        // Atualiza os dados armazenados na sessão
+        $_SESSION['usuario_nome'] = $nome;
+
     } else {
+
         $msg_erro = 'Erro ao atualizar perfil.';
+
     }
 }
 
