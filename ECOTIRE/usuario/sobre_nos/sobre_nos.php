@@ -214,7 +214,7 @@ function e($valor) {
                 <div class="shape-bg" aria-hidden="true"></div>
 
                 <div class="image-container">
-                    <img src="equipe.jpg" alt="Nossa equipe">
+                    <img src="Nossa_equipe.webp" alt="Nossa equipe">
                 </div>
 
             </div>
