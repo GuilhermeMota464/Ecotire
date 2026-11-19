@@ -4,6 +4,7 @@
    ========================================================== */
 
 /* ---------- Menu hambúrguer ---------- */
+
 function toggleMenu(forcarFechar = false) {
     const menu = document.getElementById("menu-links");
     const botao = document.getElementById("icon");
@@ -41,9 +42,52 @@ function toggleMenu(forcarFechar = false) {
         }
     });
 
-    window.matchMedia("(min-width: 769px)").addEventListener("change", (e) => {
+    const mediaDesktop = window.matchMedia("(min-width: 769px)");
+
+    mediaDesktop.addEventListener("change", (e) => {
         if (e.matches) toggleMenu(true);
     });
+
+
+    /* ======================================================
+       MENU DO USUÁRIO LOGADO
+       ====================================================== */
+
+    const userMenu = document.getElementById("user-menu");
+    const userToggle = document.getElementById("user-toggle");
+
+    if (userMenu && userToggle) {
+
+        function fecharUserMenu() {
+            userMenu.classList.remove("aberto");
+            userToggle.setAttribute("aria-expanded", "false");
+        }
+
+        userToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const aberto = userMenu.classList.toggle("aberto");
+
+            userToggle.setAttribute(
+                "aria-expanded",
+                String(aberto)
+            );
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!userMenu.contains(e.target)) {
+                fecharUserMenu();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && userMenu.classList.contains("aberto")) {
+                fecharUserMenu();
+                userToggle.focus();
+            }
+        });
+    }
 
 
     /* ======================================================
@@ -318,6 +362,8 @@ function toggleMenu(forcarFechar = false) {
         }
 
         form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
             mostrarStatus("");
 
             const nome = form.elements.namedItem("nome");
@@ -330,7 +376,7 @@ function toggleMenu(forcarFechar = false) {
 
             const erros = [];
 
-            if (!nome.value.trim()) {
+            if (!nome || !nome.value.trim()) {
                 erros.push([nome, "Informe seu nome."]);
             }
 
@@ -338,28 +384,30 @@ function toggleMenu(forcarFechar = false) {
                 erros.push([telefone, "Informe um telefone com DDD."]);
             }
 
-            if (email.value && !email.checkValidity()) {
+            if (email && email.value && !email.checkValidity()) {
                 erros.push([email, "Esse e-mail parece incompleto."]);
             }
 
-            if (!msg.value.trim()) {
+            if (!msg || !msg.value.trim()) {
                 erros.push([msg, "Escreva sua mensagem."]);
             }
 
             if (erros.length) {
-                e.preventDefault();
-
                 mostrarStatus(erros[0][1], "erro");
-                erros[0][0].focus();
+
+                if (erros[0][0]) {
+                    erros[0][0].focus();
+                }
 
                 return;
             }
 
             const endpoint = form.dataset.endpoint;
 
-            if (!endpoint) return;
-
-            e.preventDefault();
+            if (!endpoint) {
+                form.submit();
+                return;
+            }
 
             if (enviar) enviar.disabled = true;
 
@@ -396,45 +444,6 @@ function toggleMenu(forcarFechar = false) {
 
 
     /* ======================================================
-       MENU DO USUÁRIO LOGADO
-       ====================================================== */
-
-    const userMenu = document.getElementById("user-menu");
-    const userToggle = document.getElementById("user-toggle");
-
-    if (userMenu && userToggle) {
-
-        function fecharUserMenu() {
-            userMenu.classList.remove("aberto");
-            userToggle.setAttribute("aria-expanded", "false");
-        }
-
-        userToggle.addEventListener("click", (e) => {
-            e.stopPropagation();
-
-            const aberto = userMenu.classList.toggle("aberto");
-
-            userToggle.setAttribute(
-                "aria-expanded",
-                String(aberto)
-            );
-        });
-
-        document.addEventListener("click", (e) => {
-            if (!userMenu.contains(e.target)) {
-                fecharUserMenu();
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                fecharUserMenu();
-            }
-        });
-    }
-
-
-    /* ======================================================
        NOTIFICAÇÕES TOAST
        ====================================================== */
 
@@ -445,13 +454,15 @@ function toggleMenu(forcarFechar = false) {
         toast.setAttribute("role", "status");
         toast.setAttribute("aria-live", "polite");
 
-        toast.innerHTML = `
-            <i class="fa-solid ${icone}" aria-hidden="true"></i>
-            <span></span>
-        `;
+        const iconeToast = document.createElement("i");
+        iconeToast.className = `fa-solid ${icone}`;
+        iconeToast.setAttribute("aria-hidden", "true");
 
-        // textContent evita interpretar a mensagem como HTML
-        toast.querySelector("span").textContent = mensagem;
+        const textoToast = document.createElement("span");
+        textoToast.textContent = mensagem;
+
+        toast.appendChild(iconeToast);
+        toast.appendChild(textoToast);
 
         document.body.appendChild(toast);
 
@@ -487,7 +498,10 @@ function toggleMenu(forcarFechar = false) {
             }
         }
     } catch (erro) {
-        console.warn("Não foi possível acessar o sessionStorage.", erro);
+        console.warn(
+            "Não foi possível acessar o sessionStorage.",
+            erro
+        );
     }
 
 })();

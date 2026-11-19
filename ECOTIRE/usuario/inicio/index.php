@@ -50,7 +50,7 @@ function escapar($valor) {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+        referrerpolicy="no-referrer">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
         rel="stylesheet">
@@ -129,7 +129,6 @@ function escapar($valor) {
 
                     <?php else: ?>
 
-                        <!-- Área exibida para visitantes -->
                         <a href="../login/login.php" class="btn-entrar">
                             <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
                             Entrar
@@ -442,45 +441,8 @@ function escapar($valor) {
 
     </footer>
 
+    <!-- Um único arquivo JavaScript controla todas as interações -->
     <script src="script.js"></script>
-
-    <!-- Interação do menu de usuário -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const userMenu = document.getElementById('user-menu');
-        const userToggle = document.getElementById('user-toggle');
-
-        if (!userMenu || !userToggle) return;
-
-        function fecharMenu() {
-            userMenu.classList.remove('aberto');
-            userToggle.setAttribute('aria-expanded', 'false');
-        }
-
-        userToggle.addEventListener('click', function (event) {
-            event.stopPropagation();
-
-            const aberto = userMenu.classList.toggle('aberto');
-
-            userToggle.setAttribute('aria-expanded', String(aberto));
-        });
-
-        document.addEventListener('click', function (event) {
-            if (!userMenu.contains(event.target)) {
-                fecharMenu();
-            }
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                fecharMenu();
-                userToggle.focus();
-            }
-        });
-
-    });
-    </script>
 
 </body>
 </html>
