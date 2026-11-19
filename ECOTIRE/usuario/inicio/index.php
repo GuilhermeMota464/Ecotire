@@ -60,10 +60,10 @@
         <div class="imgAlternada" aria-roledescription="carrossel" aria-label="Destaques">
             <div class="Slide">
                 <img src="../../assetsGerais/banner1.webp" alt="Banner 1">
-                <img src="../../assetsGerais/banner1.webp" alt="Banner 2">
-                <img src="../../assetsGerais/banner1.webp" alt="Banner 3">
-                <img src="../../assetsGerais/banner1.webp" alt="Banner 4">
-                <img src="../../assetsGerais/banner1.webp" alt="Banner 5">
+                <img src="../../assetsGerais/banner2.webp" alt="Banner 2">
+                <img src="../../assetsGerais/banner3.webp" alt="Banner 3">
+                <img src="../../assetsGerais/banner4.webp" alt="Banner 4">
+                <img src="../../assetsGerais/banner5.webp" alt="Banner 5">
             </div>
             <button type="button" class="prev" aria-label="Banner anterior">❮</button>
             <button type="button" class="next" aria-label="Próximo banner">❯</button>
