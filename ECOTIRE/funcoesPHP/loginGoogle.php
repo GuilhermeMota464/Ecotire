@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/connection.php';
-
-session_start();
-
 header('Content-Type: application/json; charset=utf-8');
 
 ini_set('display_errors', '0');
@@ -27,11 +22,26 @@ function respond(array $data, int $httpCode = 200): void
 
 try {
 
-    // Recebe o token enviado pelo Google
-    $input = json_decode(
-        file_get_contents('php://input'),
-        true
-    );
+    // Carrega as dependências
+    require __DIR__ . '/../vendor/autoload.php';
+    require __DIR__ . '/connection.php';
+
+    // Inicia a sessão
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
+    // Recebe o JSON enviado pelo JavaScript
+    $rawInput = file_get_contents('php://input');
+
+    $input = json_decode($rawInput, true);
+
+    if (!is_array($input)) {
+        respond([
+            'success' => false,
+            'message' => 'Requisição inválida.'
+        ], 400);
+    }
 
     $credential = $input['credential'] ?? null;
 
@@ -45,6 +55,7 @@ try {
     // Client ID do Google
     $clientId = '1086800036836-iclvo8nhvs6adrm941bdi6plvj5ahjkn.apps.googleusercontent.com';
 
+    // Inicializa o cliente Google
     $client = new Google_Client([
         'client_id' => $clientId
     ]);
@@ -59,7 +70,7 @@ try {
         ], 401);
     }
 
-    // Confirma que o Google verificou o e-mail
+    // Verifica se o e-mail foi verificado pelo Google
     if (
         !isset($payload['email_verified']) ||
         $payload['email_verified'] !== true
@@ -72,17 +83,14 @@ try {
 
     $email = $payload['email'] ?? null;
 
-    if (!$email) {
+    if (!$email || !is_string($email)) {
         respond([
             'success' => false,
             'message' => 'Não foi possível obter o e-mail da conta Google.'
         ], 422);
     }
 
-    // =====================================================
-    // PROCURA O USUÁRIO NO BANCO
-    // =====================================================
-
+    // Procura o usuário no banco de dados
     $stmt = $pdo->prepare("
         SELECT
             id_usuario,
@@ -100,22 +108,15 @@ try {
 
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // =====================================================
-    // SE NÃO EXISTIR, NÃO DEIXA ENTRAR
-    // =====================================================
-
+    // Bloqueia contas que não possuem cadastro
     if (!$usuario) {
-
         respond([
             'success' => false,
             'message' => 'Esta conta Google ainda não possui cadastro. Cadastre-se primeiro.'
         ], 404);
     }
 
-    // =====================================================
-    // USUÁRIO EXISTE → LOGIN
-    // =====================================================
-
+    // Cria a sessão do usuário
     session_regenerate_id(true);
 
     $_SESSION['id_usuario'] = (int) $usuario['id_usuario'];
@@ -123,6 +124,7 @@ try {
     $_SESSION['usuario_email'] = $usuario['email'];
     $_SESSION['usuario_tipo'] = $usuario['tipo'] ?? 'cliente';
 
+    // Login concluído
     respond([
         'success' => true,
         'message' => 'Login realizado com sucesso!',
@@ -131,9 +133,7 @@ try {
 
 } catch (PDOException $e) {
 
-    error_log(
-        '[loginGoogle][DB] ' . $e->getMessage()
-    );
+    error_log('[loginGoogle][DB] ' . $e->getMessage());
 
     respond([
         'success' => false,
@@ -143,7 +143,11 @@ try {
 } catch (Throwable $e) {
 
     error_log(
-        '[loginGoogle][GENERAL] ' . $e->getMessage()
+        '[loginGoogle][GENERAL] ' .
+        get_class($e) . ' - ' .
+        $e->getMessage() .
+        ' | Arquivo: ' . $e->getFile() .
+        ' | Linha: ' . $e->getLine()
     );
 
     respond([
