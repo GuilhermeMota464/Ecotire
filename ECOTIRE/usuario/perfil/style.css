@@ -1,6 +1,7 @@
 /* Variáveis CSS */
 :root {
     --cor-primaria: #2c9b2a;
+    --cor-primaria-escura: #1e6b1d;
     --cor-gradiente: linear-gradient(75deg, rgba(44, 155, 42, 1) 0%, rgba(35, 199, 32, 1) 100%);
     --cor-secundaria: rgb(222, 217, 217);
     --fundo: rgb(241, 234, 234);
@@ -861,5 +862,291 @@ html, body {
         width: 100%;
         min-width: 0;
         flex: 0 0 auto;
+    }
+}
+
+
+/* ==========================================================
+   AJUSTES FINAIS — BOTÃO ADICIONAR E RESPONSIVIDADE DO PERFIL
+   ========================================================== */
+
+/* Botão Adicionar: ícone off-white e conteúdo centralizado */
+.form-endereco .btn-add {
+    width: 100%;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 9px;
+    color: #f5f2e9;
+    line-height: 1.2;
+}
+
+.form-endereco .btn-add i {
+    color: #f5f2e9;
+    font-size: 14px;
+    width: auto;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+/* Evita que os elementos ultrapassem os limites dos painéis */
+.perfil-container,
+.sidebar,
+.main-content,
+.order-card,
+.endereco-card {
+    min-width: 0;
+}
+
+.perfil-container {
+    width: min(100% - 40px, 1200px);
+}
+
+.header {
+    min-width: 0;
+    gap: 16px;
+}
+
+.header-actions {
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-actions i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+}
+
+.form-endereco input,
+.form-group input {
+    width: 100%;
+    min-width: 0;
+}
+
+.order-body,
+.order-header,
+.endereco-card p {
+    overflow-wrap: anywhere;
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+    .perfil-container {
+        gap: 20px;
+        width: min(100% - 32px, 760px);
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 250px;
+        padding: 24px 16px;
+    }
+
+    .main-content {
+        padding: 24px;
+    }
+
+    .tab-content h2 {
+        font-size: 21px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 18px;
+    }
+
+    .logo {
+        width: clamp(90px, 25vw, 120px);
+    }
+
+    .header-actions {
+        gap: 10px;
+    }
+
+    .header-actions i {
+        font-size: 19px;
+    }
+
+    .perfil-container {
+        flex-direction: column;
+        width: calc(100% - 28px);
+        margin: 18px auto;
+        gap: 16px;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        padding: 20px 16px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+        min-width: 0;
+    }
+
+    .user-info > div {
+        min-width: 0;
+    }
+
+    .user-info h3,
+    .user-info p {
+        overflow-wrap: anywhere;
+    }
+
+    .user-avatar {
+        flex: 0 0 auto;
+        font-size: 46px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .sidebar-nav a {
+        min-width: 0;
+        justify-content: center;
+        text-align: center;
+        padding: 11px 8px;
+        font-size: 13px;
+        gap: 7px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 22px 18px;
+        min-height: 0;
+    }
+
+    .tab-content h2 {
+        font-size: clamp(18px, 4.5vw, 22px);
+        gap: 9px;
+        margin-bottom: 20px;
+    }
+
+    .order-card {
+        padding: 16px;
+    }
+
+    .order-header {
+        align-items: flex-start;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .actions-row {
+        flex-direction: column;
+    }
+
+    .actions-item {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .actions-item form,
+    .actions-item button,
+    .btn-pagar,
+    .btn-cancelar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .enderecos-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-perfil {
+        max-width: none;
+        width: 100%;
+    }
+
+    .danger-zone {
+        padding: 18px;
+    }
+
+    .btn-danger,
+    .btn-salvar {
+        max-width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Celulares estreitos */
+@media (max-width: 420px) {
+    .header {
+        padding: 10px 12px;
+    }
+
+    .header-actions {
+        gap: 5px;
+    }
+
+    .header-actions i {
+        min-width: 32px;
+        min-height: 32px;
+        font-size: 17px;
+    }
+
+    .perfil-container {
+        width: calc(100% - 20px);
+        margin: 12px auto;
+    }
+
+    .sidebar {
+        padding: 16px 12px;
+    }
+
+    .user-info {
+        gap: 10px;
+    }
+
+    .user-avatar {
+        font-size: 40px;
+    }
+
+    .user-info h3 {
+        font-size: 16px;
+    }
+
+    .user-info p {
+        font-size: 12px;
+    }
+
+    .sidebar-nav a {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+    .main-content {
+        padding: 18px 14px;
+    }
+
+    .order-card,
+    .endereco-card {
+        padding: 14px;
+    }
+
+    .order-status {
+        font-size: 10px;
+        padding: 5px 9px;
+    }
+
+    .btn-salvar,
+    .btn-danger {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 14px;
     }
 }
