@@ -6,37 +6,86 @@
     if (!compra) return;
 
     const idProduto = compra.dataset.id;
-    const estoque = Number(compra.dataset.estoque) || 1;
+    const estoque = Math.max(1, parseInt(compra.dataset.estoque, 10) || 1);
     const campo = document.getElementById("qtd");
+    const btnMenos = document.getElementById("menos");
+    const btnMais = document.getElementById("mais");
     const botao = document.getElementById("btnCarrinho");
 
-    const limitar = (v) => Math.min(Math.max(parseInt(v, 10) || 1, 1), estoque);
+    const limitar = (v) => {
+        const num = parseInt(v, 10);
+        if (isNaN(num) || num < 1) return 1;
+        if (num > estoque) return estoque;
+        return num;
+    };
 
-    document.getElementById("menos").addEventListener("click", () => {
-        campo.value = limitar(Number(campo.value) - 1);
+    const atualizarBotoes = (valor) => {
+        btnMenos.disabled = valor <= 1;
+        btnMais.disabled = valor >= estoque;
+    };
+
+    btnMenos.addEventListener("click", () => {
+        const novo = limitar((parseInt(campo.value, 10) || 1) - 1);
+        campo.value = novo;
+        atualizarBotoes(novo);
     });
-    document.getElementById("mais").addEventListener("click", () => {
-        campo.value = limitar(Number(campo.value) + 1);
+
+    btnMais.addEventListener("click", () => {
+        const novo = limitar((parseInt(campo.value, 10) || 1) + 1);
+        campo.value = novo;
+        atualizarBotoes(novo);
     });
-    campo.addEventListener("change", () => { campo.value = limitar(campo.value); });
+
+    campo.addEventListener("keydown", (e) => {
+        if (["-", "+", "e", "E", ".", ","].includes(e.key)) {
+            e.preventDefault();
+        }
+    });
+
+    campo.addEventListener("input", () => {
+        if (campo.value === "") return;
+        const novo = limitar(campo.value);
+        campo.value = novo;
+        atualizarBotoes(novo);
+    });
+
+    campo.addEventListener("blur", () => {
+        const novo = limitar(campo.value);
+        campo.value = novo;
+        atualizarBotoes(novo);
+    });
+
+    // Inicializa valor e estado dos botões
+    campo.value = limitar(campo.value);
+    atualizarBotoes(Number(campo.value));
 
     const alerta = (opcoes) =>
         typeof Swal !== "undefined" ? Swal.fire(opcoes) : Promise.resolve({ isConfirmed: false });
 
     botao.addEventListener("click", async () => {
+        const quantidade = limitar(campo.value);
+        campo.value = quantidade;
         botao.disabled = true;
 
         try {
             const corpo = new URLSearchParams({
                 id_produto: idProduto,
-                quantidade: limitar(campo.value)
+                quantidade: quantidade
             });
 
-            const resp = await fetch("../../funcoesPHP/adicionarCarrinho.php", {
+            const resp = await fetch("../../funcoesPHP/addCarrinho.php", {
                 method: "POST",
                 body: corpo
             });
-            const dados = await resp.json();
+
+            const texto = await resp.text();
+            let dados;
+            try {
+                dados = JSON.parse(texto);
+            } catch (e) {
+                console.error("Resposta inválida do PHP:", texto);
+                throw new Error("Resposta inválida do servidor.");
+            }
 
             if (dados.ok) {
                 window.location.href = "../carrinho/carrinho.php";
@@ -69,7 +118,7 @@
         } catch (erro) {
             await alerta({
                 title: "Erro de conexão",
-                text: "Tente novamente em instantes.",
+                text: erro.message || "Tente novamente em instantes.",
                 icon: "error",
                 confirmButtonColor: "#1e6b1d"
             });

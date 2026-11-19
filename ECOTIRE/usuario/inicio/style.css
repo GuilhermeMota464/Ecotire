@@ -899,3 +899,212 @@ button, input, textarea { font: inherit; }
         transition-duration: .01ms !important;
     }
 }
+/* ==========================================================
+   MENU DO USUÁRIO LOGADO
+   ========================================================== */
+
+.user-menu {
+    position: relative;
+    z-index: 10000;
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 12px 4px 6px;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    color: var(--branco);
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.user-greeting:hover {
+    background: rgba(255, 255, 255, .16);
+}
+
+.header-actions .user-avatar {
+    font-size: 30px;
+}
+
+.user-greeting-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+    text-align: left;
+}
+
+.user-greeting-text small {
+    font-size: .72rem;
+    font-weight: 400;
+    opacity: .9;
+}
+
+.user-greeting-text strong {
+    font-size: .95rem;
+    font-weight: 600;
+}
+
+.header-actions .user-chevron {
+    font-size: .65rem;
+    transition: transform .2s;
+}
+
+.user-menu.aberto .user-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown */
+
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 210px;
+    padding: 6px;
+    background: var(--branco);
+    border-radius: var(--raio-sm);
+    box-shadow: 0 12px 30px rgba(35, 70, 30, .22);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity .2s, transform .2s, visibility .2s;
+    z-index: 10001;
+}
+
+.user-menu.aberto .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--cor-texto);
+    font-size: .9rem;
+    text-decoration: none;
+}
+
+.user-dropdown a:hover {
+    background: rgba(44, 155, 42, .10);
+}
+
+.user-dropdown a i {
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+    color: var(--cor-primaria);
+}
+
+.user-dropdown a.sair {
+    margin-top: 4px;
+    border-top: 1px solid var(--cor-borda);
+    border-radius: 0 0 8px 8px;
+    color: #b3261e;
+}
+
+.user-dropdown a.sair i {
+    color: inherit;
+}
+
+.user-dropdown a.sair:hover {
+    background: rgba(179, 38, 30, .08);
+}
+
+/* Botão Entrar */
+
+.btn-entrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: var(--branco);
+    color: var(--cor-primaria-escura);
+    font-size: .9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transicao);
+}
+
+.header-actions .btn-entrar i {
+    font-size: 1rem;
+    color: inherit;
+}
+
+.btn-entrar:hover {
+    background: var(--cor-ondas);
+    color: var(--branco);
+}
+
+/* Notificação de login */
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: calc(100vw - 40px);
+    padding: 14px 20px;
+    background: var(--cor-primaria-escura);
+    color: var(--branco);
+    border-radius: var(--raio-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .22);
+    font-size: .92rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(40px);
+    transition: opacity .4s, transform .4s, visibility .4s;
+}
+
+.toast i {
+    color: var(--cor-ondas);
+}
+
+.toast.toast-visivel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+
+    .user-greeting-text,
+    .header-actions .user-chevron {
+        display: none;
+    }
+
+    .user-greeting {
+        padding: 0;
+    }
+
+    .header-actions .user-avatar {
+        font-size: 24px;
+    }
+
+    .btn-entrar {
+        padding: 7px 14px;
+        font-size: .85rem;
+    }
+
+    .toast {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        max-width: none;
+    }
+}

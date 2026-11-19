@@ -1,40 +1,53 @@
 <?php
 session_start();
+header('Content-Type: application/json; charset=utf-8');
 include 'connection.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 if (!isset($_SESSION['id_usuario'])) {
-    // Define o status HTTP como 401 (Não autorizado)
-    http_response_code(401);
-    echo json_encode(['erro' => 'usuario_nao_logado']);
+    echo json_encode(['ok' => false, 'logado' => false]);
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $id_usuario = $_SESSION['id_usuario'];
-    $id_produto = $_POST['id_produto'];
-    $quantidade = 1;
+$id_usuario = (int) $_SESSION['id_usuario'];
+$id_produto = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
+$quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
 
-    $sql = "INSERT INTO carrinho (id_usuario, id_produto, quantidade)
-            VALUES (:user, :prod, :qtd)
-            ON DUPLICATE KEY UPDATE quantidade = quantidade + 1";
-    $stmt = $pdo -> prepare($sql);
-
-    try {
-        $stmt->execute([
-            ':user' => $id_usuario ,
-            ':prod'  => $id_produto,
-        
-            ':qtd'   => $quantidade
-        ]);
-
-        http_response_code(200);
-        echo "Adicionado com sucesso";
-    } catch (PDOException $e){
-        http_response_code(500);
-        echo "Erro ao adicionar: " . $e->getMessage();
-    }
+if (!$id_produto || !$quantidade || $quantidade < 1) {
+    echo json_encode(['ok' => false, 'mensagem' => 'Quantidade inválida.']);
+    exit;
 }
-?>
+
+try {
+    $stmt = $pdo->prepare("SELECT estoque FROM produtos WHERE id_produto = ? AND ativo = 1");
+    $stmt->execute([$id_produto]);
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$produto) {
+        echo json_encode(['ok' => false, 'mensagem' => 'Produto não encontrado.']);
+        exit;
+    }
+
+    $estoque = (int) $produto['estoque'];
+    if ($estoque <= 0) {
+        echo json_encode(['ok' => false, 'mensagem' => 'Produto esgotado.']);
+        exit;
+    }
+
+    $stmtCart = $pdo->prepare("SELECT id_item, quantidade FROM carrinho WHERE id_usuario = ? AND id_produto = ?");
+    $stmtCart->execute([$id_usuario, $id_produto]);
+    $item = $stmtCart->fetch(PDO::FETCH_ASSOC);
+
+    if ($item) {
+        $novaQtd = min((int) $item['quantidade'] + $quantidade, $estoque);
+        $stmtUpd = $pdo->prepare("UPDATE carrinho SET quantidade = ? WHERE id_item = ?");
+        $stmtUpd->execute([$novaQtd, $item['id_item']]);
+    } else {
+        $novaQtd = min($quantidade, $estoque);
+        $stmtIns = $pdo->prepare("INSERT INTO carrinho (id_usuario, id_produto, quantidade) VALUES (?, ?, ?)");
+        $stmtIns->execute([$id_usuario, $id_produto, $novaQtd]);
+    }
+
+    echo json_encode(['ok' => true]);
+} catch (PDOException $e) {
+    echo json_encode(['ok' => false, 'mensagem' => 'Erro ao adicionar produto ao carrinho.']);
+}
