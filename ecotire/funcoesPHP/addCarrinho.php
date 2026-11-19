@@ -2,6 +2,9 @@
 session_start();
 include 'connection.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 if (!isset($_SESSION['id_usuario'])) {
     // Define o status HTTP como 401 (Não autorizado)
     http_response_code(401);

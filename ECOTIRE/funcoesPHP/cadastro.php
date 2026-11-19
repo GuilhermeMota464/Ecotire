@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dominio    = $_POST['domain'] ?? ''; 
     $telefone   = trim($_POST['telefone'] ?? '');
     $senha      = $_POST['senha'] ?? '';
-    $genero     = $_POST['genero'] ?? 'prefiro_nao_dizer';
 
     $full_email = ($dominio === 'outro') ? $email_part : $email_part . $dominio;
 
@@ -28,15 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-                $insertSql = "INSERT INTO usuario (nome, email, senha, telefone, genero) VALUES (:nome, :email, :senha, :telefone, :genero)";
+                $insertSql = "INSERT INTO usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
                 $stmt = $pdo->prepare($insertSql);
 
                 $sucesso = $stmt->execute([
                     ':nome'     => $nome,
                     ':email'    => $full_email,
                     ':senha'    => $senha_hash,
-                    ':telefone' => $telefone,
-                    ':genero'   => $genero
+                    ':telefone' => $telefone
                 ]);
 
                 if ($sucesso) {

@@ -33,6 +33,7 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <meta charset="UTF-8">
     <title>Meu Carrinho</title>
     <style>
         .modal-overlay {
@@ -200,6 +201,7 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
+    <script src="script.js"></script>
     <div class="container">
         <h1>Seu Carrinho</h1>
         
@@ -422,5 +424,4 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
 </body>
-    <script src="script.js"></script>
 </html>

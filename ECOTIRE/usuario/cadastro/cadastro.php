@@ -82,18 +82,6 @@ unset($_SESSION['feedback']);
                         <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" required>
                     </div>
 
-                    <div class="row">
-                        <div class="input-group" style="flex: 1;">
-                            <label for="genero">Gênero</label>
-                            <select id="genero" name="genero" required>
-                                <option value="masculino">Masculino</option>
-                                <option value="feminino">Feminino</option>
-                                <option value="outros">Outros</option>
-                                <option value="prefiro_nao_dizer" selected>Prefiro não dizer</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">
