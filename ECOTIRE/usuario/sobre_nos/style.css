@@ -64,7 +64,6 @@ button, input, textarea { font: inherit; }
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(12px, 2vw, 28px);
     padding: 10px 5%;
     border-bottom: 4px solid var(--cor-ondas);
     min-height: 90px;
@@ -72,8 +71,6 @@ button, input, textarea { font: inherit; }
 
 .logo {
     height: 75px;
-    max-width: 190px;
-    object-fit: contain;
     cursor: pointer;
     transition: var(--transicao);
 }
@@ -81,16 +78,19 @@ button, input, textarea { font: inherit; }
 .logo:hover { transform: scale(1.05); }
 
 .search-group {
-    position: relative;
     display: flex;
     align-items: center;
     flex: 0 1 500px;
     margin: 0 20px;
 }
 
+.search-actions {
+    display: flex;
+    flex-direction: row;
+}
+
 .search-bar {
-    flex: 1;
-    min-width: 0;
+    width: 452px;
     height: 45px;
     padding: 0 20px;
     border: none;
@@ -113,25 +113,46 @@ button, input, textarea { font: inherit; }
 #lupa {
     height: 18px;
     width: 18px;
+}
+
+#lupa:hover{
+    scale:1.1;
     transition: var(--transicao);
 }
 
-#lupa:hover { scale: 1.1; }
+.busca-ativa-input {
+    border-bottom-left-radius: 0 !important;
+    border: 2px solid var(--cor-ondas) !important;
+}
+.busca-ativa-icone {
+    color: white !important;
+    background-color: var(--cor-primaria) !important;
+} 
 
-#resultado {
+:where(.header-top) {
+    gap: clamp(12px, 2vw, 28px);
+}
+
+/* ===== BUSCA ===== */
+
+.search-group{
+    position: relative;
+}
+
+#resultado{
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
     background: white;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     z-index: 9999;
     display: none;
     overflow: hidden;
 }
 
-.resultado-item {
+.resultado-item{
     display: block;
     padding: 12px 15px;
     color: rgb(43, 109, 77);
@@ -140,12 +161,14 @@ button, input, textarea { font: inherit; }
     transition: 0.2s;
 }
 
-.resultado-item:hover { background-color: #f5f5f5; }
+.resultado-item:hover{
+    background-color: #f5f5f5;
+}
 
 .header-actions {
     display: flex;
     gap: 25px;
-    align-items: center;
+    align-items: center; 
 }
 
 .header-actions .icone-carrinho,
@@ -262,10 +285,23 @@ button, input, textarea { font: inherit; }
     color: #c62828;
 }
 
-/* Menu centralizado */
+.header-actions .icone-perfil {
+    order: 1;
+}
+
+.header-actions .hamburger {
+    order: 2;
+    display: none;
+}
+
+.header-actions .fa-cart-shopping {
+    order: 3;
+}
+
+/* --- Menu Centralizado --- */
 .header-bottom {
     background: var(--branco);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .menu-horizontal {
@@ -278,7 +314,6 @@ button, input, textarea { font: inherit; }
 .menu-horizontal li { margin: 0 15px; }
 
 .menu-horizontal a {
-    display: inline-block;
     color: var(--cor-primaria);
     font-weight: 600;
     text-decoration: none;
@@ -647,6 +682,8 @@ button, input, textarea { font: inherit; }
     .header-actions .icone-carrinho,
     .header-actions .btn-entrar {
         font-size: 22px;
+        cursor: pointer;
+        padding: 8px;
     }
 
     .user-greeting {

@@ -288,11 +288,8 @@ function applyCapitalizeOnBlur(input) {
     });
 }
 
-// Inicializa máscaras em campos comuns quando este script estiver disponível
-(function initMasksAndCartIcons() {
-    // Phone inputs: any tel input or named telefone
-    var phoneInputs = [].slice.call(document.querySelectorAll('input[type="tel"], input[name="telefone"], #telefone'));
-    phoneInputs.forEach(function(inp){ applyPhoneMaskTo(inp); });
+// Inicializa máscaras em campos comuns quando o DOM estiver pronto
+function initMasksAndCartIcons() {
 
     // CEP fields (by common ids or name)
     var cepInputs = [].slice.call(document.querySelectorAll('input[name="cep"], input#novo_cep, input[name="cep_novo"]'));
@@ -311,4 +308,10 @@ function applyCapitalizeOnBlur(input) {
             window.location.href = '../carrinho/carrinho.php';
         });
     });
-})();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMasksAndCartIcons);
+} else {
+    initMasksAndCartIcons();
+}

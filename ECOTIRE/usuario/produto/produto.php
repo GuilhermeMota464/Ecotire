@@ -21,6 +21,7 @@ $produtos = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | Aruanã</title>
     <link rel="stylesheet" href="style.css">
     <title>Produtos - Aruanã</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">

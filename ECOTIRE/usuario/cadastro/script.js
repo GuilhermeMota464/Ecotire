@@ -3,18 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const domainSelect = document.getElementById("domain");
     const emailInput = document.getElementById("email");
     const cadastroForm = document.getElementById("cadastroForm");
-    const toggleSenha = document.getElementById("toggle-senha");
-    const campoSenha = document.getElementById("senha");
-
-    // Mostrar / ocultar senha
-    if (toggleSenha && campoSenha) {
-        toggleSenha.addEventListener("click", function () {
-            const mostrando = campoSenha.type === "text";
-            campoSenha.type = mostrando ? "password" : "text";
-            toggleSenha.setAttribute("aria-label", mostrando ? "Mostrar senha" : "Ocultar senha");
-            toggleSenha.innerHTML = '<i class="fa-solid ' + (mostrando ? "fa-eye" : "fa-eye-slash") + '"></i>';
-        });
-    }
 
     // Máscara dinâmica de telefone
     if (teleInput) {
@@ -51,26 +39,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validação antes do envio
     if (cadastroForm) {
         cadastroForm.addEventListener("submit", function (event) {
-            const nome = document.getElementById("nome").value.trim();
             const email = emailInput.value.trim();
             const domain = domainSelect.value;
             const fullEmail = (domain === "outro") ? email : email + domain;
-            const senha = campoSenha.value;
+            const senha = document.getElementById("senha").value;
             const telefone = teleInput.value;
-            const termos = document.getElementById("terms");
             const errorDiv = document.getElementById("error");
 
             errorDiv.innerHTML = "";
             let errors = [];
 
-            if (!nome) {
-                errors.push("Informe seu nome.");
-            }
-
             // Validação de Email
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(fullEmail)) {
                 errors.push("Insira um endereço de e-mail válido.");
+            }
+
+            // Validação de Senha
+            if (senha.length < 6) {
+                errors.push("A senha deve ter no mínimo 6 caracteres.");
             }
 
             // Validação de Telefone
@@ -79,20 +66,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 errors.push("Telefone inválido. Formato esperado: (XX) XXXXX-XXXX");
             }
 
-            // Validação de Senha
-            if (senha.length < 6) {
-                errors.push("A senha deve ter no mínimo 6 caracteres.");
-            }
-
-            // Termos
-            if (!termos.checked) {
-                errors.push("Aceite os termos e condições para continuar.");
-            }
-
             if (errors.length > 0) {
                 event.preventDefault();
                 errorDiv.innerHTML = errors.join("<br>");
-                errorDiv.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
     }

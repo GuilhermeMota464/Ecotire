@@ -1,17 +1,3 @@
-<?php
-session_start();
-date_default_timezone_set('America/Sao_Paulo');
-
-$logado       = isset($_SESSION['id_usuario']);
-$nomeCompleto = $_SESSION['usuario_nome'] ?? '';
-$emailUsuario = $_SESSION['usuario_email'] ?? '';
-$primeiroNome = explode(' ', trim($nomeCompleto))[0];
-
-$hora = (int) date('H');
-if ($hora < 12)     $saudacao = 'Bom dia';
-elseif ($hora < 18) $saudacao = 'Boa tarde';
-else                $saudacao = 'Boa noite';
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -44,28 +30,8 @@ else                $saudacao = 'Boa noite';
                 </div>
 
                 <div class="header-actions">
-                    <?php if ($logado): ?>
-                        <div class="user-menu" id="user-menu">
-                            <button type="button" class="user-greeting" id="user-toggle"
-                                    aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown">
-                                <i class="fa-solid fa-circle-user user-avatar" aria-hidden="true"></i>
-                                <span class="user-greeting-text">
-                                    <small><?= $saudacao ?>,</small>
-                                    <strong><?= htmlspecialchars($primeiroNome) ?></strong>
-                                </span>
-                                <i class="fa-solid fa-chevron-down user-chevron" aria-hidden="true"></i>
-                            </button>
-
-                            <div class="user-dropdown" id="user-dropdown">
-                                <a href="../perfil/perfil.php"><i class="fa-solid fa-user"></i> Meu perfil</a>
-                                <a href="../../funcoesPHP/logout.php" class="sair"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="../login/login.php" class="btn-entrar">
-                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> 
-                        </a>
-                    <?php endif; ?>
+                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user icone-perfil"
+                        title="Minha Conta"></i>
                     <button id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
                         aria-controls="menu-links" onclick="toggleMenu()">
                         <i class="fa-solid fa-bars"></i>
@@ -159,8 +125,7 @@ else                $saudacao = 'Boa noite';
                         <label for="nome">Nome</label>
                         <div class="campo-input">
                             <i class="fa-solid fa-user" aria-hidden="true"></i>
-                            <input type="text" id="nome" name="nome" required placeholder="Seu nome" autocomplete="name"
-                                value="<?= htmlspecialchars($nomeCompleto) ?>">
+                            <input type="text" id="nome" name="nome" required placeholder="Seu nome" autocomplete="name">
                         </div>
                     </div>
 
@@ -177,8 +142,7 @@ else                $saudacao = 'Boa noite';
                         <label for="email">E-mail <span class="opcional">(opcional)</span></label>
                         <div class="campo-input">
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                            <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email"
-                                value="<?= htmlspecialchars($emailUsuario) ?>">
+                            <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email">
                         </div>
                     </div>
 
