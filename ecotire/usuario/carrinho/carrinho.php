@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../../funcoesPHP/connection.php';
+include '../../funcoesPHP/imagemWebp.php';
 
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login/login.php");
@@ -122,8 +123,15 @@ function brl($valor) {
                                 <tr>
                                     <td class="celula-produto">
                                         <div class="produto-info">
-                                            <img src="../produto/Assets/<?php echo htmlspecialchars($produto['imagem']); ?>_1.webp"
-                                                 alt="<?php echo $nome; ?>" width="72" height="72" loading="lazy">
+                                            <?php $imagemSrc = imagemParaDataUri($produto['imagem']); ?>
+                                            <?php if ($imagemSrc): ?>
+                                                <img src="<?php echo htmlspecialchars($imagemSrc, ENT_QUOTES, 'UTF-8'); ?>"
+                                                    alt="<?php echo $nome; ?>" width="72" height="72" loading="lazy">
+                                            <?php else: ?>
+                                                <div class="produto-sem-imagem" aria-hidden="true">
+                                                    <i class="fa-solid fa-leaf"></i>
+                                                </div>
+                                            <?php endif; ?>
                                             <span><?php echo $nome; ?></span>
                                         </div>
                                     </td>
