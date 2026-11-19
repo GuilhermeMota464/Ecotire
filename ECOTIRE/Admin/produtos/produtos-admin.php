@@ -1,4 +1,5 @@
 <?php
+require_once '../auth_admin/auth_admin.php';
 include '../../funcoesPHP/connection.php';
 
 // Busca os produtos ordenados pelo id mais recente
@@ -41,7 +42,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
                 <ul class="menu-horizontal">
-                    <li><a href="../inicio-admin/inicio-admin.php"><i class="fa-solid fa-box-open"></i> Pedidos</a></li>
+                    <li><a href="../pedidos/pedidos.php"><i class="fa-solid fa-box-open"></i> Pedidos</a></li>
                     <li><a href="../produtos/produtos-admin.php" class="ativo" aria-current="page"><i class="fa-solid fa-tags"></i> Produtos</a></li>
                     <li><a href="../usuarios/usuarios.php"><i class="fa-solid fa-user-group"></i> Usuários</a></li>
                 </ul>
