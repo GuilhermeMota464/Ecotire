@@ -43,28 +43,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    
+
     // ================= VALIDAÇÃO DO FORMULÁRIO DE PERFIL =================
-    const perfilForm = document.querySelector('.form-perfil');
-    if (perfilForm) {
-        perfilForm.addEventListener('submit', function(e) {
-            const nome = document.getElementById('nome').value.trim();
-            const telefone = document.getElementById('telefone').value.trim();
-            
-            if (nome.length < 2) {
-                e.preventDefault();
-                alert('Nome deve ter pelo menos 2 caracteres!');
-                return false;
-            }
-            
-            if (telefone.length < 10) {
-                e.preventDefault();
-                alert('Telefone inválido!');
-                return false;
-            }
-            
-            return true;
-        });
+const perfilForm = document.querySelector('.form-perfil');
+if (perfilForm) {
+    perfilForm.addEventListener('submit', function(e) {
+        const nome = document.getElementById('nome').value.trim();
+        const telefone = document.getElementById('telefone').value.trim();
+        const digitos = telefone.replace(/\D/g, '');
+        
+        if (nome.length < 2) {
+            e.preventDefault();
+            alert('Nome deve ter pelo menos 2 caracteres!');
+            return false;
+        }
+        
+        if (telefone !== '' && (digitos.length < 10 || digitos.length > 11)) {
+            e.preventDefault();
+            alert('Telefone inválido! Use o formato (XX) XXXXX-XXXX');
+            return false;
+        }
+        
+        return true;
+    });
+
     }
     
     // ================= VALIDAÇÃO DO FORMULÁRIO DE ENDEREÇO =================
@@ -93,24 +95,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ================= MÁSCARA PARA TELEFONE =================
-    const telefoneInput = document.getElementById('telefone');
-    if (telefoneInput) {
-        telefoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            
-            if (value.length > 0) {
-                if (value.length <= 2) {
-                    value = '(' + value;
-                } else if (value.length <= 6) {
-                    value = '(' + value.substring(0, 2) + ') ' + value.substring(2);
-                } else {
-                    value = '(' + value.substring(0, 2) + ') ' + value.substring(2, 7) + '-' + value.substring(7, 11);
-                }
-            }
-            
-            e.target.value = value;
-        });
-    }
+const telefoneInput = document.getElementById('telefone');
+if (telefoneInput) {
+    telefoneInput.addEventListener('input', function(e) {
+        const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+
+        if (digits.length === 0) {
+            e.target.value = '';
+        } else if (digits.length <= 2) {
+            e.target.value = '(' + digits;
+        } else if (digits.length <= 6) {
+            e.target.value = '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+        } else if (digits.length <= 10) {
+            e.target.value = '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 6) + '-' + digits.slice(6);
+        } else {
+            e.target.value = '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7, 11);
+        }
+    });
+}
     
     // ================= MÁSCARA PARA CEP =================
     const cepInputs = document.querySelectorAll('input[name="cep"]');

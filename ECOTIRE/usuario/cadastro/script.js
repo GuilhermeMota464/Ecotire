@@ -81,8 +81,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 errors.push("A senha deve ter no mínimo 6 caracteres.");
             }
 
+            // Validação de Telefone (apenas se preenchido)
+            const telefoneLimpo = telefone.trim();
             const telefonePattern = /^\(\d{2}\) \d{4,5}-\d{4}$/;
-            if (!telefonePattern.test(telefone)) {
+            if (telefoneLimpo !== "" && !telefonePattern.test(telefoneLimpo)) {
                 errors.push("Telefone inválido. Formato esperado: (XX) XXXXX-XXXX");
             }
 
