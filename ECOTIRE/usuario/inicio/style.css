@@ -779,8 +779,8 @@ button, input, textarea { font: inherit; }
         cursor: pointer;
         padding: 8px;
     }
-    
-    .hamburger i { font-size: 24px; }
+
+    .hamburger i { font-size: 22px; }
 
     .search-group {
         order: 3;

@@ -1,17 +1,3 @@
-<?php
-session_start();
-date_default_timezone_set('America/Sao_Paulo');
-
-$logado       = isset($_SESSION['id_usuario']);
-$nomeCompleto = $_SESSION['usuario_nome'] ?? '';
-$emailUsuario = $_SESSION['usuario_email'] ?? '';
-$primeiroNome = explode(' ', trim($nomeCompleto))[0];
-
-$hora = (int) date('H');
-if ($hora < 12)     $saudacao = 'Bom dia';
-elseif ($hora < 18) $saudacao = 'Boa tarde';
-else                $saudacao = 'Boa noite';
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -44,36 +30,14 @@ else                $saudacao = 'Boa noite';
                 </div>
 
                 <div class="header-actions">
-                    <?php if ($logado): ?>
-                        <div class="user-menu" id="user-menu">
-                            <button type="button" class="user-greeting" id="user-toggle"
-                                    aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown">
-                                <i class="fa-solid fa-circle-user user-avatar" aria-hidden="true"></i>
-                                <span class="user-greeting-text">
-                                    <small><?= $saudacao ?>,</small>
-                                    <strong><?= htmlspecialchars($primeiroNome) ?></strong>
-                                </span>
-                                <i class="fa-solid fa-chevron-down user-chevron" aria-hidden="true"></i>
-                            </button>
-
-                            <div class="user-dropdown" id="user-dropdown">
-                                <a href="../perfil/perfil.php"><i class="fa-solid fa-user"></i> Meu perfil</a>
-                                <a href="../../funcoesPHP/logout.php" class="sair"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="../login/login.php" class="btn-entrar">
-                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
-                        </a>
-                    <?php endif; ?>
-
+                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user icone-perfil"
+                        title="Minha Conta"></i>
                     <button id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
                         aria-controls="menu-links" onclick="toggleMenu()">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-
-                    <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping icone-carrinho"
-                        title="Meu Carrinho"></i>
+                    <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"
+                        role="link" tabindex="0" aria-label="Meu carrinho"></i>
                 </div>
             </div>
 
@@ -105,7 +69,7 @@ else                $saudacao = 'Boa noite';
             <div class="about-image-wrapper">
                 <div class="shape-bg" aria-hidden="true"></div>
                 <div class="image-container">
-                    <img src="reuniao.webp" alt="Nossa equipe">
+                    <img src="equipe.jpg" alt="Nossa equipe">
                 </div>
             </div>
         </section>
@@ -164,51 +128,51 @@ else                $saudacao = 'Boa noite';
 
     </main>
 
-    <footer class="footer">
-        <div class="footer-container">
+<footer class="footer">
+    <div class="footer-container">
 
-            <div class="footer-top">
-                <div class="footer-left">
-                    <p class="footer-mensagem">
-                        O futuro começa nas escolhas de hoje.<br>
-                        A Aruanã torna esse caminho mais simples.
-                    </p>
-                </div>
-
-                <div class="footer-right">
-                    <nav>
-                        <ul>
-                            <li><a href="../inicio/index.php">Início</a></li>
-                            <li><a href="../sobre_nos/sobre_nos.php">Sobre nós</a></li>
-                            <li><a href="../produto/produto.php">Produtos</a></li>
-                            <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
-                            <li><a href="../perfil/perfil.php">Perfil</a></li>
-                        </ul>
-                    </nav>
-
-                    <div class="social">
-                        <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    </div>
-                </div>
+        <div class="footer-top">
+            <div class="footer-left">
+                <p class="footer-mensagem">
+                    O futuro começa nas escolhas de hoje.<br>
+                    A Aruanã torna esse caminho mais simples.
+                </p>
             </div>
 
-            <div class="footer-bottom">
-                <div class="footer-logo">
-                    <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
-                </div>
+            <div class="footer-right">
+                <nav>
+                    <ul>
+                        <li><a href='../inicio/index.php'>Início</a></li>
+                        <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
+                        <li><a href="../produto/produto.php">Produtos</a></li>
+                        <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
+                        <li><a href='../perfil/perfil.php'>Perfil</a></li>
+                    </ul>
+                </nav>
 
-                <div class="footer-legal">
-                    <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
-
-                    <div class="footer-links">
-                        <a href="../termos/termosdeuso.php">Termos de uso</a>
-                    </div>
+                <div class="social">
+                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
                 </div>
             </div>
-
         </div>
-    </footer>
+
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
+            </div>
+
+            <div class="footer-legal">
+                <p>©<?php echo date('Y') ?> todos direitos reservados Aruanã</p>
+
+                <div class="footer-links">
+                    <a href="../termos/termosdeuso.php">Termos de uso</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
     <script src="script.js"></script>

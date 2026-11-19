@@ -2,6 +2,7 @@
    ARUANÃ — página Sobre Nós
    ========================================================== */
 
+/* ---------- Menu hambúrguer (chamado pelo onclick do HTML) ---------- */
 function toggleMenu(forcarFechar = false) {
     const menu = document.getElementById("menu-links");
     const botao = document.getElementById("icon");
@@ -20,6 +21,7 @@ function toggleMenu(forcarFechar = false) {
 (function () {
     "use strict";
 
+    /* ---------- Menu: fecha ao escolher link, com Esc ou ao voltar ao desktop ---------- */
     document.querySelectorAll("#menu-links a").forEach((link) => {
         link.addEventListener("click", () => toggleMenu(true));
     });
@@ -32,6 +34,7 @@ function toggleMenu(forcarFechar = false) {
         if (e.matches) toggleMenu(true);
     });
 
+    /* ---------- Pesquisa ---------- */
     const ENDPOINT_BUSCA = "/ecotire/ecotire/funcoesPHP/busca.php";
     const inputBusca = document.getElementById("busca");
     const botaoBusca = document.getElementById("btn-busca");
@@ -88,27 +91,46 @@ function toggleMenu(forcarFechar = false) {
         });
     }
 
-    const userMenu = document.getElementById("user-menu");
-    const userToggle = document.getElementById("user-toggle");
+    /* ---------- Carrinho: só abre se o usuário estiver logado ---------- */
+    const botaoCarrinho = document.getElementById("botaoCarrinho");
 
-    if (userMenu && userToggle) {
-        const fecharUserMenu = () => {
-            userMenu.classList.remove("aberto");
-            userToggle.setAttribute("aria-expanded", "false");
-        };
+    if (botaoCarrinho) {
+        const irParaCarrinho = () => { window.location.href = "../carrinho/carrinho.php"; };
 
-        userToggle.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const aberto = userMenu.classList.toggle("aberto");
-            userToggle.setAttribute("aria-expanded", String(aberto));
-        });
+        async function verificarCarrinho() {
+            try {
+                const resp = await fetch("../../funcoesPHP/verificarSessao.php");
+                const dados = await resp.json();
 
-        document.addEventListener("click", (e) => {
-            if (!userMenu.contains(e.target)) fecharUserMenu();
-        });
+                if (dados.logado) { irParaCarrinho(); return; }
 
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") fecharUserMenu();
+                // Sem o SweetAlert carregado, manda direto para o login
+                if (typeof Swal === "undefined") {
+                    window.location.href = "../login/login.php";
+                    return;
+                }
+
+                const resultado = await Swal.fire({
+                    title: "Acesso restrito",
+                    text: "Você precisa fazer login para ver seu carrinho.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#1e6b1d",
+                    cancelButtonColor: "#8a8f7a",
+                    confirmButtonText: "Fazer login",
+                    cancelButtonText: "Depois"
+                });
+
+                if (resultado.isConfirmed) window.location.href = "../login/login.php";
+            } catch (erro) {
+                // Se a verificação falhar, abre o carrinho (a própria página protege o acesso)
+                irParaCarrinho();
+            }
+        }
+
+        botaoCarrinho.addEventListener("click", verificarCarrinho);
+        botaoCarrinho.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); verificarCarrinho(); }
         });
     }
 })();

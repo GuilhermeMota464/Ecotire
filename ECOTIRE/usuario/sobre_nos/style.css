@@ -1,5 +1,6 @@
 /* ==========================================================
    ARUANÃ — página Sobre Nós
+   Paleta original mantida. Header e footer preservados.
    ========================================================== */
 
 :root {
@@ -24,12 +25,11 @@
     --largura: 1180px;
 }
 
-*,
-*::before,
-*::after {
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -38,7 +38,6 @@ html {
 }
 
 body {
-    font-family: "Poppins", sans-serif;
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     line-height: 1.6;
@@ -56,9 +55,7 @@ button, input, textarea { font: inherit; }
     box-shadow: var(--foco);
 }
 
-/* ==========================================================
-   HEADER
-   ========================================================== */
+/* --- Header Otimizado --- */
 .header-top {
     background: var(--cor-gradiente);
     display: flex;
@@ -96,7 +93,6 @@ button, input, textarea { font: inherit; }
     border: none;
     border-radius: 25px 0 0 25px;
     outline: none;
-    background: var(--branco);
 }
 
 #btn-busca {
@@ -171,119 +167,13 @@ button, input, textarea { font: inherit; }
     align-items: center; 
 }
 
-.header-actions .icone-carrinho,
-.header-actions .btn-entrar {
-    color: var(--branco);
+.header-actions i {
     font-size: 26px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--branco);
     cursor: pointer;
     transition: var(--transicao);
 }
 
-.header-actions .icone-carrinho:hover,
-.header-actions .btn-entrar:hover {
-    transform: scale(1.15);
-}
-
-/* Menu do Usuário Logado */
-.user-menu {
-    position: relative;
-}
-
-.user-greeting {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    border: none;
-    color: var(--branco);
-    padding: 4px 8px;
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: left;
-    transition: var(--transicao);
-}
-
-.user-greeting:hover {
-    background: transparent;
-    opacity: 0.92;
-}
-
-.user-avatar {
-    font-size: 28px;
-    color: var(--branco);
-}
-
-.user-greeting-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-}
-
-.user-greeting-text small {
-    font-size: 0.75rem;
-    opacity: 0.95;
-}
-
-.user-greeting-text strong {
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
-.user-chevron {
-    font-size: 0.75rem;
-    color: var(--branco);
-    transition: transform 0.2s ease;
-}
-
-.user-menu.aberto .user-chevron {
-    transform: rotate(180deg);
-}
-
-.user-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 180px;
-    background: var(--branco);
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
-    padding: 8px;
-    z-index: 10000;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.user-menu.aberto .user-dropdown {
-    display: flex;
-}
-
-.user-dropdown a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    color: var(--cor-texto);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.user-dropdown a:hover {
-    background-color: #f3f7ef;
-    color: var(--cor-primaria-escura);
-}
-
-.user-dropdown a.sair:hover {
-    background-color: #fdecec;
-    color: #c62828;
-}
 
 .header-actions .icone-perfil {
     order: 1;
@@ -326,21 +216,6 @@ button, input, textarea { font: inherit; }
 .menu-horizontal a.ativo {
     background-color: var(--cor-ondas);
     color: var(--branco);
-}
-
-.menu-horizontal li a:hover:not(.ativo) { background-color: #f0f0f0; }
-
-/* Botão hambúrguer (só aparece no mobile) */
-.hamburger {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    color: var(--branco);
-    cursor: pointer;
-    padding: 4px;
-    font-size: 22px;
 }
 
 /* ==========================================================
@@ -521,7 +396,7 @@ button, input, textarea { font: inherit; }
 }
 
 /* ==========================================================
-   FOOTER
+   FOOTER (preservado)
    ========================================================== */
 .footer {
     margin-top: clamp(64px, 8vw, 100px);
@@ -644,6 +519,7 @@ button, input, textarea { font: inherit; }
 
 .footer-links a:hover { text-decoration: underline; }
 
+/* Só apaga os outros links quando o mouse está sobre um deles */
 .footer:has(a:hover) nav a { opacity: 0.4; }
 
 /* ==========================================================
@@ -658,9 +534,9 @@ button, input, textarea { font: inherit; }
 
 @media (max-width: 768px) {
     .reviews-container {
-        grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
     }
-
+    /* ----- Header: 2 linhas (logo + ações / busca) ----- */
     .header-top {
         flex-wrap: wrap;
         justify-content: space-between;
@@ -675,34 +551,29 @@ button, input, textarea { font: inherit; }
 
     .header-actions {
         order: 2;
-        gap: 14px;
+        gap: 18px;
         flex-shrink: 0;
     }
 
-    .header-actions .icone-carrinho,
-    .header-actions .btn-entrar {
+    .header-actions i { font-size: 22px; }
+
+    .icone-perfil { display: none; }
+
+    .header-actions .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: transparent;
+        border: none;
+        color: white;
+
         font-size: 22px;
         cursor: pointer;
         padding: 8px;
     }
 
-    .user-greeting {
-        padding: 4px 6px;
-        gap: 6px;
-    }
-
-    .user-avatar {
-        font-size: 24px;
-    }
-
-    .user-greeting-text small {
-        display: none;
-    }
-
-    .hamburger {
-        display: inline-flex;
-        order: 3;
-    }
+    .hamburger i { font-size: 22px; }
 
     .search-group {
         order: 3;
@@ -735,6 +606,7 @@ button, input, textarea { font: inherit; }
         border-radius: 0;
     }
 
+    /* ----- Menu dropdown ----- */
     .header-bottom { position: relative; }
 
     .header-bottom nav {
@@ -764,6 +636,7 @@ button, input, textarea { font: inherit; }
         text-align: center;
     }
 
+    /* ----- Conteúdo ----- */
     .container-sobre { padding-top: 24px; }
 
     .about-image-wrapper { padding: 0 0 18px 18px; }
@@ -772,6 +645,7 @@ button, input, textarea { font: inherit; }
 
     .btn { width: 100%; }
 
+    /* ----- Footer ----- */
     .footer { padding: 30px 20px; }
     .footer-container { gap: 30px; }
     .footer-top { flex-direction: column; gap: 30px; }
@@ -802,4 +676,4 @@ button, input, textarea { font: inherit; }
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
     }
-}
+}   
