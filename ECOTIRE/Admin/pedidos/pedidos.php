@@ -1,4 +1,5 @@
 <?php
+require_once '../auth_admin/auth_admin.php';
 include '../../funcoesPHP/connection.php';
 
 // Pedidos (um registro por pedido) com usuário, endereço e método de pagamento

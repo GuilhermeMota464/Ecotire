@@ -84,7 +84,7 @@ try {
 
     $tipoUsuario  = $usuario['tipo'] ?? 'cliente';
     $redirectUrl  = ($tipoUsuario === 'admin')
-        ? '../../admin/inicio-admin/inicio-admin.php'
+        ? '../../admin/produtos/produtos-admin.php'
         : '../../usuario/inicio/index.php';
 
     respond([
