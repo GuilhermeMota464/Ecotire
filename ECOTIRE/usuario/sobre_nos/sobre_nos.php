@@ -1,109 +1,132 @@
-  <!DOCTYPE html>
-  <html lang="pt-br">
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Aruanã</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    </head>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós | Aruanã</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
 <body>
-  <!-- Cabeçalho -->
-<header>
-    <div class="header">
-        <div class="header-top">
-            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio/index.php'">
-            
-            <div class="search-group">               
-                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
-                <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
-                <div id="resultado"></div>
-            </div>
- 
-            <div class="header-actions">
-                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user"
-                    title="Minha Conta"></i>
-                    <button id="icon" class="hamburger" aria-label="Abrir menu" onclick="toggleMenu()">
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header">
+            <div class="header-top">
+                <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã"
+                    onclick="window.location.href='../inicio/index.php'">
+
+                <div class="search-group">
+                    <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis..."
+                        aria-label="Pesquisar" autocomplete="off">
+                    <button type="button" id="btn-busca" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
+                    <div id="resultado" aria-live="polite"></div>
+                </div>
+
+                <div class="header-actions">
+                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user icone-perfil"
+                        title="Minha Conta"></i>
+                    <button id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
+                        aria-controls="menu-links" onclick="toggleMenu()">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping"
-                    title="Meu Carrinho"></i>
+                    <i id="botaoCarrinho" class="fa-solid fa-cart-shopping" title="Meu Carrinho"
+                        role="link" tabindex="0" aria-label="Meu carrinho"></i>
+                </div>
+            </div>
+
+            <div class="header-bottom">
+                <nav>
+                    <ul class="menu-horizontal" id="menu-links">
+                        <li><a href="../inicio/index.php">Início</a></li>
+                        <li><a href="../sobre_nos/sobre_nos.php" class="ativo" aria-current="page">Sobre Nós</a></li>
+                        <li><a href="../produto/produto.php">Produtos</a></li>
+                        <li class="contato-btn"><a href="../inicio/index.php#fale_conosco">Contato</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-        <div class="header-bottom">
-            <nav>
-                <ul class="menu-horizontal" id="menu-links">
-                    <li><a onclick="window.location.href='../inicio/index.php'">Início</a></li>
-                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" class="ativo">Sobre Nós</a></li>
-                    <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-                    <li class="contato-btn"><a href="../inicio/index.php#fale_conosco">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
+    </header>
 
-<main class="container-sobre">
-    <section class="about-section">
-        <div class="about-content">
-            <span class="subtitle">SOBRE NÓS</span>
-            <h1>Ajudando empresas<br>a crescer com <span>sustentabilidade.</span></h1>
-            <p>
-              A Aruanã não é apenas uma loja; é um movimento. Curamos e entregamos as melhores 
-              soluções sustentáveis para que você e sua empresa possam prosperar sem abrir mão 
-              do cuidado com o planeta.
-            </p>
-            <button class="btn-cta" onclick="window.location.href='../produto/produto.php'">Ver Nossas Soluções</button>
-        </div>
+    <main class="container-sobre">
 
-        <div class="about-image-wrapper">
-            <div class="shape-bg"></div>
-            <div class="image-container">
-                <img src="equipe.jpg" alt="Nossa Equipe">
+        <!-- Apresentação -->
+        <section class="about-section">
+            <div class="about-content">
+                <h1>Ajudando empresas a crescer com sustentabilidade.</h1>
+                <p>A Aruanã não é apenas uma loja; é um movimento. Curamos e entregamos as melhores
+                    soluções sustentáveis para que você e sua empresa possam prosperar sem abrir mão
+                    do cuidado com o planeta.</p>
+                <a class="btn btn-primario" href="../produto/produto.php">Ver nossas soluções</a>
             </div>
-            <div class="dots-pattern"></div>
-        </div>
-    </section>
 
-  <section class="reviews-section">
-      <div class="reviews-header">
-          <h2>O que nossos clientes dizem</h2>
-          <p>A confiança de quem já transformou seu consumo com a Aruanã.</p>
-      </div>
+            <div class="about-image-wrapper">
+                <div class="shape-bg" aria-hidden="true"></div>
+                <div class="image-container">
+                    <img src="equipe.jpg" alt="Nossa equipe">
+                </div>
+            </div>
+        </section>
 
-      <div class="reviews-container">
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Experiência incrível!"</h4>
-              <p>"Fiquei impressionada com o cuidado da Aruanã em cada detalhe. O produto tem um acabamento impecável e une estética com materiais sustentáveis."</p>
-              <span class="review-author">Mariana Silva</span>
-              <span class="author-job">Designer de Interiores</span>
-          </div>
+        <!-- Avaliações -->
+        <section class="reviews-section" aria-labelledby="titulo-avaliacoes">
+            <div class="reviews-header">
+                <h2 id="titulo-avaliacoes">O que nossos clientes dizem</h2>
+                <p>A confiança de quem já transformou seu consumo com a Aruanã.</p>
+            </div>
 
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Rapidez e Consciência"</h4>
-              <p>"Comprei soluções para o meu escritório e a entrega foi rápida, com embalagem eco-friendly. Atendimento humano e muito eficiente."</p>
-              <span class="review-author">Ricardo Gomes</span>
-              <span class="author-job">Empreendedor</span>
-          </div>
+            <div class="reviews-container">
+                <article class="review-card">
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
+                    <h3>Experiência incrível!</h3>
+                    <p>“Fiquei impressionada com o cuidado da Aruanã em cada detalhe. O produto tem um acabamento
+                        impecável.”</p>
+                    <div class="review-autor">
+                        <span class="avatar" aria-hidden="true">M</span>
+                        <div>
+                            <span class="review-author">Mariana Silva</span>
+                            <span class="author-job">Designer de Interiores</span>
+                        </div>
+                    </div>
+                </article>
 
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Consumo com Propósito"</h4>
-              <p>"É difícil encontrar um site de vendas com uma curadoria tão criteriosa. Sinto que cada centavo investido aqui apoia um futuro mais verde."</p>
-              <span class="review-author">Beatriz Soares</span>
-              <span class="author-job">Consultora Ambiental</span>
-          </div>
-      </div>
-  </section>
+                <article class="review-card">
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
+                    <h3>Rapidez e consciência</h3>
+                    <p>“Comprei soluções para o meu escritório e a entrega foi rápida, com embalagem eco-friendly.
+                        Atendimento humano e muito eficiente.”</p>
+                    <div class="review-autor">
+                        <span class="avatar" aria-hidden="true">R</span>
+                        <div>
+                            <span class="review-author">Ricardo Gomes</span>
+                            <span class="author-job">Empreendedor</span>
+                        </div>
+                    </div>
+                </article>
 
-</main>
+                <article class="review-card">
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">★★★★★</div>
+                    <h3>Consumo com propósito</h3>
+                    <p>“É difícil encontrar um site de vendas com uma curadoria tão criteriosa. Sinto que cada
+                        centavo investido aqui apoia um futuro mais verde.”</p>
+                    <div class="review-autor">
+                        <span class="avatar" aria-hidden="true">B</span>
+                        <div>
+                            <span class="review-author">Beatriz Soares</span>
+                            <span class="author-job">Consultora Ambiental</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
 
 <footer class="footer">
     <div class="footer-container">
@@ -122,13 +145,13 @@
                         <li><a href='../inicio/index.php'>Início</a></li>
                         <li><a href='../sobre_nos/sobre_nos.php'>Sobre nós</a></li>
                         <li><a href="../produto/produto.php">Produtos</a></li>
-                        <li><a href="#fale_conosco">Contato</a></li>
+                        <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
                         <li><a href='../perfil/perfil.php'>Perfil</a></li>
                     </ul>
                 </nav>
 
                 <div class="social">
-                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></i></a>
+                    <a href="https://instagram.com" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                     <a href="https://facebook.com" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
                 </div>
             </div>
@@ -151,7 +174,8 @@
     </div>
 </footer>
 
-<script src="script.js"></script>
-  </body>
-  </html>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+    <script src="script.js"></script>
+</body>
 
+</html>
