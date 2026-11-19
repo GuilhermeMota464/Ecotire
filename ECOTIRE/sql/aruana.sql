@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS usuario (
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    genero ENUM('Masculino', 'Feminino', 'Prefiro_nao_dizer', 'Outros') NOT NULL DEFAULT 'Prefiro_nao_dizer',
     tipo ENUM('cliente', 'admin') DEFAULT 'cliente',
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
