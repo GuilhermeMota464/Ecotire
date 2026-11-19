@@ -48,6 +48,38 @@ if (!$produto) {
     // MEDIUMBLOB -> WebP (data URI)
     $imagemSrc = imagemParaDataUri($produto['imagem']);
 }
+
+session_start();
+date_default_timezone_set('America/Sao_Paulo');
+
+// Verificação da autenticação
+$logado = isset($_SESSION['id_usuario']);
+
+$nomeCompleto = $logado ? ($_SESSION['usuario_nome'] ?? '') : '';
+$emailUsuario = $logado ? ($_SESSION['usuario_email'] ?? '') : '';
+
+// Primeiro nome
+$primeiroNome = '';
+if ($nomeCompleto !== '') {
+    $partesNome = preg_split('/\s+/', trim($nomeCompleto));
+    $primeiroNome = $partesNome[0] ?? '';
+}
+
+// Saudação conforme o horário
+$hora = (int) date('H');
+
+if ($hora < 12) {
+    $saudacao = 'Bom dia';
+} elseif ($hora < 18) {
+    $saudacao = 'Boa tarde';
+} else {
+    $saudacao = 'Boa noite';
+}
+
+// Proteção para exibição de dados
+function escapar($valor) {
+    return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -82,8 +114,54 @@ if (!$produto) {
                 </div>
 
                 <div class="header-actions">
-                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user icone-perfil"
-                        title="Minha Conta"></i>
+                <?php if ($logado): ?>
+
+                        <div class="user-menu" id="user-menu">
+
+                            <button type="button"
+                                class="user-greeting"
+                                id="user-toggle"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                aria-controls="user-dropdown">
+
+                                <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true"></i>
+
+                                <span class="user-greeting-text">
+                                    <small><?= $saudacao ?>,</small>
+                                    <strong><?= escapar($primeiroNome ?: 'Usuário') ?></strong>
+                                </span>
+
+                                <i class="fa-solid fa-chevron-down user-chevron"
+                                    aria-hidden="true"></i>
+
+                            </button>
+
+                            <div class="user-dropdown" id="user-dropdown">
+
+                                <a href="../perfil/perfil.php">
+                                    <i class="fa-solid fa-user"></i>
+                                    Meu perfil
+                                </a>
+
+                                <a href="../../funcoesPHP/logout.php" class="sair">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Sair da conta
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    <?php else: ?>
+
+                        <a href="../login/login.php" class="btn-entrar">
+                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                            Entrar
+                        </a>
+
+                    <?php endif; ?>
 
                     <button id="icon" class="hamburger" aria-label="Abrir menu" aria-expanded="false"
                         aria-controls="menu-links" onclick="toggleMenu()">
