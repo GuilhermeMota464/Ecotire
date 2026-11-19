@@ -672,6 +672,7 @@ body {
 .hamburger {
     order: 3;
     display: flex !important;
+    max-width: 24px;
 }
 
     /* FOOTER */
