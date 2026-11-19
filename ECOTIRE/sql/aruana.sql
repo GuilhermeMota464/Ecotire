@@ -113,9 +113,9 @@ CREATE TABLE IF NOT EXISTS contato (
 ) ENGINE=InnoDB;
 
 INSERT INTO usuario (nome, email, senha, telefone, genero, tipo) VALUES
-('Aruana Admin', 'contato@aruanaeco.com.br', '$2b$12$K8j7H6g5F4d3S2a1...', '11912345678', 'Prefiro_nao_dizer', 'admin'),
-('Lucas Mendes', 'lucas.mendes@eco.com', '$2b$12$XyZ1v2w3u4t5s6r7...', '11988887777', 'Masculino', 'cliente'),
-('Marina Silva', 'marina.verde@email.com', '$2b$12$AbC9876543210zyx...', '21977776666', 'Feminino', 'cliente');
+('Aruana Admin', 'admin@aruana.com.br', md5('123456789'), '11912345678', 'Prefiro_nao_dizer', 'admin'),
+('Lucas Rosa', 'lucas.rosa@gmail.com', md5('12345678'), '11988887777', 'Masculino', 'cliente'),
+('Guilherme Mota', 'guilherme@gmail.com', md5('987654321'), '21977776666', 'Feminino', 'cliente');
 
 INSERT INTO endereco (id_usuario, cep, numero, complemento) VALUES
 (2, '05422-000', '450', 'Apto 12B - Pinheiros'),
