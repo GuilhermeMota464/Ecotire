@@ -59,9 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (openModalBtn) openModalBtn.addEventListener('click', openModal);
     if (modalClose) modalClose.addEventListener('click', closeModal);
 
+  if (modalBackdrop) {
     modalBackdrop.addEventListener('click', (e) => {
         if (e.target === modalBackdrop) closeModal();
     });
+}
+
+// Menu hambúrguer (mobile)
+const hamburger = document.getElementById('icon');
+const menuLinks = document.getElementById('menu-links');
+if (hamburger && menuLinks) {
+    hamburger.addEventListener('click', () => menuLinks.classList.toggle('active'));
+}
 
     // Exibição do campo de preço promocional
     if (promoCheckbox) {

@@ -11,8 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="httpeseewews://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -41,29 +40,14 @@
                 </button>
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
-                        <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
-                        <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
+                    <li><a href="../inicio/index.php" class="ativo"><i class="fa-solid fa-house"></i> Início</a></li>
+                    <li><a href="../produto/produto.php"><i class="fa-solid fa-box-open"></i> Produtos</a></li>
+                    <li><a href="../pedidos/pedidos.php"><i class="fa-solid fa-receipt"></i> Pedidos</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-
-    <main class="sales-container">
-        <section class="sales-content">
-            <h1>Relatório Mensal de Vendas</h1>
-            <div class="chart-wrapper">
-                <canvas id="sales-chart"></canvas>
-            </div>
-        </section>
-
-        <section class="gender-content">
-            <h1>Distribuição por Gênero</h1>
-            <div class="chart-wrapper">
-                <canvas id="gender-chart"></canvas>
-            </div>
-        </section>
-    </main>
 
     <footer class="footer">
         <div class="footer-container">
