@@ -128,6 +128,10 @@ body {
     transform: scale(1.3);
 }
 
+:hover .hamburger:hover{
+    transform: none !important;
+}
+
 /* --- Menu Centralizado --- */
 .header-bottom {
     background: var(--branco);

@@ -427,6 +427,10 @@ body {
     transition: var(--transicao);
 }
 
+.hamburger {
+    display: none !important;
+}
+
 .hamburger-icon {
     display: flex;
     flex-direction: column;
@@ -667,6 +671,7 @@ body {
 /* Hambúrguer vai para o canto direito */
 .hamburger {
     order: 3;
+    display: flex !important;
 }
 
     /* FOOTER */
