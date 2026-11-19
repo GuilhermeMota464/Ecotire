@@ -828,7 +828,7 @@ body {
         order: 2;
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 16px;
     }
 
     .icone-perfil {
@@ -846,7 +846,7 @@ body {
     }
 
     .hamburger i {
-        font-size: 22px;
+        font-size: 24px;
     }
 
     /* Campo de busca ocupando a 2ª linha por inteiro */
