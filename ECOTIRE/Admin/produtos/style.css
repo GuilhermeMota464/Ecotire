@@ -30,73 +30,300 @@ body {
 }
 
 /* Cabeçalho */
-.header {
-    display: flex;
-    flex-direction: column;
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: linear-gradient(90deg, #1e6b1d 0%, #2c9b2a 55%, #23b520 100%);
+    transition: box-shadow 0.3s ease;
 }
 
-.header-top {
-    background: var(--cor-gradiente);
+/* Linha de onda na base, referência ao nome Aruanã */
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -9px;
+    height: 10px;
+    pointer-events: none;
+    background-color: var(--cor-ondas);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0h40v3c-5 0-5 6-10 6S25 3 20 3 15 9 10 9 5 3 0 3z'/%3E%3C/svg%3E") repeat-x left top / 40px 10px;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0h40v3c-5 0-5 6-10 6S25 3 20 3 15 9 10 9 5 3 0 3z'/%3E%3C/svg%3E") repeat-x left top / 40px 10px;
+}
+
+.site-header.scrolled {
+    box-shadow: 0 6px 20px rgba(30, 107, 29, 0.25);
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5%;
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo-link {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 5%;
-    border-bottom: 4px solid var(--cor-ondas);
-    min-height: 80px;
-    position: relative;
+    justify-self: start;
+    border-radius: 8px;
 }
 
 .logo {
-    height: 60px;
-    cursor: pointer;
-    transition: var(--transicao);
+    height: 48px;
+    width: auto;
+    transition: transform 0.25s ease;
 }
 
-.logo:hover {
-    transform: scale(1.03);
+.logo-link:hover .logo {
+    transform: scale(1.04);
 }
 
-.foto_perfil {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--branco);
-    cursor: pointer;
-}
-
-.header-bottom {
-    background: var(--branco);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/* Navegação */
+.main-nav {
     display: flex;
     justify-content: center;
 }
 
 .menu-horizontal {
     display: flex;
-    gap: 10px;
-    padding: 10px 0;
+    gap: 6px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.14);
+    border-radius: 999px;
 }
 
 .menu-horizontal a {
-    padding: 8px 20px;
-    color: var(--cor-primaria);
-    font-weight: 600;
-    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+    font-weight: 500;
+    border-radius: 999px;
     cursor: pointer;
-    transition: var(--transicao);
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.menu-horizontal a:hover,
-.menu-horizontal a.ativo {
-    background-color: var(--cor-ondas);
+.menu-horizontal a i {
+    font-size: 0.9rem;
+}
+
+.menu-horizontal a:hover {
+    background: rgba(255, 255, 255, 0.16);
     color: var(--branco);
+}
+
+.menu-horizontal a.ativo {
+    background: var(--branco);
+    color: var(--cor-primaria-escura);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Perfil */
+.profile {
+    position: relative;
+    justify-self: end;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px 5px 5px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    color: var(--branco);
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+}
+
+.profile-btn:hover,
+.profile-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.foto_perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--branco);
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.profile-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.profile-role {
+    font-size: 0.72rem;
+    opacity: 0.8;
+}
+
+.profile-chevron {
+    font-size: 0.7rem;
+    transition: transform 0.25s ease;
+}
+
+.profile-btn[aria-expanded="true"] .profile-chevron {
+    transform: rotate(180deg);
+}
+
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    min-width: 170px;
+    background: var(--branco);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.profile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-menu a:hover {
+    background: #fdecec;
+    color: var(--perigo);
+}
+
+/* Botão do menu mobile */
+.menu-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 0 10px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 2px;
+    background: var(--branco);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Foco visível */
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+    outline: 3px solid var(--branco);
+    outline-offset: 2px;
+}
+
+.profile-menu a:focus-visible {
+    outline-color: var(--cor-primaria);
+}
+
+@media (max-width: 900px) {
+    .header-inner {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        min-height: 64px;
+    }
+
+    .logo { height: 40px; }
+
+    .menu-toggle {
+        display: flex;
+        order: 3;
+    }
+
+    .profile { order: 2; margin-left: auto; }
+    .profile-text,
+    .profile-chevron { display: none; }
+    .profile-btn { padding: 4px; }
+
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex: none;
+        display: block;
+        background: var(--cor-primaria-escura);
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .main-nav.open {
+        max-height: 260px;
+        padding: 12px 20px 18px;
+    }
+
+    .menu-horizontal {
+        flex-direction: column;
+        background: transparent;
+        padding: 0;
+        gap: 4px;
+    }
+
+    .menu-horizontal a {
+        padding: 12px 16px;
+        border-radius: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header *,
+    .site-header {
+        transition: none !important;
+    }
 }
 
 /* Conteúdo Principal */
 .container {
     max-width: 1200px;
-    margin: 30px auto;
+    margin: 40px auto 30px;
     padding: 0 20px;
 }
 
