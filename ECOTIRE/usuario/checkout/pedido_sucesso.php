@@ -133,7 +133,6 @@ unset($_SESSION['ultimo_pedido'], $_SESSION['total_pedido'], $_SESSION['sucesso'
         <div class="order-info">
             <p><strong>Número do Pedido:</strong> #<?php echo $pedido_id; ?></p>
             <p><strong>Total Pago:</strong> R$ <?php echo number_format($total_pedido, 2, ',', '.'); ?></p>
-            <p><strong>Status:</strong> Pendente (Aguardando pagamento)</p>
         </div>
         
         <p style="color: #666; margin-bottom: 30px;">
