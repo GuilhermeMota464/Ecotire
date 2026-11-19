@@ -3,11 +3,11 @@ session_start();
 include '../../funcoesPHP/connection.php';
 
 if (!isset($_SESSION['id_usuario'])) {
-    header ("Location: ../login/login.php");
+    header("Location: ../login/login.php");
     exit();
-};
+}
 
-$id_usuario = $_SESSION['id_usuario'] ?? null;
+$id_usuario = $_SESSION['id_usuario'];
 
 // Busca os itens do carrinho
 $sql = "SELECT c.*, p.nome, p.imagem,
@@ -26,402 +26,339 @@ $sql_enderecos = "SELECT * FROM endereco WHERE id_usuario = ?";
 $stmt_enderecos = $pdo->prepare($sql_enderecos);
 $stmt_enderecos->execute([$id_usuario]);
 $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
-?>
 
+// Calcula totais
+$totalGeral = 0;
+$totalItens = 0;
+foreach ($produtos as $i => $produto) {
+    $preco_unitario = $produto['preco_promocional'] !== null
+        ? (float)$produto['preco_promocional']
+        : (float)$produto['preco_venda'];
+    $subtotal = $preco_unitario * (int)$produto['quantidade'];
+    $produtos[$i]['_preco_unitario'] = $preco_unitario;
+    $produtos[$i]['_subtotal'] = $subtotal;
+    $totalGeral += $subtotal;
+    $totalItens += (int)$produto['quantidade'];
+}
+
+function brl($valor) {
+    return 'R$ ' . number_format($valor, 2, ',', '.');
+}
+?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <meta charset="UTF-8">
-    <title>Meu Carrinho</title>
-    <style>
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .modal h2 {
-            color: var(--cor-primaria);
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--fundo);
-            padding-bottom: 10px;
-        }
-        
-        .endereco-option {
-            border: 2px solid #eee;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-        }
-        
-        .endereco-option:hover {
-            border-color: var(--cor-primaria);
-        }
-        
-        .endereco-option.selected {
-            border-color: var(--cor-primaria);
-            background: rgba(43, 109, 77, 0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            box-sizing: border-box;
-        }
-        
-        .metodo-pagamento {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .metodo-btn {
-            flex: 1;
-            min-width: 80px;
-            padding: 15px 10px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .metodo-btn:hover {
-            border-color: var(--cor-primaria);
-        }
-        
-        .metodo-btn.selected {
-            border-color: var(--cor-primaria);
-            background: var(--cor-primaria);
-            color: white;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .btn-cancelar, .btn-confirmar, .btn-add-endereco {
-            flex: 1;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-        }
-        
-        .btn-cancelar {
-            border: 2px solid #ddd;
-            background: white;
-            color: #666;
-        }
-        
-        .btn-confirmar, .btn-add-endereco {
-            border: none;
-            background: var(--cor-primaria);
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-add-endereco {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .new-address-box {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        
-        .new-address-box h4 {
-            color: var(--cor-primaria);
-            margin-bottom: 15px;
-        }
-        
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .btn-row .btn-cancelar, .btn-row .btn-confirmar {
-            flex: 1;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meu Carrinho — Ecotire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <script src="script.js"></script>
-    <div class="container">
-        <h1>Seu Carrinho</h1>
-        
+
+    <!-- Navegação: link real (<a>) com texto visível, rótulo acessível e alvo de toque >= 44px -->
+    <header class="topo">
+        <a class="link-voltar" href="../inicio/index.php" aria-label="Voltar para a página inicial">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            <span>Voltar</span>
+        </a>
+    </header>
+
+    <main class="container">
+        <h1 class="titulo-pagina">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+            Seu Carrinho
+            <?php if (!empty($produtos)): ?>
+                <span class="contador-itens"><?php echo $totalItens; ?> <?php echo $totalItens === 1 ? 'item' : 'itens'; ?></span>
+            <?php endif; ?>
+        </h1>
+
         <!-- Mensagens de sessão -->
         <?php if (isset($_SESSION['sucesso'])): ?>
-            <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
-                <i class="fa-solid fa-check-circle"></i> <?php echo htmlspecialchars($_SESSION['sucesso']); ?>
+            <div class="alerta alerta-sucesso" role="status">
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                <?php echo htmlspecialchars($_SESSION['sucesso']); ?>
             </div>
             <?php unset($_SESSION['sucesso']); ?>
         <?php endif; ?>
-        
+
         <?php if (isset($_SESSION['erro'])): ?>
-            <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
-                <i class="fa-solid fa-exclamation-circle"></i> <?php echo htmlspecialchars($_SESSION['erro']); ?>
+            <div class="alerta alerta-erro" role="alert">
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                <?php echo htmlspecialchars($_SESSION['erro']); ?>
             </div>
             <?php unset($_SESSION['erro']); ?>
         <?php endif; ?>
-        
-        <?php if (empty($produtos)): ?>
-            <div class="carrinho-vazio">
-                <i class="fa-solid fa-cart-shopping" style="font-size: 50px; color: #ccc;"></i>
-                <p>Seu carrinho está vazio.</p>
-                <a href="../inicio/index.php" class="btn-voltar">Ver Produtos</a>
-            </div>
-        <?php else: ?>
-            <table class="tabela-carrinho">
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Qtd</th>
-                        <th>Preço Unit.</th>
-                        <th>Subtotal</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    $totalGeral = 0;
-                    foreach ($produtos as $produto): 
-                        $preco_unitario = $produto['preco_promocional'] !== null ? (float)$produto['preco_promocional'] : (float)$produto['preco_venda'];
-                        $subtotal = $preco_unitario * (int)$produto['quantidade'];
-                        $totalGeral += $subtotal;
-                    ?>
-                    <tr>
-                        <td>
-                            <img src="../produto/Assets/<?php echo $produto['imagem'] . '_1'; ?>.webp" width="50">
-                            <?php echo htmlspecialchars($produto['nome']); ?>
-                        </td>
-                        <td><?php echo $produto['quantidade']; ?></td>
-                        <td>R$ <?php echo number_format($produto['preco_promocional'] !== null ? $produto['preco_promocional'] : $produto['preco_venda'], 2, ',', '.'); ?></td>
-                        <td>R$ <?php echo number_format($subtotal, 2, ',', '.'); ?></td>
-                        <td>
-                            <a href="../../funcoesPHP/removeCarrinho.php?id_item=<?php echo $produto['id_item']; ?>" class="btn-remover">
-                                Remover
-                            </a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
 
-            <div class="resumo">
-                <h3>Total: R$ <?php echo number_format($totalGeral, 2, ',', '.'); ?></h3>
-                <button type="button" class="btn-finalizar" onclick="document.getElementById('modalCheckout').style.display='flex'">Finalizar Compra</button>
+        <?php if (empty($produtos)): ?>
+            <section class="card carrinho-vazio">
+                <div class="icone-vazio" aria-hidden="true"><i class="fa-solid fa-basket-shopping"></i></div>
+                <h2>Seu carrinho está vazio</h2>
+                <p>Que tal conhecer nossos produtos e escolher algo para você?</p>
+                <a href="../produto/produto.php" class="btn-voltar">Ver produtos</a>
+            </section>
+        <?php else: ?>
+            <div class="carrinho-layout">
+
+                <section class="card tabela-wrapper" aria-label="Itens do carrinho">
+                    <table class="tabela-carrinho">
+                        <caption>Produtos no seu carrinho</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Qtd</th>
+                                <th scope="col">Preço unit.</th>
+                                <th scope="col">Subtotal</th>
+                                <th scope="col"><span class="sr-only">Ação</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($produtos as $produto): ?>
+                                <?php $nome = htmlspecialchars($produto['nome']); ?>
+                                <tr>
+                                    <td class="celula-produto">
+                                        <div class="produto-info">
+                                            <img src="../produto/Assets/<?php echo htmlspecialchars($produto['imagem']); ?>_1.webp"
+                                                 alt="<?php echo $nome; ?>" width="72" height="72" loading="lazy">
+                                            <span><?php echo $nome; ?></span>
+                                        </div>
+                                    </td>
+                                    <td data-label="Quantidade"><span class="qtd-pill"><?php echo (int)$produto['quantidade']; ?></span></td>
+                                    <td data-label="Preço unitário">
+                                        <span>
+                                            <?php if ($produto['preco_promocional'] !== null): ?>
+                                                <span class="preco-antigo"><?php echo brl((float)$produto['preco_venda']); ?></span>
+                                            <?php endif; ?>
+                                            <span class="preco-atual"><?php echo brl($produto['_preco_unitario']); ?></span>
+                                        </span>
+                                    </td>
+                                    <td data-label="Subtotal" class="subtotal"><?php echo brl($produto['_subtotal']); ?></td>
+                                    <td data-label="Ação">
+                                        <a href="../../funcoesPHP/removeCarrinho.php?id_item=<?php echo (int)$produto['id_item']; ?>"
+                                           class="btn-remover"
+                                           aria-label="Remover <?php echo $nome; ?> do carrinho">
+                                            <i class="fa-regular fa-trash-can" aria-hidden="true"></i> Remover
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </section>
+
+                <aside class="card resumo" aria-label="Resumo do pedido">
+                    <h2>Resumo do pedido</h2>
+                    <div class="resumo-linha">
+                        <span>Itens (<?php echo $totalItens; ?>)</span>
+                        <span><?php echo brl($totalGeral); ?></span>
+                    </div>
+                    <div class="resumo-total">
+                        <span>Total</span>
+                        <strong><?php echo brl($totalGeral); ?></strong>
+                    </div>
+                    <button type="button" class="btn-finalizar" id="btnAbrirCheckout"
+                            aria-haspopup="dialog" aria-controls="modalCheckout">
+                        Finalizar compra
+                    </button>
+                    <p class="resumo-seguro"><i class="fa-solid fa-lock" aria-hidden="true"></i> Compra segura</p>
+                </aside>
+
             </div>
         <?php endif; ?>
-    </div>
+    </main>
 
     <!-- Modal de Checkout -->
-    <div class="modal-overlay" id="modalCheckout">
-        <div class="modal">
-            <h2><i class="fa-solid fa-bag-shopping"></i> Finalizar Compra</h2>
-            
-            <!-- Seção de Endereço -->
-            <div class="form-group">
-                <label>Endereço de Entrega</label>
-                
-                <!-- Botão para adicionar novo endereço -->
-                <button type="button" class="btn-add-endereco" id="btnAddNewAddress" onclick="showNewAddressForm()">
-                    <i class="fa-solid fa-plus"></i> Adicionar Novo Endereço
-                </button>
-                
-                <!-- Formulário para novo endereço -->
-                <div id="newAddressForm" class="new-address-box hidden">
-                    <h4>Novo Endereço</h4>
-                    <form method="POST" action="../../funcoesPHP/adicionar_endereco_simples.php">
-                        <div class="form-group">
-                            <label>CEP</label>
-                            <input type="text" name="cep" placeholder="00000-000" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Número</label>
-                            <input type="number" name="numero" placeholder="Número" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Complemento (opcional)</label>
-                            <input type="text" name="complemento" placeholder="Apartamento, bloco, etc.">
-                        </div>
-                        <button type="submit" class="btn-confirmar" style="width:100%;">Salvar Endereço</button>
-                        <button type="button" class="btn-cancelar" style="width:100%; margin-top:10px;" onclick="hideNewAddressForm()">Cancelar</button>
-                    </form>
-                </div>
-                
-                <!-- Lista de endereços existentes -->
-                <div id="addressesList" style="margin-top: 15px;">
+    <div class="modal-overlay" id="modalCheckout" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloCheckout">
+            <h2 id="tituloCheckout"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Finalizar compra</h2>
+
+            <p class="erro-checkout hidden" id="erroCheckout" role="alert"></p>
+
+            <!-- Endereço -->
+            <fieldset class="grupo">
+                <legend>Endereço de entrega</legend>
+
+                <div id="listaEnderecos">
                     <?php if (!empty($enderecos)): ?>
                         <?php foreach ($enderecos as $endereco): ?>
-                            <div class="endereco-option" onclick="selectAddress(<?php echo $endereco['id_endereco']; ?>, this)">
-                                <input type="radio" name="id_endereco" value="<?php echo $endereco['id_endereco']; ?>" style="display:none;">
-                                <span style="font-weight:600;">Número: <?php echo htmlspecialchars($endereco['numero']); ?></span>
-                                <br>
-                                <span style="color:#666;">CEP: <?php echo htmlspecialchars($endereco['cep']); ?></span>
-                            </div>
+                            <label class="opcao">
+                                <input type="radio" name="id_endereco" class="sr-only"
+                                       value="<?php echo (int)$endereco['id_endereco']; ?>">
+                                <span class="titulo">Número: <?php echo htmlspecialchars($endereco['numero']); ?></span>
+                                <span class="detalhe">CEP: <?php echo htmlspecialchars($endereco['cep']); ?></span>
+                            </label>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p style="text-align: center; color: #666;">Nenhum endereço cadastrado.</p>
+                        <p class="sem-endereco">Nenhum endereço cadastrado.</p>
                     <?php endif; ?>
                 </div>
-            </div>
-            
-            <!-- Seção de Pagamento -->
-            <div class="form-group">
-                <label>Método de Pagamento</label>
-                <div class="metodo-pagamento" id="paymentMethods">
-                    <div class="metodo-btn selected" onclick="selectPayment('pix', this)">
-                        <input type="radio" name="metodo_pagamento" value="pix" checked style="display:none;">
-                        <i class="fa-solid fa-wallet" style="font-size: 24px;"></i><br>PIX
-                    </div>
-                    <div class="metodo-btn" onclick="selectPayment('cartao', this)">
-                        <input type="radio" name="metodo_pagamento" value="cartao" style="display:none;">
-                        <i class="fa-solid fa-credit-card" style="font-size: 24px;"></i><br>Cartão
-                    </div>
-                    <div class="metodo-btn" onclick="selectPayment('boleto', this)">
-                        <input type="radio" name="metodo_pagamento" value="boleto" style="display:none;">
-                        <i class="fa-solid fa-barcode" style="font-size: 24px;"></i><br>Boleto
-                    </div>
+
+                <button type="button" class="btn-add-endereco" id="btnNovoEndereco"
+                        aria-expanded="false" aria-controls="formNovoEndereco">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> Adicionar novo endereço
+                </button>
+
+                <div id="formNovoEndereco" class="novo-endereco hidden">
+                    <h3>Novo endereço</h3>
+                    <form method="POST" action="../../funcoesPHP/adicionar_endereco_simples.php">
+                        <div class="campo">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" name="cep" placeholder="00000-000"
+                                   inputmode="numeric" autocomplete="postal-code" required>
+                        </div>
+                        <div class="campo">
+                            <label for="numero">Número</label>
+                            <input type="text" id="numero" name="numero" placeholder="Número"
+                                   inputmode="numeric" pattern="[0-9]*" autocomplete="off" required>
+                        </div>
+                        <div class="campo">
+                            <label for="complemento">Complemento (opcional)</label>
+                            <input type="text" id="complemento" name="complemento"
+                                   placeholder="Apartamento, bloco, etc." autocomplete="address-line2">
+                        </div>
+                        <button type="submit" class="btn-confirmar">Salvar endereço</button>
+                        <button type="button" class="btn-cancelar" id="btnCancelarNovo">Cancelar</button>
+                    </form>
                 </div>
-            </div>
-            
+            </fieldset>
+
+            <!-- Pagamento -->
+            <fieldset class="grupo">
+                <legend>Método de pagamento</legend>
+                <div class="metodo-pagamento">
+                    <label class="opcao">
+                        <input type="radio" name="metodo_pagamento" value="pix" class="sr-only" checked>
+                        <i class="fa-solid fa-wallet" aria-hidden="true"></i> PIX
+                    </label>
+                    <label class="opcao">
+                        <input type="radio" name="metodo_pagamento" value="cartao" class="sr-only">
+                        <i class="fa-solid fa-credit-card" aria-hidden="true"></i> Cartão
+                    </label>
+                    <label class="opcao">
+                        <input type="radio" name="metodo_pagamento" value="boleto" class="sr-only">
+                        <i class="fa-solid fa-barcode" aria-hidden="true"></i> Boleto
+                    </label>
+                </div>
+            </fieldset>
+
             <div class="modal-buttons">
-                <button type="button" class="btn-cancelar" onclick="document.getElementById('modalCheckout').style.display='none'">Cancelar</button>
-                <button type="button" class="btn-confirmar" onclick="submitCheckout()">Confirmar Compra</button>
+                <button type="button" class="btn-cancelar" id="btnFecharCheckout">Cancelar</button>
+                <button type="button" class="btn-confirmar" id="btnConfirmarCompra">Confirmar compra</button>
             </div>
         </div>
     </div>
-    
+
     <script>
-        var selectedAddressId = null;
-        
-        function showNewAddressForm() {
-            document.getElementById('newAddressForm').classList.remove('hidden');
-            document.getElementById('btnAddNewAddress').classList.add('hidden');
+    (function () {
+        var overlay   = document.getElementById('modalCheckout');
+        var btnAbrir  = document.getElementById('btnAbrirCheckout');
+        var btnFechar = document.getElementById('btnFecharCheckout');
+        var btnNovo   = document.getElementById('btnNovoEndereco');
+        var btnCancelarNovo = document.getElementById('btnCancelarNovo');
+        var formNovo  = document.getElementById('formNovoEndereco');
+        var erroBox   = document.getElementById('erroCheckout');
+        var ultimoFoco = null;
+
+        var FOCAVEIS = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+
+        function mostrarErro(msg) {
+            erroBox.textContent = msg;
+            erroBox.classList.remove('hidden');
         }
-        
-        function hideNewAddressForm() {
-            document.getElementById('newAddressForm').classList.add('hidden');
-            document.getElementById('btnAddNewAddress').classList.remove('hidden');
+
+        function limparErro() {
+            erroBox.textContent = '';
+            erroBox.classList.add('hidden');
         }
-        
-        function selectAddress(id, element) {
-            // Remove selected from all options
-            var options = document.querySelectorAll('.endereco-option');
-            options.forEach(function(opt) {
-                opt.classList.remove('selected');
-            });
-            
-            // Add selected to clicked
-            element.classList.add('selected');
-            selectedAddressId = id;
+
+        function abrirModal() {
+            ultimoFoco = document.activeElement;
+            overlay.hidden = false;
+            document.body.classList.add('modal-aberto');
+            limparErro();
+            var primeiro = overlay.querySelector('input[name="id_endereco"], #btnNovoEndereco');
+            (primeiro || overlay.querySelector(FOCAVEIS)).focus();
         }
-        
-        function selectPayment(method, element) {
-            // Remove selected from all options
-            var options = document.querySelectorAll('.metodo-btn');
-            options.forEach(function(opt) {
-                opt.classList.remove('selected');
-            });
-            
-            // Add selected to clicked
-            element.classList.add('selected');
+
+        function fecharModal() {
+            overlay.hidden = true;
+            document.body.classList.remove('modal-aberto');
+            if (ultimoFoco) ultimoFoco.focus();
         }
-        
-        function submitCheckout() {
-            // Check if address is selected
-            if (!selectedAddressId) {
-                alert('Por favor, selecione um endereço de entrega.');
+
+        function alternarFormEndereco(mostrar) {
+            formNovo.classList.toggle('hidden', !mostrar);
+            btnNovo.classList.toggle('hidden', mostrar);
+            btnNovo.setAttribute('aria-expanded', mostrar ? 'true' : 'false');
+            if (mostrar) {
+                document.getElementById('cep').focus();
+            } else {
+                btnNovo.focus();
+            }
+        }
+
+        if (btnAbrir) btnAbrir.addEventListener('click', abrirModal);
+        btnFechar.addEventListener('click', fecharModal);
+        btnNovo.addEventListener('click', function () { alternarFormEndereco(true); });
+        btnCancelarNovo.addEventListener('click', function () { alternarFormEndereco(false); });
+
+        // Fecha ao clicar fora da caixa
+        overlay.addEventListener('mousedown', function (e) {
+            if (e.target === overlay) fecharModal();
+        });
+
+        // Esc fecha; Tab fica preso dentro do modal
+        document.addEventListener('keydown', function (e) {
+            if (overlay.hidden) return;
+            if (e.key === 'Escape') {
+                fecharModal();
                 return;
             }
-            
-            // Get selected payment method
-            var paymentRadios = document.getElementsByName('metodo_pagamento');
-            var paymentMethod = 'pix';
-            for (var i = 0; i < paymentRadios.length; i++) {
-                if (paymentRadios[i].checked) {
-                    paymentMethod = paymentRadios[i].value;
-                    break;
+            if (e.key === 'Tab') {
+                var itens = Array.prototype.filter.call(
+                    overlay.querySelectorAll(FOCAVEIS),
+                    function (el) { return el.offsetParent !== null || el.classList.contains('sr-only'); }
+                );
+                if (!itens.length) return;
+                var primeiro = itens[0], ultimo = itens[itens.length - 1];
+                if (e.shiftKey && document.activeElement === primeiro) {
+                    e.preventDefault(); ultimo.focus();
+                } else if (!e.shiftKey && document.activeElement === ultimo) {
+                    e.preventDefault(); primeiro.focus();
                 }
             }
-            
-            // Create and submit form
+        });
+
+        // Envia o pedido
+        document.getElementById('btnConfirmarCompra').addEventListener('click', function () {
+            var endereco = document.querySelector('input[name="id_endereco"]:checked');
+            if (!endereco) {
+                mostrarErro('Por favor, selecione um endereço de entrega.');
+                return;
+            }
+            var pagamento = document.querySelector('input[name="metodo_pagamento"]:checked');
+
             var form = document.createElement('form');
             form.method = 'POST';
             form.action = '../checkout/finalizar_compra.php';
-            
-            var addressInput = document.createElement('input');
-            addressInput.type = 'hidden';
-            addressInput.name = 'id_endereco';
-            addressInput.value = selectedAddressId;
-            
-            var paymentInput = document.createElement('input');
-            paymentInput.type = 'hidden';
-            paymentInput.name = 'metodo_pagamento';
-            paymentInput.value = paymentMethod;
-            
-            form.appendChild(addressInput);
-            form.appendChild(paymentInput);
-            
+
+            [['id_endereco', endereco.value], ['metodo_pagamento', pagamento ? pagamento.value : 'pix']]
+                .forEach(function (par) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = par[0];
+                    input.value = par[1];
+                    form.appendChild(input);
+                });
+
             document.body.appendChild(form);
             form.submit();
-        }
+        });
+    })();
     </script>
 </body>
 </html>
