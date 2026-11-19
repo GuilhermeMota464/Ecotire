@@ -50,7 +50,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="profile" id="profile">
                 <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
-                    <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de perfil">
+                    <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true" id="user_avatar" ></i>
                     <span class="profile-text">
                         <span class="profile-name">Administrador</span>
                         <span class="profile-role">Painel Aruanã</span>
