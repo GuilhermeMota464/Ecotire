@@ -27,6 +27,7 @@ $stmt = $pdo->prepare($sql_pedidos_andamento);
 $stmt->execute([$id_usuario]);
 $pedidos_andamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
 // Busca pagamentos pendentes (novo SQL)
 $sql_pagamentos_pendentes = "SELECT pa.*, ped.data_pedido, ped.status as pedido_status,
         pr.nome as nome_produto, pi.quantidade, pr.imagem as imagem_produto,

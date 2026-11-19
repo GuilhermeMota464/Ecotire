@@ -374,15 +374,17 @@ $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
         }
         
         function selectPayment(method, element) {
-            // Remove selected from all options
-            var options = document.querySelectorAll('.metodo-btn');
-            options.forEach(function(opt) {
-                opt.classList.remove('selected');
-            });
-            
-            // Add selected to clicked
-            element.classList.add('selected');
-        }
+    var options = document.querySelectorAll('.metodo-btn');
+    options.forEach(function(opt) {
+        opt.classList.remove('selected');
+        var radio = opt.querySelector('input[type="radio"]');
+        if (radio) radio.checked = false;
+    });
+
+    element.classList.add('selected');
+    var selectedRadio = element.querySelector('input[type="radio"]');
+    if (selectedRadio) selectedRadio.checked = true;
+}
         
         function submitCheckout() {
             // Check if address is selected
