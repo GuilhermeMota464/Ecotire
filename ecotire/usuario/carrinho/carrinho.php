@@ -221,7 +221,9 @@ function brl($valor) {
                         <div class="campo">
                             <label for="numero">Número</label>
                             <input type="text" id="numero" name="numero" placeholder="Número"
-                                   inputmode="numeric" pattern="[0-9]*" autocomplete="off" required>
+                                   inputmode="numeric" pattern="[0-9]+"
+                                   oninput="this.value = this.value.replace(/\D/g, '')"
+                                   autocomplete="off" required>
                         </div>
                         <div class="campo">
                             <label for="complemento">Complemento (opcional)</label>
@@ -269,9 +271,16 @@ function brl($valor) {
         var btnCancelarNovo = document.getElementById('btnCancelarNovo');
         var formNovo  = document.getElementById('formNovoEndereco');
         var erroBox   = document.getElementById('erroCheckout');
+        var inputNumero = document.getElementById('numero');
         var ultimoFoco = null;
 
         var FOCAVEIS = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+
+        if (inputNumero) {
+            inputNumero.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '');
+            });
+        }
 
         function mostrarErro(msg) {
             erroBox.textContent = msg;
