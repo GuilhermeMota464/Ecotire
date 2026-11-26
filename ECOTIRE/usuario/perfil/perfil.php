@@ -15,8 +15,13 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$id_usuario]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$usuario) {
+    session_destroy();
+    header("Location: ../login/login.php?erro=sessao_expirada");
+    exit;
+}
+
 // Busca pedidos em andamento (pendente, pago ou enviado)
-// Observação: no novo SQL os itens ficam em pedido_itens, e o pagamento em pagamentos.
 $sql_pedidos_andamento = "SELECT p.*, pr.nome as nome_produto, pr.imagem as imagem_produto, pi.quantidade, pi.preco_unitario
         FROM pedidos p
         LEFT JOIN pedido_itens pi ON p.id_pedido = pi.id_pedido
@@ -27,8 +32,6 @@ $stmt = $pdo->prepare($sql_pedidos_andamento);
 $stmt->execute([$id_usuario]);
 $pedidos_andamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-
 // Busca endereço do usuário
 $sql_endereco = "SELECT * FROM endereco WHERE id_usuario = ?";
 $stmt = $pdo->prepare($sql_endereco);
@@ -38,8 +41,10 @@ $enderecos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Processar atualização de perfil
 $msg_sucesso = '';
 $msg_erro = '';
+$aba_ativa = 'pedidos';
 
 if (isset($_POST['atualizar_perfil'])) {
+    $aba_ativa = 'conta';
     $nome = trim($_POST['nome'] ?? '');
     $telefone = trim($_POST['telefone'] ?? '');
     $digitos_telefone = preg_replace('/\D/', '', $telefone);
@@ -67,21 +72,57 @@ if (isset($_POST['atualizar_perfil'])) {
 
 // Processar adição de endereço
 if (isset($_POST['adicionar_endereco'])) {
-    $cep = $_POST['cep'];
-    $numero = $_POST['numero'];
-    $complemento = $_POST['complemento'];
-    
-    $sql_insert_endereco = "INSERT INTO endereco (id_usuario, cep, numero, complemento) VALUES (?, ?, ?, ?)";
+    $aba_ativa = 'enderecos';$cep = $_POST['cep'];$numero = $_POST['numero'];$complemento = $_POST['complemento'];$sql_insert_endereco = "INSERT INTO endereco (id_usuario, cep, numero, complemento) VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql_insert_endereco);
     
-    if ($stmt->execute([$id_usuario, $cep, $numero, $complemento])) {
-        $msg_sucesso = 'Endereço adicionado com sucesso!';
-        // Recarrega endereços
+    if ($stmt->execute([$id_usuario, $cep,$numero, $complemento])) {$msg_sucesso = 'Endereço adicionado com sucesso!';
         $stmt = $pdo->prepare($sql_endereco);
         $stmt->execute([$id_usuario]);
-        $enderecos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         $msg_erro = 'Erro ao adicionar endereço.';
+    }
+}
+
+// Processar edição de endereço
+if (isset($_POST['editar_endereco'])) {$aba_ativa = 'enderecos';
+    $id_endereco =$_POST['id_endereco'];
+    $cep =$_POST['cep'];
+    $numero =$_POST['numero'];
+    $complemento =$_POST['complemento'];
+
+    $sql_edit_endereco = "UPDATE endereco SET cep = ?, numero = ?, complemento = ? WHERE id_endereco = ? AND id_usuario = ?";
+    $stmt = $pdo->prepare($sql_edit_endereco);
+
+    if ($stmt->execute([$cep,$numero, $complemento,$id_endereco, $id_usuario])) {$msg_sucesso = 'Endereço atualizado com sucesso!';
+        $stmt = $pdo->prepare($sql_endereco);
+        $stmt->execute([$id_usuario]);
+        $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $msg_erro = 'Erro ao atualizar endereço.';
+    }
+}
+
+// Processar exclusão de endereço
+if (isset($_POST['excluir_endereco'])) {$aba_ativa = 'enderecos';
+    $id_endereco =$_POST['id_endereco'];
+
+    try {
+        $sql_del_endereco = "DELETE FROM endereco WHERE id_endereco = ? AND id_usuario = ?";
+        $stmt = $pdo->prepare($sql_del_endereco);
+
+        if ($stmt->execute([$id_endereco, $id_usuario])) {$msg_sucesso = 'Endereço excluído com sucesso!';
+            $stmt = $pdo->prepare($sql_endereco);
+            $stmt->execute([$id_usuario]);
+            $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $stmt = $pdo->prepare($sql_pedidos_andamento);
+            $stmt->execute([$id_usuario]);
+            $pedidos_andamento =$stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $msg_erro = 'Erro ao excluir endereço.';
+        }
+    } catch (PDOException $e) {$msg_erro = 'Não foi possível excluir este endereço pois ele está vinculado a um pedido.';
     }
 }
 
@@ -99,7 +140,7 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Conta - Ecotire</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,14 +168,13 @@ if (isset($_GET['logout'])) {
                 <p><?php echo htmlspecialchars($usuario['email']); ?></p>
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="tab-btn active" data-tab="pedidos">
+                <a href="#" class="tab-btn <?php echo $aba_ativa === 'pedidos' ? 'active' : ''; ?>" data-tab="pedidos">
                     <i class="fa-solid fa-box-open"></i> Meus Pedidos
                 </a>
-                </a>
-                <a href="#" class="tab-btn" data-tab="conta">
+                <a href="#" class="tab-btn <?php echo $aba_ativa === 'conta' ? 'active' : ''; ?>" data-tab="conta">
                     <i class="fa-solid fa-gear"></i> Configurações
                 </a>
-                <a href="#" class="tab-btn" data-tab="enderecos">
+                <a href="#" class="tab-btn <?php echo $aba_ativa === 'enderecos' ? 'active' : ''; ?>" data-tab="enderecos">
                     <i class="fa-solid fa-location-dot"></i> Endereços
                 </a>
             </nav>
@@ -143,10 +183,10 @@ if (isset($_GET['logout'])) {
         <!-- Conteúdo principal -->
         <div class="main-content">
             <!-- Tab: Pedidos em Andamento -->
-            <div class="tab-content active" id="pedidos">
+            <div class="tab-content <?php echo $aba_ativa === 'pedidos' ? 'active' : ''; ?>" id="pedidos">
                 <h2><i class="fa-solid fa-box-open"></i> Pedidos em Andamento</h2>
                 
-                <?php if ($msg_sucesso && isset($_POST['atualizar_perfil']) == false): ?>
+                <?php if ($msg_sucesso &&$aba_ativa === 'pedidos'): ?>
                     <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
                 <?php endif; ?>
                 
@@ -158,7 +198,7 @@ if (isset($_GET['logout'])) {
                     </div>
                 <?php else: ?>
                     <div class="orders-list">
-                        <?php foreach ($pedidos_andamento as $pedido): ?>
+                        <?php foreach ($pedidos_andamento as$pedido): ?>
                         <div class="order-card">
                             <div class="order-header">
                                 <span class="order-id">Pedido #<?php echo $pedido['id_pedido']; ?></span>
@@ -167,7 +207,7 @@ if (isset($_GET['logout'])) {
                             <div class="order-body">
                                 <p><strong>Produto:</strong> <?php echo htmlspecialchars($pedido['nome_produto']); ?></p>
                                 <p><strong>Quantidade:</strong> <?php echo $pedido['quantidade']; ?></p>
-                                <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
+                                <p><strong>Total:</strong> R$<?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
                                 <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
                             </div>
                         </div>
@@ -177,14 +217,14 @@ if (isset($_GET['logout'])) {
             </div>
 
             <!-- Tab: Configurações da Conta -->
-            <div class="tab-content" id="conta">
+            <div class="tab-content <?php echo $aba_ativa === 'conta' ? 'active' : ''; ?>" id="conta">
                 <h2><i class="fa-solid fa-gear"></i> Configurações da Conta</h2>
                 
-                <?php if ($msg_erro): ?>
+                <?php if ($msg_erro &&$aba_ativa === 'conta'): ?>
                     <div class="alert erro"><?php echo $msg_erro; ?></div>
                 <?php endif; ?>
                 
-                <?php if ($msg_sucesso && isset($_POST['atualizar_perfil'])): ?>
+                <?php if ($msg_sucesso &&$aba_ativa === 'conta'): ?>
                     <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
                 <?php endif; ?>
                 
@@ -202,10 +242,8 @@ if (isset($_GET['logout'])) {
                     
                     <div class="form-group">
                         <label for="telefone"><i class="fa-solid fa-phone"></i> Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone']); ?>">
+                        <input type="tel" id="telefone" name="telefone" value="<?php echo htmlspecialchars($usuario['telefone'] ?? ''); ?>">
                     </div>
-                    
-
                     
                     <button type="submit" name="atualizar_perfil" class="btn-salvar">
                         <i class="fa-solid fa-check"></i> Salvar Alterações
@@ -225,23 +263,79 @@ if (isset($_GET['logout'])) {
             </div>
 
             <!-- Tab: Endereços -->
-            <div class="tab-content" id="enderecos">
+            <div class="tab-content <?php echo $aba_ativa === 'enderecos' ? 'active' : ''; ?>" id="enderecos">
                 <h2><i class="fa-solid fa-location-dot"></i> Meus Endereços</h2>
+
+                <?php if ($msg_erro &&$aba_ativa === 'enderecos'): ?>
+                    <div class="alert erro"><?php echo $msg_erro; ?></div>
+                <?php endif; ?>
+
+                <?php if ($msg_sucesso &&$aba_ativa === 'enderecos'): ?>
+                    <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
+                <?php endif; ?>
                 
                 <div class="enderecos-grid">
-                    <?php foreach ($enderecos as $endereco): ?>
-                    <div class="endereco-card">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <p><strong>CEP:</strong> <?php echo htmlspecialchars($endereco['cep']); ?></p>
-                        <p><strong>Número:</strong> <?php echo $endereco['numero']; ?></p>
-                        <p><strong>Complemento:</strong> <?php echo htmlspecialchars($endereco['complemento'] ?: 'Não informado'); ?></p>
+                    <?php foreach ($enderecos as$endereco): ?>
+                    <?php $idEnd = (int)$endereco['id_endereco']; ?>
+                    <div class="endereco-card" id="card-end-<?php echo $idEnd; ?>">
+                        <!-- Visualização padrão -->
+                        <div class="endereco-view-box" id="view-end-<?php echo $idEnd; ?>">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p><strong>CEP:</strong> <?php echo htmlspecialchars($endereco['cep']); ?></p>
+                            <p><strong>Número:</strong> <?php echo htmlspecialchars($endereco['numero']); ?></p>
+                            <p><strong>Complemento:</strong> <?php echo htmlspecialchars($endereco['complemento'] ?: 'Não informado'); ?></p>
+
+                            <div class="endereco-acoes" id="acoes-end-<?php echo $idEnd; ?>">
+                                <button type="button" class="btn-endereco-editar" onclick="mostrarEdicao(<?php echo $idEnd; ?>)">
+                                    <i class="fa-solid fa-pen"></i> Editar
+                                </button>
+                                <button type="button" class="btn-endereco-excluir" onclick="pedirConfirmacaoExclusao(<?php echo $idEnd; ?>)">
+                                    <i class="fa-solid fa-trash"></i> Excluir
+                                </button>
+                            </div>
+
+                            <!-- Confirmação sem pop-up do navegador -->
+                            <div class="confirmacao-exclusao" id="confirm-end-<?php echo $idEnd; ?>" style="display: none;">
+                                <p>Excluir este endereço?</p>
+                                <div class="endereco-acoes" style="margin-top: 8px; padding-top: 0;">
+                                    <form method="POST">
+                                        <input type="hidden" name="id_endereco" value="<?php echo $idEnd; ?>">
+                                        <button type="submit" name="excluir_endereco" class="btn-endereco-excluir">
+                                            <i class="fa-solid fa-check"></i> Sim
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn-endereco-cancelar" onclick="cancelarConfirmacaoExclusao(<?php echo $idEnd; ?>)">
+                                        Não
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edição com o mesmo layout do card "Adicionar Novo Endereço" -->
+                        <div class="endereco-edit-box" id="edit-end-<?php echo $idEnd; ?>" style="display: none;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <p class="titulo-card-form">Editar Endereço</p>
+                            <form method="POST" class="form-endereco">
+                                <input type="hidden" name="id_endereco" value="<?php echo $idEnd; ?>">
+                                <input type="text" name="cep" value="<?php echo htmlspecialchars($endereco['cep']); ?>" placeholder="CEP" required>
+                                <input type="number" name="numero" value="<?php echo htmlspecialchars($endereco['numero']); ?>" placeholder="Número" required>
+                                <input type="text" name="complemento" value="<?php echo htmlspecialchars($endereco['complemento'] ?? ''); ?>" placeholder="Complemento (opcional)">
+
+                                <button type="submit" name="editar_endereco" class="btn-add">
+                                    <i class="fa-solid fa-pen"></i> Editar
+                                </button>
+                                <button type="button" class="btn-link-cancelar" onclick="cancelarEdicao(<?php echo $idEnd; ?>)">
+                                    Cancelar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <?php endforeach; ?>
                     
                     <!-- Formulário para adicionar novo endereço -->
                     <div class="endereco-card add-new">
                         <i class="fa-solid fa-plus"></i>
-                        <p>Adicionar Novo Endereço</p>
+                        <p class="titulo-card-form">Adicionar Novo Endereço</p>
                         <form method="POST" class="form-endereco">
                             <input type="text" name="cep" placeholder="CEP" required>
                             <input type="number" name="numero" placeholder="Número" required>
@@ -256,6 +350,29 @@ if (isset($_GET['logout'])) {
         </div>
     </div>
 
+    <script>
+        function mostrarEdicao(id) {
+            document.getElementById('card-end-' + id).classList.add('editando');
+            document.getElementById('view-end-' + id).style.display = 'none';
+            document.getElementById('edit-end-' + id).style.display = 'flex';
+        }
+
+        function cancelarEdicao(id) {
+            document.getElementById('card-end-' + id).classList.remove('editando');
+            document.getElementById('edit-end-' + id).style.display = 'none';
+            document.getElementById('view-end-' + id).style.display = 'flex';
+        }
+
+        function pedirConfirmacaoExclusao(id) {
+            document.getElementById('acoes-end-' + id).style.display = 'none';
+            document.getElementById('confirm-end-' + id).style.display = 'block';
+        }
+
+        function cancelarConfirmacaoExclusao(id) {
+            document.getElementById('confirm-end-' + id).style.display = 'none';
+            document.getElementById('acoes-end-' + id).style.display = 'flex';
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
