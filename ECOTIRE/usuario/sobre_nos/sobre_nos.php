@@ -1,158 +1,394 @@
-  <!DOCTYPE html>
-  <html lang="pt-br">
-  <head>
-      <link rel="stylesheet" href="style.css">
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Sobre nós</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  </head>
+
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+date_default_timezone_set('America/Sao_Paulo');
+
+// Verificação da autenticação
+$logado = isset($_SESSION['id_usuario']);
+
+$nomeCompleto = $logado ? ($_SESSION['usuario_nome'] ?? '') : '';
+
+// Primeiro nome
+$primeiroNome = '';
+if ($nomeCompleto !== '') {
+    $partesNome = preg_split('/\s+/', trim($nomeCompleto));
+    $primeiroNome = $partesNome[0] ?? '';
+}
+
+// Saudação conforme o horário
+$hora = (int) date('H');
+
+if ($hora < 12) {
+    $saudacao = 'Bom dia';
+} elseif ($hora < 18) {
+    $saudacao = 'Boa tarde';
+} else {
+    $saudacao = 'Boa noite';
+}
+
+// Proteção para exibição de dados
+function e($valor) {
+    return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
+}
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós | Aruanã</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
 <body>
-  <!-- Cabeçalho -->
-<header>
-    <div class="header">
-        <div class="header-top">
-            <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã" onclick="window.location.href='../inicio/index.php'">
-            
-            <div class="search-group">               
-                <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
-                <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
-                <div id="resultado"></div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header">
+
+            <div class="header-top">
+
+                <img src="../../assetsGerais/aruanaCabecario.webp"
+                    class="logo"
+                    alt="Logo Aruanã"
+                    onclick="window.location.href='../inicio/index.php'">
+
+                <div class="search-group">
+
+                    <input type="text"
+                        class="search-bar"
+                        id="busca"
+                        placeholder="Pesquisar soluções sustentáveis..."
+                        aria-label="Pesquisar"
+                        autocomplete="off">
+
+                    <button type="button" id="btn-busca" aria-label="Pesquisar">
+                        <i class="fa-solid fa-magnifying-glass" id="lupa"></i>
+                    </button>
+
+                    <div id="resultado" aria-live="polite"></div>
+
+                </div>
+
+                <div class="header-actions">
+
+                    <!-- Área da conta -->
+                    <?php if ($logado): ?>
+
+                        <div class="user-menu" id="user-menu">
+
+                            <button type="button"
+                                class="user-greeting"
+                                id="user-toggle"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                aria-controls="user-dropdown">
+
+                                <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true"></i>
+
+                                <span class="user-greeting-text">
+                                    <small><?= $saudacao ?>,</small>
+                                    <strong><?= e($primeiroNome ?: 'Usuário') ?></strong>
+                                </span>
+
+                                <i class="fa-solid fa-chevron-down user-chevron"
+                                    aria-hidden="true"></i>
+
+                            </button>
+
+                            <div class="user-dropdown" id="user-dropdown">
+
+                                <a href="../perfil/perfil.php">
+                                    <i class="fa-solid fa-user"></i>
+                                    Meu perfil
+                                </a>
+
+                                <a href="../../funcoesPHP/logout.php" class="sair">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Sair da conta
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    <?php else: ?>
+
+                        <a href="../login/login.php" class="btn-entrar">
+                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                            Entrar
+                        </a>
+
+                    <?php endif; ?>
+
+                    <!-- Menu mobile -->
+                    <button id="icon"
+                        class="hamburger"
+                        aria-label="Abrir menu"
+                        aria-expanded="false"
+                        aria-controls="menu-links"
+                        onclick="toggleMenu()">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <!-- Carrinho -->
+                    <i id="botaoCarrinho"
+                        class="fa-solid fa-cart-shopping"
+                        title="Meu Carrinho"
+                        role="link"
+                        tabindex="0"
+                        aria-label="Meu carrinho"></i>
+
+                </div>
+
             </div>
- 
-            <div class="header-actions">
-                <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user" title="Minha Conta"></i>
-                <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping" title="Meu Carrinho"></i>
+
+            <div class="header-bottom">
+                <nav>
+                    <ul class="menu-horizontal" id="menu-links">
+
+                        <li><a href="../inicio/index.php">Início</a></li>
+
+                        <li>
+                            <a href="../sobre_nos/sobre_nos.php"
+                                class="ativo"
+                                aria-current="page">Sobre Nós</a>
+                        </li>
+
+                        <li><a href="../produto/produto.php">Produtos</a></li>
+
+                        <li class="contato-btn">
+                            <a href="../inicio/index.php#fale_conosco">Contato</a>
+                        </li>
+
+                    </ul>
+                </nav>
             </div>
-        </div>
-        <div class="header-bottom">
-            <nav>
-                <ul class="menu-horizontal" id="menu-links">
-                    <li><a onclick="window.location.href='../inicio/index.php'">Início</a></li>
-                    <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'" class="ativo">Sobre Nós</a></li>
-                    <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-                    <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</header>
 
-<main class="container-sobre">
-    <section class="about-section">
-        <div class="about-content">
-            <span class="subtitle">SOBRE NÓS</span>
-            <h1>Ajudando empresas<br>a crescer com <span>sustentabilidade.</span></h1>
-            <p>
-              A Aruanã não é apenas uma loja; é um movimento. Curamos e entregamos as melhores 
-              soluções sustentáveis para que você e sua empresa possam prosperar sem abrir mão 
-              do cuidado com o planeta.
-            </p>
-            <button class="btn-cta" onclick="window.location.href='../produto/produto.php'">Ver Nossas Soluções</button>
         </div>
+    </header>
 
-        <div class="about-image-wrapper">
-            <div class="shape-bg"></div>
-            <div class="image-container">
-                <img src="equipe.png" alt="Nossa Equipe">
+    <main class="container-sobre">
+
+        <!-- Apresentação -->
+        <section class="about-section">
+
+            <div class="about-content">
+
+                <h1>Ajudando empresas a crescer com sustentabilidade.</h1>
+
+                <p>
+                    A Aruanã não é apenas uma loja; é um movimento. Curamos e entregamos as melhores
+                    soluções sustentáveis para que você e sua empresa possam prosperar sem abrir mão
+                    do cuidado com o planeta.
+                </p>
+
+                <a class="btn btn-primario" href="../produto/produto.php">
+                    Ver nossas soluções
+                </a>
+
             </div>
-            <div class="dots-pattern"></div>
+
+            <div class="about-image-wrapper">
+
+                <div class="shape-bg" aria-hidden="true"></div>
+
+                <div class="image-container">
+                    <img src="Nossa_equipe.webp" alt="Nossa equipe">
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Avaliações -->
+        <section class="reviews-section" aria-labelledby="titulo-avaliacoes">
+
+            <div class="reviews-header">
+
+                <h2 id="titulo-avaliacoes">O que nossos clientes dizem</h2>
+
+                <p>
+                    A confiança de quem já transformou seu consumo com a Aruanã.
+                </p>
+
+            </div>
+
+            <div class="reviews-container">
+
+                <article class="review-card">
+
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">
+                        ★★★★★
+                    </div>
+
+                    <h3>Experiência incrível!</h3>
+
+                    <p>
+                        “Fiquei impressionada com o cuidado da Aruanã em cada detalhe.
+                        O produto tem um acabamento impecável.”
+                    </p>
+
+                    <div class="review-autor">
+
+                        <span class="avatar" aria-hidden="true">M</span>
+
+                        <div>
+                            <span class="review-author">Mariana Silva</span>
+                            <span class="author-job">Designer de Interiores</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article class="review-card">
+
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">
+                        ★★★★★
+                    </div>
+
+                    <h3>Rapidez e consciência</h3>
+
+                    <p>
+                        “Comprei soluções para o meu escritório e a entrega foi rápida,
+                        com embalagem eco-friendly. Atendimento humano e muito eficiente.”
+                    </p>
+
+                    <div class="review-autor">
+
+                        <span class="avatar" aria-hidden="true">R</span>
+
+                        <div>
+                            <span class="review-author">Ricardo Gomes</span>
+                            <span class="author-job">Empreendedor</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article class="review-card">
+
+                    <div class="stars" role="img" aria-label="Avaliação: 5 de 5 estrelas">
+                        ★★★★★
+                    </div>
+
+                    <h3>Consumo com propósito</h3>
+
+                    <p>
+                        “É difícil encontrar um site de vendas com uma curadoria tão criteriosa.
+                        Sinto que cada centavo investido aqui apoia um futuro mais verde.”
+                    </p>
+
+                    <div class="review-autor">
+
+                        <span class="avatar" aria-hidden="true">B</span>
+
+                        <div>
+                            <span class="review-author">Beatriz Soares</span>
+                            <span class="author-job">Consultora Ambiental</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-top">
+
+                <div class="footer-left">
+
+                    <p class="footer-mensagem">
+                        O futuro começa nas escolhas de hoje.<br>
+                        A Aruanã torna esse caminho mais simples.
+                    </p>
+
+                </div>
+
+                <div class="footer-right">
+
+                    <nav>
+                        <ul>
+                            <li><a href="../inicio/index.php">Início</a></li>
+                            <li><a href="../sobre_nos/sobre_nos.php">Sobre nós</a></li>
+                            <li><a href="../produto/produto.php">Produtos</a></li>
+                            <li><a href="../inicio/index.php#fale_conosco">Contato</a></li>
+                            <li><a href="../perfil/perfil.php">Perfil</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="social">
+
+                        <a href="https://instagram.com" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+
+                        <a href="https://facebook.com" title="Facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <div class="footer-logo">
+                    <img src="../../assetsGerais/aruanaCabecario.webp"
+                        alt="Logo Aruanã">
+                </div>
+
+                <div class="footer-legal">
+
+                    <p>©<?php echo date('Y'); ?> todos direitos reservados Aruanã</p>
+
+                    <div class="footer-links">
+                        <a href="../termos/termosdeuso.php">Termos de uso</a>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-    </section>
 
-  <section class="reviews-section">
-      <div class="reviews-header">
-          <h2>O que nossos clientes dizem</h2>
-          <p>A confiança de quem já transformou seu consumo com a Aruanã.</p>
-      </div>
+    </footer>
 
-      <div class="reviews-container">
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Experiência incrível!"</h4>
-              <p>"Fiquei impressionada com o cuidado da Aruanã em cada detalhe. O produto tem um acabamento impecável e une estética com materiais sustentáveis."</p>
-              <span class="review-author">Mariana Silva</span>
-              <span class="author-job">Designer de Interiores</span>
-          </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+    <script src="script.js"></script>
 
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Rapidez e Consciência"</h4>
-              <p>"Comprei soluções para o meu escritório e a entrega foi rápida, com embalagem eco-friendly. Atendimento humano e muito eficiente."</p>
-              <span class="review-author">Ricardo Gomes</span>
-              <span class="author-job">Empreendedor</span>
-          </div>
-
-          <div class="review-card">
-              <div class="stars">★★★★★</div>
-              <h4>"Consumo com Propósito"</h4>
-              <p>"É difícil encontrar um site de vendas com uma curadoria tão criteriosa. Sinto que cada centavo investido aqui apoia um futuro mais verde."</p>
-              <span class="review-author">Beatriz Soares</span>
-              <span class="author-job">Consultora Ambiental</span>
-          </div>
-      </div>
-  </section>
-
-</main>
-
-<footer>
-    <section class="footer">
-      <div class="footer-row">
-        <div class="footer-col">
-          <h4>Informação</h4>
-          <ul class="links">
-            <li><a href="../inicio/index.php">Inicio</a></li>
-            <li><a href="../sobre_nos/sobre_nos.html">Sobre nós</a></li>
-            <li><a href="#">Produtos</a></li>
-            <li><a href="#">Contatos</a></li>
-            <li><a href="#">Cadastro</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <ul class="links">
-            <li><a href="#">Free Designs</a></li>
-            <li><a href="#">Latest Designs</a></li>
-            <li><a href="#">Themes</a></li>
-            <li><a href="#">Popular Designs</a></li>
-            <li><a href="#">Art Skills</a></li>
-            <li><a href="#">New Uploads</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <p>
-            RedRoosterTI é um dos principais 
-            fornecedores de serviços de design e 
-            desenvolvimento web. Criamos sites 
-            incríveis que ajudam empresas a 
-            estabelecer uma forte presença online. 
-          </p>
-        </div>
-        <div class="footer-col">
-          <h4>Newsletter</h4>
-          <p>
-            Subscribe to our newsletter for a weekly dose
-            of news, updates, helpful tips, and
-            exclusive offers.
-          </p>
-          <form action="#">
-            <input type="text" placeholder="Your email" required>
-            <button type="submit">INSCREVA-SE</button>
-          </form>
-          <div class="icons">
-            <i class="fa-brands fa-facebook-f"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-github"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-</footer>
-<script src="script.js"></script>
-  </body>
-  </html>
-
+</body>
+</html>

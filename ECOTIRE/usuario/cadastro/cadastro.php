@@ -1,51 +1,8 @@
 <?php
-require '../../funcoesPHP/connection.php';
-
-$feedback = ""; 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome       = $_POST['nome'];
-    $email_part = $_POST['email'];
-    $dominio    = $_POST['domain']; 
-    $telefone   = $_POST['telefone'];
-    $senha      = $_POST['senha'];
-
-    $full_email = ($dominio === 'outro') ? $email_part : $email_part . $dominio;
-
-    try {
-        $checkSql = "SELECT id_usuario FROM usuario WHERE email = :email";
-        $checkStmt = $pdo->prepare($checkSql);
-        
-        $checkStmt->execute([':email' => $full_email]);
-
-        if ($checkStmt->fetch()) {
-            $feedback = "<div class='error'>O email '$full_email' já está registrado. Insira outro.</div>";
-        } else {
-            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
-            $insertSql = "INSERT INTO usuario (nome, email, senha, telefone) VALUES (:nome, :email, :senha, :telefone)";
-            $stmt = $pdo->prepare($insertSql);
-            
-            $sucesso = $stmt->execute([
-                ':nome'     => $nome,
-                ':email'    => $full_email,
-                ':senha'    => $senha_hash,
-                ':telefone' => $telefone
-            ]);
-
-            if ($sucesso) {
-                $feedback = "<div class='error' style='color: #2c9b2a;'>Cadastro realizado com sucesso!</div>";
-            } else {
-                $feedback = "<div class='error'>Erro ao cadastrar seu perfil.</div>";
-            }
-        }
-
-    } catch (PDOException $e) {
-        $feedback = "<div class='error'>Erro no sistema: " . $e->getMessage() . "</div>";
-    }
-}
+session_start();
+$feedback = $_SESSION['feedback'] ?? '';
+unset($_SESSION['feedback']);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -54,52 +11,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>Aruanã - Cadastro</title>
 </head>
+
 <body>
-
     <main class="main-wrapper">
-        <section class="side-panel">
-            <a href="../inicio/index.php"><i class="fa-solid fa-arrow-left" id="seta"></i></a>
-            
-            <div class="side-content">
-                <div class="logo-wrapper">
-                    <img src="../../assetsGerais/aruana.webp" alt="Aruanã logo" class="logo-img">
-                </div>
-                <h1>Crie sua <br><span>Conta</span></h1>
-                <p>Junte-se à Aruanã e faça parte de uma jornada tecnológica voltada para um futuro mais sustentável.</p>
-            </div>
-            
-            <div class="creator-footer">
-                <span>ARUANÃ | SUSTENTABILIDADE</span>
-            </div>
-        </section>
-
         <section class="form-panel">
+            <a href="../inicio/index.php" class="voltar" aria-label="Voltar para o início">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
             <div class="form-container">
-                <h2>Cadastre-se</h2>
-                <p>Preencha os campos abaixo para criar seu perfil.</p>
-                
+                <h1>Crie sua conta</h1>
+                <p class="subtitle">Faça parte da jornada sustentável da Aruanã.</p>
+
+                <div id="error" class="error"></div>
                 <?php echo $feedback; ?>
 
-                <form action="cadastro.php" method="post" id="cadastroForm">
-                    
+                <form action="../../funcoesPHP/cadastro.php" method="post" id="cadastroForm">
                     <div class="input-group">
-                        <label for="nome">Nome Completo</label>
-                        <input name="nome" type="text" id="nome" placeholder="Insira seu nome" required>
+                        <label for="nome">Nome</label>
+                        <div class="campo">
+                            <i class="fa-regular fa-user" aria-hidden="true"></i>
+                            <input name="nome" type="text" id="nome" placeholder="Insira seu nome" autocomplete="name" required>
+                        </div>
                     </div>
 
-                    <div class="row">
-                        <div class="input-group">
-                            <label for="email">E-mail</label>
-                            <input name="email" id="email" type="text" placeholder="Nome do usuário" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="domain">Domínio</label>
-                            <select id="domain" name="domain">
+                    <div class="input-group">
+                        <label for="email">E-mail</label>
+                        <div class="email-row">
+                            <div class="campo email-user">
+                                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                                <input name="email" id="email" type="text" placeholder="Seu usuário" autocomplete="off" required>
+                            </div>
+                            <select id="domain" name="domain" aria-label="Domínio do e-mail">
                                 <option value="@gmail.com">@gmail.com</option>
                                 <option value="@hotmail.com">@hotmail.com</option>
                                 <option value="@yahoo.com">@yahoo.com</option>
@@ -111,31 +59,106 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
 
                     <div class="input-group">
-                        <label for="tele">Telefone</label>
-                        <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" required>
+                        <label for="tele">Telefone (opcional)</label>
+                        <div class="campo">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                            <input name="telefone" type="tel" id="tele" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" autocomplete="tel">
+                        </div>
                     </div>
 
                     <div class="input-group">
                         <label for="senha">Senha</label>
-                        <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" required>
+                        <div class="campo">
+                            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                            <input name="senha" type="password" id="senha" placeholder="Crie uma senha forte" autocomplete="new-password" required>
+                            <button type="button" class="olho" id="toggleSenha" aria-label="Mostrar senha">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" required>
-                        <label for="terms">
-                            Eu li e aceito os <span id="termos" onclick="window.location.href='../termos/termosdeuso.php'">&nbsp;termos e condições</span>
-                        </label>
+                        <label for="terms">Eu li e concordo com os</label>
+                        <a href="../termos/termosdeuso.php" target="_blank" rel="noopener">Termos e Condições</a>
                     </div>
 
-                    <div class="actions">
-                        <button type="submit" class="btn-submit">Cadastrar</button>
-                        <a href="../login/login.php" class="btn-outline">Entrar</a>
-                    </div>
+                    <button type="submit" class="btn-submit">Cadastrar <i class="fa-solid fa-arrow-right"></i></button>
                 </form>
+
+                <div class="divider"><span>ou</span></div>
+                <div class="social-buttons">
+                    <div id="g_id_onload"
+                        data-client_id="1086800036836-iclvo8nhvs6adrm941bdi6plvj5ahjkn.apps.googleusercontent.com"
+                        data-callback="handleGoogleLogin"></div>
+                    <div class="g_id_signin" data-type="standard" data-theme="outline" data-size="large" data-width="300"></div>
+                </div>
+                <p class="switch-auth">Já tem uma conta? <a href="../login/login.php">Entrar</a></p>
+            </div>
+        </section>
+
+        <section class="image-panel">
+            <img src="../../assetsGerais/tugFrog.webp" alt="" class="side-image">
+            <div class="image-overlay">
+                <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã" class="overlay-logo">
+                <p class="overlay-texto">O futuro começa nas escolhas de hoje.</p>
             </div>
         </section>
     </main>
 
+ <script>
+    (function () {
+        const button = document.getElementById('toggleSenha');
+        const field = document.getElementById('senha');
+        if (!button || !field) return;
+        button.addEventListener('click', function () {
+            const show = field.type === 'password';
+            field.type = show ? 'text' : 'password';
+            button.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+            button.querySelector('i').className = show ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+        });
+    })();
+
+    async function handleGoogleLogin(response) {
+
+        try {
+            const resultado = await fetch('../../funcoesPHP/cadastroGoogle.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            });
+
+            const texto = await resultado.text();
+
+            console.log("Resposta PHP:", texto);
+
+            const dados = JSON.parse(texto);
+
+            if (dados.success) {
+                window.location.href = dados.redirect;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro no cadastro',
+                    text: dados.message
+                });
+            }
+
+        } catch (erro) {
+            console.error("Erro:", erro);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um problema ao realizar o cadastro com Google.'
+            });
+        }
+    }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

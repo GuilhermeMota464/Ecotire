@@ -1,188 +1,676 @@
-/* =========================================================
-   PÁGINA DE PEDIDOS - INTEGRADA AO TEMA PRINCIPAL
-   ========================================================= */
+    /* ==========================================================
+    ARUANÃ — base da página de pedidos
+    Define as variáveis usadas pelo style_pedidos.css
+    ========================================================== */
 
-/* Container principal da tabela */
-.container-pedidos {
-    max-width: 1200px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px; /* Segue o padrão do seu .fale_conosco_container */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Sombra mais suave para facilitar a leitura */
-    width: 90%;
+    :root {
+        --cor-primaria: #2c9b2a;
+        --cor-primaria-escura: #1e6b1d;
+        --cor-gradiente: linear-gradient(75deg, rgba(44, 155, 42, 1) 0%, rgba(35, 199, 32, 1) 100%);
+        --cor-ondas: #82ce00;
+        --cor-texto: #2b3a1a;
+        --branco: #fbfbfb;
+        --transicao: all 0.3s ease;
+        --perigo: #d93025;
+
+        /* Usada pelo style_pedidos.css (bordas suaves e hover das linhas) */
+        --fundo: #f4f1e1;
+        --cor-fundo: #f4f1e1;
+    }
+
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        background-color: var(--cor-fundo);
+        color: var(--cor-texto);
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: clip;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    a {
+        color: var(--cor-primaria);
+        text-decoration: none;
+    }
+
+    button, input, textarea {
+        font: inherit;
+    }
+
+    small {
+        color: #666;
+        font-size: 12px;
+    }
+
+
+    /* =========================================================
+    PÁGINA DE PEDIDOS - INTEGRADA AO TEMA PRINCIPAL
+    ========================================================= */
+
+    /* Cabeçalho */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: linear-gradient(90deg, #1e6b1d 0%, #2c9b2a 55%, #23b520 100%);
+    transition: box-shadow 0.3s ease;
 }
 
-/* Título da página */
-.container-pedidos h2 {
-    margin-top: 0;
-    color: var(--cor-primaria-escura); /* Puxa sua variável verde escuro */
-    font-size: 24px;
+/* Linha de onda na base, referência ao nome Aruanã */
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -9px;
+    height: 10px;
+    pointer-events: none;
+    background-color: var(--cor-ondas);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0h40v3c-5 0-5 6-10 6S25 3 20 3 15 9 10 9 5 3 0 3z'/%3E%3C/svg%3E") repeat-x left top / 40px 10px;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0h40v3c-5 0-5 6-10 6S25 3 20 3 15 9 10 9 5 3 0 3z'/%3E%3C/svg%3E") repeat-x left top / 40px 10px;
+}
+
+.site-header.scrolled {
+    box-shadow: 0 6px 20px rgba(30, 107, 29, 0.25);
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5%;
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    border-radius: 8px;
+}
+
+.logo {
+    height: 48px;
+    width: auto;
+    transition: transform 0.25s ease;
+}
+
+.logo-link:hover .logo {
+    transform: scale(1.04);
+}
+
+/* Navegação */
+.main-nav {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-horizontal {
+    display: flex;
+    gap: 6px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.14);
+    border-radius: 999px;
+    list-style: none; 
+}
+
+.menu-horizontal a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+    font-weight: 500;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.menu-horizontal a i {
+    font-size: 0.9rem;
+}
+
+.menu-horizontal a:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--branco);
+}
+
+.menu-horizontal a.ativo {
+    background: var(--branco);
+    color: var(--cor-primaria-escura);
     font-weight: 600;
-    border-bottom: 2px solid var(--fundo);
-    padding-bottom: 15px;
-    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Perfil */
+.profile {
+    position: relative;
+    justify-self: end;
+}
+
+.profile-btn {
     display: flex;
     align-items: center;
     gap: 10px;
-    text-align: left;
+    padding: 5px 12px 5px 5px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    color: var(--branco);
+    cursor: pointer;
+    transition: background-color 0.25s ease;
 }
 
-.container-pedidos h2 i {
-    color: var(--cor-primaria); /* Puxa sua variável verde padrão */
+.profile-btn:hover,
+.profile-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.22);
 }
 
-/* Estrutura da Tabela */
-.tabela-pedidos {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.foto_perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--branco);
 }
 
-.tabela-pedidos th, 
-.tabela-pedidos td {
-    border-bottom: 1px solid var(--fundo); /* Usa a cor de fundo como uma borda divisória suave */
-    padding: 16px 12px;
-    text-align: left;
-    font-size: 14px;
-    color: #333;
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
 }
 
-/* Cabeçalho da Tabela */
-.tabela-pedidos th {
-    background-color: aliceblue; /* Mesma cor que você usa nos inputs do formulário */
-    color: var(--cor-primaria-escura);
+.profile-name {
+    font-size: 0.85rem;
     font-weight: 600;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 0.5px;
 }
 
-/* Efeito Hover nas linhas */
-.tabela-pedidos tr {
-    transition: background-color 0.2s ease;
+.profile-btn{
+    font-size: 20px;
 }
 
-.tabela-pedidos tr:hover {
-    background-color: var(--fundo); /* Destaca a linha com a sua cor de fundo */
+.profile-role {
+    font-size: 0.72rem;
+    opacity: 0.8;
 }
 
-/* Destacando IDs e Valores */
-.tabela-pedidos td:first-child {
-    font-weight: 600;
-    color: var(--cor-primaria-escura);
+.profile-chevron {
+    font-size: 0.7rem;
+    transition: transform 0.25s ease;
 }
 
-.tabela-pedidos td:nth-last-child(2) { 
-    font-weight: 600;
-    font-size: 15px;
-    color: var(--cor-primaria);
+.profile-btn[aria-expanded="true"] .profile-chevron {
+    transform: rotate(180deg);
 }
 
-/* =========================================================
-   BADGES DE STATUS DO PEDIDO (BASEADO NAS SUAS CORES)
-   ========================================================= */
-.status {
-    padding: 6px 12px;
-    border-radius: 15px; /* Segue o padrão das suas labels */
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-    display: inline-block;
-    text-align: center;
-    min-width: 90px;
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
+    min-width: 170px;
+    background: var(--branco);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
-/* Pendente: Cor de alerta/espera */
-.status-pendente { 
-    background-color: #fff3cd; 
-    color: #856404; 
-}
-/* Pago: Verde contornado */
-.status-pago { 
-    background-color: white; 
-    color: var(--cor-primaria); 
-    border: 1px solid var(--cor-primaria);
-}
-/* Enviado: Usando a paleta do aliceblue */
-.status-enviado { 
-    background-color: aliceblue; 
-    color: var(--cor-primaria-escura); 
-}
-/* Entregue: Preenchimento total da sua marca */
-.status-entregue { 
-    background-color: var(--cor-primaria); 
-    color: white; 
-}
-/* Cancelado: Vermelho clássico para erro/cancelamento */
-.status-cancelado { 
-    background-color: #ffeaea; 
-    color: #d93025; 
+.profile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-  /* =========================================================
-   RESPONSIVIDADE (MOBILE) - MODO CARDS VERTICAIS
-   ========================================================= */
-@media (max-width: 768px) {
+.profile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-menu a:hover {
+    background: #fdecec;
+    color: var(--perigo);
+}
+
+/* Botão do menu mobile */
+.menu-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 0 10px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 2px;
+    background: var(--branco);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+    /* Container principal da tabela */
     .container-pedidos {
-        padding: 15px;
-        margin-top: 20px;
-        width: 95%;
-        background-color: transparent; /* Remove o fundo branco principal para destacar os cards */
-        box-shadow: none;
-    }
-
-    /* Esconde o cabeçalho original da tabela no mobile */
-    .tabela-pedidos thead {
-        display: none;
-    }
-
-    /* Transforma a tabela, o corpo, as linhas e as células em blocos */
-    .tabela-pedidos, 
-    .tabela-pedidos tbody, 
-    .tabela-pedidos tr, 
-    .tabela-pedidos td {
-        display: block;
-        width: 100%;
-    }
-
-    /* Estiliza cada linha como um Card individual */
-    .tabela-pedidos tr {
+        max-width: 1200px;
+        margin: 40px auto;
         background-color: #ffffff;
-        margin-bottom: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        border: 1px solid var(--fundo);
-        overflow: hidden;
+        padding: 30px;
+        border-radius: 10px; /* Segue o padrão do seu .fale_conosco_container */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Sombra mais suave para facilitar a leitura */
+        width: 90%;
     }
 
-    /* Ajuste interno das células do Card */
-    .tabela-pedidos td {
-        text-align: right;
-        padding: 12px 15px;
-        position: relative;
-        border-bottom: 1px solid var(--fundo);
-        font-size: 13px;
+    /* Título da página */
+    .container-pedidos h2 {
+        margin-top: 0;
+        color: var(--cor-primaria-escura); /* Puxa sua variável verde escuro */
+        font-size: 24px;
+        font-weight: 600;
+        border-bottom: 2px solid var(--fundo);
+        padding-bottom: 15px;
+        margin-bottom: 25px;
         display: flex;
-        justify-content: space-between; /* Alinha o rótulo à esquerda e o valor à direita */
         align-items: center;
+        gap: 10px;
+        text-align: left;
     }
 
-    /* Remove a borda inferior do último item do card */
-    .tabela-pedidos td:last-child {
-        border-bottom: none;
-        background-color: aliceblue; /* Dá um destaque no status no final do card */
+    .container-pedidos h2 i {
+        color: var(--cor-primaria); /* Puxa sua variável verde padrão */
     }
 
-    /* Cria o título da informação usando o data-label que colocamos no HTML */
-    .tabela-pedidos td::before {
-        content: attr(data-label);
+    /* Estrutura da Tabela */
+    .tabela-pedidos {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .tabela-pedidos th, 
+    .tabela-pedidos td {
+        border-bottom: 1px solid var(--fundo); /* Usa a cor de fundo como uma borda divisória suave */
+        padding: 16px 12px;
+        text-align: left;
+        font-size: 14px;
+        color: #333;
+    }
+
+    /* Cabeçalho da Tabela */
+    .tabela-pedidos th {
+        background-color: aliceblue; /* Mesma cor que você usa nos inputs do formulário */
+        color: var(--cor-primaria-escura);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+
+    /* Efeito Hover nas linhas */
+    .tabela-pedidos tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .tabela-pedidos tr:hover {
+        background-color: var(--fundo); /* Destaca a linha com a sua cor de fundo */
+    }
+
+    /* Destacando IDs e Valores */
+    .tabela-pedidos td:first-child {
         font-weight: 600;
         color: var(--cor-primaria-escura);
+    }
+
+    .tabela-pedidos td:nth-last-child(2) { 
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--cor-primaria);
+    }
+
+    /* =========================================================
+    BADGES DE STATUS DO PEDIDO (BASEADO NAS SUAS CORES)
+    ========================================================= */
+    .status {
+        padding: 6px 12px;
+        border-radius: 15px; /* Segue o padrão das suas labels */
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
         text-transform: uppercase;
-        font-size: 11px;
-        letter-spacing: 0.5px;
-        text-align: left;
+        display: inline-block;
+        text-align: center;
+        min-width: 90px;
+    }
+
+    /* Pendente: Cor de alerta/espera */
+    .status-pendente { 
+        background-color: #fff3cd; 
+        color: #856404; 
+    }
+    /* Pago: Verde contornado */
+    .status-pago { 
+        background-color: white; 
+        color: var(--cor-primaria); 
+        border: 1px solid var(--cor-primaria);
+    }
+    /* Enviado: Usando a paleta do aliceblue */
+    .status-enviado { 
+        background-color: aliceblue; 
+        color: var(--cor-primaria-escura); 
+    }
+    /* Entregue: Preenchimento total da sua marca */
+    .status-entregue { 
+        background-color: var(--cor-primaria); 
+        color: white; 
+    }
+    /* Cancelado: Vermelho clássico para erro/cancelamento */
+    .status-cancelado { 
+        background-color: #ffeaea; 
+        color: #d93025; 
+    }
+
+    /* =========================================================
+    RESPONSIVIDADE (MOBILE) - MODO CARDS VERTICAIS
+    ========================================================= */
+    @media (max-width: 768px) {
+        .container-pedidos {
+            padding: 15px;
+            margin-top: 20px;
+            width: 95%;
+            background-color: transparent; /* Remove o fundo branco principal para destacar os cards */
+            box-shadow: none;
+        }
+
+        /* Esconde o cabeçalho original da tabela no mobile */
+        .tabela-pedidos thead {
+            display: none;
+        }
+
+        /* Transforma a tabela, o corpo, as linhas e as células em blocos */
+        .tabela-pedidos, 
+        .tabela-pedidos tbody, 
+        .tabela-pedidos tr, 
+        .tabela-pedidos td {
+            display: block;
+            width: 100%;
+        }
+
+        /* Estiliza cada linha como um Card individual */
+        .tabela-pedidos tr {
+            background-color: #ffffff;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--fundo);
+            overflow: hidden;
+        }
+
+        /* Ajuste interno das células do Card */
+        .tabela-pedidos td {
+            text-align: right;
+            padding: 12px 15px;
+            position: relative;
+            border-bottom: 1px solid var(--fundo);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between; /* Alinha o rótulo à esquerda e o valor à direita */
+            align-items: center;
+        }
+
+        /* Remove a borda inferior do último item do card */
+        .tabela-pedidos td:last-child {
+            border-bottom: none;
+            background-color: aliceblue; /* Dá um destaque no status no final do card */
+        }
+
+        /* Cria o título da informação usando o data-label que colocamos no HTML */
+        .tabela-pedidos td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--cor-primaria-escura);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+    }
+
+/* =========================================================
+   PEDIDOS — MELHORIAS (o cabeçalho acima não foi alterado)
+   ========================================================= */
+
+/* Título com contador */
+.container-pedidos h2 .contador {
+    margin-left: auto;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-primaria-escura);
+    background: #e6f4e6;
+    border-radius: 999px;
+}
+
+/* Cards de resumo */
+.resumo-pedidos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.resumo-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--branco);
+    border: 1px solid var(--fundo);
+    border-left: 4px solid var(--cor-primaria);
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resumo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(30, 107, 29, 0.12);
+}
+
+.resumo-card .icone {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    color: var(--cor-primaria-escura);
+    background: #e6f4e6;
+    border-radius: 12px;
+}
+
+.resumo-card .rotulo {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.resumo-card .valor {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cor-primaria-escura);
+    line-height: 1.2;
+}
+
+.resumo-card.alerta { border-left-color: #e0a800; }
+.resumo-card.alerta .icone { background: #fff3cd; color: #856404; }
+
+/* Tabela: rolagem em telas médias e acabamento */
+.tabela-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--fundo);
+    border-radius: 12px;
+}
+
+.tabela-wrapper .tabela-pedidos {
+    margin-top: 0;
+    min-width: 900px;
+}
+
+.tabela-pedidos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-pedidos td {
+    vertical-align: middle;
+}
+
+.tabela-pedidos td small {
+    display: block;
+    margin-top: 2px;
+}
+
+.tabela-pedidos .item-linha + .item-linha {
+    margin-top: 6px;
+}
+
+.tabela-pedidos .sem-dados {
+    text-align: center;
+    padding: 40px 20px;
+    color: #777;
+}
+
+.tabela-pedidos .sem-dados i {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 36px;
+    color: var(--cor-ondas);
+}
+
+.metodo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cor-primaria-escura);
+    background: var(--fundo);
+    border-radius: 8px;
+}
+
+/* Mobile: tabela em cards e cabeçalho com menu recolhível */
+@media (max-width: 768px) {
+    .tabela-wrapper {
+        overflow: visible;
+        border: none;
+    }
+
+    .tabela-wrapper .tabela-pedidos {
+        min-width: 0;
+    }
+
+    .container-pedidos h2 .contador {
+        font-size: 12px;
+    }
+
+    .tabela-pedidos td > div {
+        text-align: right;
+    }
+
+    .tabela-pedidos .sem-dados {
+        display: block;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    .header-inner {
+        grid-template-columns: 1fr auto auto;
+        gap: 12px;
+        min-height: 64px;
+    }
+
+    .menu-toggle {
+        display: flex;
+        order: 3;
+    }
+
+    .profile { order: 2; }
+    .profile-btn { padding-right: 8px; }
+
+.profile-role { display: none; }
+
+.profile-name {
+    font-size: 0.8rem;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+    .main-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        padding: 12px 5% 16px;
+        background: #1e6b1d;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+
+    .main-nav.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .menu-horizontal {
+        flex-direction: column;
+        width: 100%;
+        border-radius: 16px;
     }
 }

@@ -1,281 +1,391 @@
+/* ==========================================================
+   ARUANÃ — Login
+   ========================================================== */
+
 :root {
     --cor-primaria: #2c9b2a;
-    --cor-gradiente: linear-gradient(135deg, rgba(44, 155, 42, 1) 0%, rgb(136 231 19) 100%);
-    --cor-ondas: #a2ff00;
+    --cor-primaria-escura: #1e6b1d;
+    --cor-gradiente: linear-gradient(135deg, #2c9b2a 0%, #88e713 100%);
+    --cor-ondas: #82ce00;
     --cor-fundo: #f4f1e1;
     --cor-texto: #2b3a1a;
+    --cor-texto-suave: #6b7757;
+    --cor-borda: #dcd8c0;
+    --cor-campo: #fbfaf3;
     --branco: #ffffff;
-    --cinza-suave: #e0e0e0;
-    --transicao: all 0.3s ease;
+    --transicao: all .25s ease;
+    --foco: 0 0 0 4px rgba(44, 155, 42, .18);
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
 
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--branco);
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    color: var(--cor-texto);
+    background: var(--branco);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
+button, input { font: inherit; }
+
+/* ---------- Layout ---------- */
 .main-wrapper {
     display: flex;
-    width: 90vw;
-    max-width: 1000px;
-    height: 600px;
-    background: var(--branco);
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+    min-height: 100vh;
 }
 
-/* Painel Esquerdo (Azul na imagem, Verde aqui) */
-.side-panel {
-    flex: 1;
-    background: var(--cor-gradiente);
-    color: white;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    /* Efeito de borda curvada */
-    border-radius: 0 80px 150px 0;
-    z-index: 2;
-    height: 100vh;
-}
-
-.side-content {
-    max-width: 300px;
-}
-
-.logo-wrapper {
-    background: white;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.logo-img { 
-    width: 150px; 
-}
-
-.side-panel h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 20px; }
-.side-panel h1 span { font-weight: 300; }
-.side-panel p { font-size: 0.9rem; opacity: 0.9; line-height: 1.6; }
-
-.creator-footer {
-    position: absolute;
-    bottom: 20px;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
-}
-
-/* Painel Direito (Formulário) */
 .form-panel {
-    flex: 1.2;
+    position: relative;
+    flex: 1 1 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
-    background: white;
+    padding: 48px 32px;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(130, 206, 0, .12), transparent 45%),
+        var(--branco);
 }
 
-.form-container { width: 100%; max-width: 350px; }
+.image-panel {
+    position: relative;
+    flex: 1 1 50%;
+    min-height: 100vh;
+    overflow: hidden;
+}
 
-.form-container h2 {
+/* ---------- Botão voltar ---------- */
+.voltar {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--cor-borda);
+    background: var(--branco);
     color: var(--cor-texto);
-    margin-bottom: 30px;
-    font-size: 1.8rem;
+    text-decoration: none;
+    transition: var(--transicao);
 }
 
-.input-group { margin-bottom: 25px; }
+.voltar:hover {
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+    transform: translateX(-3px);
+}
+
+/* ---------- Formulário ---------- */
+.form-container {
+    width: 100%;
+    max-width: 380px;
+}
+
+.form-container h1 {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    color: var(--cor-primaria-escura);
+}
+
+.subtitle {
+    margin: 8px 0 32px;
+    font-size: .92rem;
+    color: var(--cor-texto-suave);
+}
+
+.input-group { margin-bottom: 18px; }
 
 label {
     display: block;
-    font-size: 0.85rem;
+    margin-bottom: 6px;
+    font-size: .85rem;
     font-weight: 600;
-    margin-bottom: 5px;
     color: var(--cor-texto);
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
-    width: 100%;
-    padding: 10px 0;
-    border: none;
-    border-bottom: 1.5px solid var(--cinza-suave);
-    outline: none;
-    font-family: inherit;
-    transition: var(--transicao);
+.campo {
+    position: relative;
 }
 
-input:focus { border-bottom-color: var(--cor-primaria); }
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.75rem;
-    margin-bottom: 30px;
-}
-
-.checkbox-group span { 
-    color: var(--cor-primaria); 
-    cursor: pointer; 
-}
-
-/* Botões */
-.actions {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-submit {
-    flex: 1;
-    padding: 12px;
-    background: var(--cor-gradiente);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;            /* 🌟 Define o tamanho padrão da fonte */
-    font-weight: bold;
-    font-family: inherit;       /* Garante que puxe o Poppins do body */
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(44, 155, 42, 0.3);
-    transition: var(--transicao); /* Adicionado para suavizar o hover */
-    
-    /* Alinhamento igual ao do link */
-    display: flex;            
-    align-items: center;      
-    justify-content: center;
-}
-
-.btn-outline {
-    flex: 1;
-    padding: 12px;
-    background: transparent;
-    color: #999;
-    border: 1.5px solid var(--cinza-suave);
-    border-radius: 25px;
-    font-size: 1rem;            /* 🌟 Mesmo tamanho do botão submit */
-    font-weight: bold;
-    font-family: inherit;       /* Garante que puxe o Poppins do body */
-    text-decoration: none;      /* Remove sublinhados nativos de links */
-    cursor: pointer;
-    
-    display: flex;            
-    align-items: center;      
-    justify-content: center;
-    transition: var(--transicao);
-}
-
-/* Efeitos de Hover para manter o padrão visual idêntico */
-.btn-submit:hover {
-    transform: scale(1.02);     
-}
-
-.btn-outline:hover {
-    color: var(--cor-primaria);
-    border-color: var(--cor-primaria);
-    transform: scale(1.02);
-}
-
-a {
-    color: white;
-}
-
-#seta {
+.campo > i {
     position: absolute;
-    top: 30px;
-    left: 30px;
-    scale: 2;
-    cursor: pointer;
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    font-size: .95rem;
+    color: #9aa387;
+    pointer-events: none;
+    transition: var(--transicao);
 }
 
-#seta:hover {
-    background-color: rgba(178, 255, 179, 0.11);
+.campo:focus-within > i { color: var(--cor-primaria); }
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 48px 0 44px;
+    border: 1.5px solid var(--cor-borda);
+    border-radius: 14px;
+    background: var(--cor-campo);
+    color: var(--cor-texto);
+    font-size: .95rem;
+    outline: none;
+    transition: var(--transicao);
+}
+
+input::placeholder { color: #a9ae98; }
+
+input:focus {
+    border-color: var(--cor-primaria);
+    background: var(--branco);
+    box-shadow: var(--foco);
+}
+
+.olho {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border: none;
     border-radius: 50%;
+    background: transparent;
+    color: #8a9377;
+    cursor: pointer;
+    transition: var(--transicao);
 }
 
-input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  display: none; /* ou position: absolute; opacity: 0; */
+.olho:hover {
+    background: rgba(44, 155, 42, .1);
+    color: var(--cor-primaria);
 }
 
-/* Esconde o input real */
-input[type="checkbox"] {
-    display: none;
+/* ---------- Checkbox ---------- */
+.checkbox-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0 4px;
+    margin: 4px 0 24px;
+    font-size: .8rem;
+}
+
+/* Escondido visualmente, mas ainda focável (evita bloquear o envio sem aviso) */
+.checkbox-group input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .checkbox-group label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    margin: 0;
+    font-size: .8rem;
+    font-weight: 400;
     cursor: pointer;
-    position: relative; /* Necessário para posicionar o check */
-    font-size: 0.75rem;
-    color: var(--cor-texto);
 }
 
-/* O quadrado (caixa) */
 .checkbox-group label::before {
     content: "";
+    flex-shrink: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid #555;
-    border-radius: 4px;
-    background-color: #fff;
-    transition: all 0.2s ease;
     margin-right: 10px;
-    display: inline-block;
-    flex-shrink: 0; /* Impede que a caixa amasse em telas menores */
-}
-
-/* O símbolo de Check (Visto) */
-.checkbox-group label::after {
-    content: "";
-    position: absolute;
-    left: 7px; /* Ajuste conforme necessário */
-    top: 4px;  /* Ajuste conforme necessário */
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    opacity: 0; /* Escondido por padrão */
-    transition: opacity 0.2s ease;
-}
-
-/* Quando marcado: Muda a cor do fundo da caixa */
-.checkbox-group input[type="checkbox"]:checked + label::before {
-    background-color: var(--cor-primaria);
-    border-color: var(--cor-primaria);
-}
-
-/* Quando marcado: Mostra o símbolo de Check */
-.checkbox-group input[type="checkbox"]:checked + label::after {
-    opacity: 1;
-}
-
-.btn-submit:hover {
-    transform: scale(1.02);     
+    border: 2px solid #b6b9a4;
+    border-radius: 6px;
+    background: var(--branco);
     transition: var(--transicao);
 }
 
-/* Responsividade Básica */
-@media (max-width: 768px) {
-    .main-wrapper { flex-direction: column; height: auto; width: 95vw; }
-    .side-panel { border-radius: 0 0 50px 50px; padding: 60px 40px; }
+.checkbox-group label::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    width: 6px;
+    height: 11px;
+    margin-top: -7px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.checkbox-group input:checked + label::before {
+    background: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.checkbox-group input:checked + label::after { opacity: 1; }
+
+.checkbox-group input:focus-visible + label::before { box-shadow: var(--foco); }
+
+.checkbox-group a {
+    color: var(--cor-primaria);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.checkbox-group a:hover { text-decoration: underline; }
+
+/* ---------- Botão principal ---------- */
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 14px;
+    background: var(--cor-gradiente);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(44, 155, 42, .3);
+    transition: var(--transicao);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(44, 155, 42, .4);
+}
+
+.btn-submit:active { transform: translateY(0); }
+
+.btn-submit i { transition: transform .25s ease; }
+.btn-submit:hover i { transform: translateX(4px); }
+
+/* ---------- Divisor e social ---------- */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    font-size: .8rem;
+    color: #9a9f88;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.divider span { padding: 0 14px; }
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 26px;
+}
+
+.switch-auth {
+    text-align: center;
+    font-size: .88rem;
+}
+
+.switch-auth a {
+    color: var(--cor-primaria);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.switch-auth a:hover { text-decoration: underline; }
+
+/* ---------- Painel da imagem ---------- */
+.side-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    background:
+        linear-gradient(180deg, rgba(30, 107, 29, .55) 0%, rgba(30, 107, 29, 0) 40%),
+        linear-gradient(0deg, rgba(20, 70, 20, .85) 0%, rgba(20, 70, 20, 0) 55%);
+}
+
+.overlay-logo {
+    height: 56px;
+    width: auto;
+    align-self: flex-start;
+}
+
+.overlay-texto {
+    max-width: 380px;
+    color: #fff;
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 860px) {
+    .main-wrapper { flex-direction: column; }
+
+    .image-panel {
+        order: 1;
+        flex: none;
+        min-height: 0;
+        height: 220px;
+    }
+
+    .form-panel {
+        order: 2;
+        flex: none;
+        padding: 56px 24px 40px;
+    }
+
+    .image-overlay { padding: 22px; }
+    .overlay-logo { height: 40px; }
+    .overlay-texto { font-size: 1.15rem; max-width: 260px; }
+
+    .voltar {
+        top: -196px;       /* sobe para cima da imagem */
+        left: 18px;
+        background: rgba(255, 255, 255, .92);
+        z-index: 2;
+    }
+}
+
+@media (max-width: 400px) {
+    .form-container h1 { font-size: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: .01ms !important;
+    }
 }

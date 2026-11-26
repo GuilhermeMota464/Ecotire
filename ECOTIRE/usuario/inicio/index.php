@@ -1,144 +1,448 @@
+
+<?php
+session_start();
+date_default_timezone_set('America/Sao_Paulo');
+
+// Verificação da autenticação
+$logado = isset($_SESSION['id_usuario']);
+
+$nomeCompleto = $logado ? ($_SESSION['usuario_nome'] ?? '') : '';
+$emailUsuario = $logado ? ($_SESSION['usuario_email'] ?? '') : '';
+
+// Primeiro nome
+$primeiroNome = '';
+if ($nomeCompleto !== '') {
+    $partesNome = preg_split('/\s+/', trim($nomeCompleto));
+    $primeiroNome = $partesNome[0] ?? '';
+}
+
+// Saudação conforme o horário
+$hora = (int) date('H');
+
+if ($hora < 12) {
+    $saudacao = 'Bom dia';
+} elseif ($hora < 18) {
+    $saudacao = 'Boa tarde';
+} else {
+    $saudacao = 'Boa noite';
+}
+
+// Proteção para exibição de dados
+function escapar($valor) {
+    return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aruanã</title>
+
+    <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+
     <!-- Cabeçalho -->
     <header>
         <div class="header">
+
             <div class="header-top">
-                <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Logo Aruanã"
+
+                <img src="../../assetsGerais/aruanaCabecario.webp"
+                    class="logo"
+                    alt="Logo Aruanã"
                     onclick="window.location.href='../inicio/index.php'">
 
                 <div class="search-group">
-                    <input type="text" class="search-bar" id="busca" placeholder="Pesquisar soluções sustentáveis...">
-                    <button type="button" id="btn-busca"><i class="fa-solid fa-magnifying-glass" id="lupa"></i></button>
-                    <div id="resultado"></div>
+                    <input type="text"
+                        class="search-bar"
+                        id="busca"
+                        placeholder="Pesquisar soluções sustentáveis..."
+                        aria-label="Pesquisar"
+                        autocomplete="off">
+
+                    <button type="button" id="btn-busca" aria-label="Pesquisar">
+                        <i class="fa-solid fa-magnifying-glass" id="lupa"></i>
+                    </button>
+
+                    <div id="resultado" aria-live="polite"></div>
                 </div>
 
                 <div class="header-actions">
-                    <i onclick="window.location.href = '../perfil/perfil.php'" class="fa-solid fa-circle-user"
-                        title="Minha Conta"></i>
-                    <i onclick="window.location.href = '../carrinho/carrinho.php'" class="fa-solid fa-cart-shopping"
-                        title="Meu Carrinho"></i>
+
+                    <!-- Área da conta -->
+                    <?php if ($logado): ?>
+
+                        <div class="user-menu" id="user-menu">
+
+                            <button type="button"
+                                class="user-greeting"
+                                id="user-toggle"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                aria-controls="user-dropdown">
+
+                                <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true"></i>
+
+                                <span class="user-greeting-text">
+                                    <small><?= $saudacao ?>,</small>
+                                    <strong><?= escapar($primeiroNome ?: 'Usuário') ?></strong>
+                                </span>
+
+                                <i class="fa-solid fa-chevron-down user-chevron"
+                                    aria-hidden="true"></i>
+
+                            </button>
+
+                            <div class="user-dropdown" id="user-dropdown">
+
+                                <a href="../perfil/perfil.php">
+                                    <i class="fa-solid fa-user"></i>
+                                    Meu perfil
+                                </a>
+
+                                <a href="../../funcoesPHP/logout.php" class="sair">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Sair da conta
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    <?php else: ?>
+
+                        <a href="../login/login.php" class="btn-entrar">
+                            <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                            Entrar
+                        </a>
+
+                    <?php endif; ?>
+
+                    <!-- Menu mobile -->
+                    <button id="icon"
+                        class="hamburger"
+                        aria-label="Abrir menu"
+                        aria-expanded="false"
+                        aria-controls="menu-links"
+                        onclick="toggleMenu()">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <!-- Carrinho -->
+                    <i onclick="window.location.href='../carrinho/carrinho.php'"
+                        class="fa-solid fa-cart-shopping"
+                        title="Meu Carrinho"
+                        role="link"
+                        tabindex="0"
+                        aria-label="Meu Carrinho"></i>
+
                 </div>
             </div>
 
             <div class="header-bottom">
                 <nav>
                     <ul class="menu-horizontal" id="menu-links">
-                        <li><a onclick="window.location.href='../inicio/index.php'" class="ativo">Início</a></li>
-                        <li><a onclick="window.location.href='../sobre_nos/sobre_nos.php'">Sobre Nós</a></li>
-                        <li><a onclick="window.location.href='../produto/produto.php'">Produtos</a></li>
-                        <li class="contato-btn"><a href="#fale_conosco">Contato</a></li>
+
+                        <li>
+                            <a href="../inicio/index.php"
+                                class="ativo"
+                                aria-current="page">Início</a>
+                        </li>
+
+                        <li>
+                            <a href="../sobre_nos/sobre_nos.php">Sobre Nós</a>
+                        </li>
+
+                        <li>
+                            <a href="../produto/produto.php">Produtos</a>
+                        </li>
+
+                        <li class="contato-btn">
+                            <a href="#fale_conosco">Contato</a>
+                        </li>
+
                     </ul>
                 </nav>
             </div>
+
         </div>
     </header>
 
     <main class="main-content">
-        <div class="imgAlternada">
+
+        <!-- Banner -->
+        <div class="imgAlternada"
+            aria-roledescription="carrossel"
+            aria-label="Destaques">
+
             <div class="Slide">
                 <img src="../../assetsGerais/banner1.webp" alt="Banner 1">
-                <img src="../../assetsGerais/placeholder.webp" alt="Banner 2">
-                <img src="../../assetsGerais/placeholder.webp" alt="Banner 3">
-                <img src="../../assetsGerais/placeholder.webp" alt="Banner 4">
-                <img src="../../assetsGerais/placeholder.webp" alt="Banner 5">
+                <img src="../../assetsGerais/banner2.webp" alt="Banner 2">
+                <img src="../../assetsGerais/banner3.webp" alt="Banner 3">
+                <img src="../../assetsGerais/banner4.webp" alt="Banner 4">
+                <img src="../../assetsGerais/banner5.webp" alt="Banner 5">
             </div>
-            <button class="prev">❮</button>
-            <button class="next">❯</button>
+
+            <button type="button" class="prev" aria-label="Banner anterior">❮</button>
+            <button type="button" class="next" aria-label="Próximo banner">❯</button>
+
+            <div class="slide-dots" id="slide-dots"></div>
         </div>
 
+        <!-- Apresentação -->
+        <section class="intro" aria-labelledby="titulo-intro">
+
+            <div class="intro-grid">
+
+                <h1 id="titulo-intro">
+                    O futuro começa nas escolhas de hoje.
+                </h1>
+
+                <div class="intro-texto">
+
+                    <p>
+                        A Aruanã reúne soluções sustentáveis para você pesquisar,
+                        comparar e comprar com tranquilidade, sem complicação.
+                    </p>
+
+                    <div class="intro-acoes">
+                        <a class="btn btn-primario" href="../produto/produto.php">
+                            Ver produtos
+                        </a>
+
+                        <a class="btn btn-secundario" href="#fale_conosco">
+                            Falar com a equipe
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <ul class="destaques">
+
+                <li>
+                    <span class="destaque-icone" aria-hidden="true">
+                        <i class="fa-solid fa-leaf"></i>
+                    </span>
+
+                    <div>
+                        <h2>Soluções sustentáveis</h2>
+                        <p>Produtos pensados para reduzir o impacto ambiental no dia a dia.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <span class="destaque-icone" aria-hidden="true">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </span>
+
+                    <div>
+                        <h2>Compra simples</h2>
+                        <p>Pesquise, escolha e adicione ao carrinho em poucos cliques.</p>
+                    </div>
+                </li>
+
+                <li>
+                    <span class="destaque-icone" aria-hidden="true">
+                        <i class="fa-solid fa-headset"></i>
+                    </span>
+
+                    <div>
+                        <h2>Atendimento próximo</h2>
+                        <p>Tire suas dúvidas direto com a nossa equipe pelo formulário abaixo.</p>
+                    </div>
+                </li>
+
+            </ul>
+        </section>
+
+        <!-- Fale conosco -->
         <section class="fale_conosco_container">
-            <form class="fale_conosco_form">
+
+            <div class="contato-lateral">
+
                 <div class="form_title">
                     <h2 id="fale_conosco">Fale Conosco</h2>
-                    <p>Conecte-se com a natureza e tire suas dúvidas.</p>
                 </div>
+
+                <p>Conecte-se com a natureza e tire suas dúvidas.</p>
+
+                <i class="fa-solid fa-seedling folha" aria-hidden="true"></i>
+
+            </div>
+
+            <form class="fale_conosco_form"
+                id="form-contato"
+                data-endpoint=""
+                novalidate>
 
                 <div class="form_groups">
-                    <div class="input_group">
-                        <div class="conjunto">
-                            <label for="nome"><i class="fa-solid fa-user"></i></label>
-                            <input type="text" id="nome" name="nome" required placeholder="Nome">
-                        </div>
-                        <div class="conjunto">
-                            <label for="email"><i class="fa-solid fa-envelope"></i></label>
-                            <input type="email" id="email" name="email" placeholder="E-mail">
-                        </div>
-                        <div class="conjunto">
-                            <label for="telefone"><i class="fa-solid fa-phone"></i></label>
-                            <input type="tel" id="telefone" name="telefone" required placeholder="Telefone">
+
+                    <div class="campo">
+                        <label for="nome">Nome</label>
+
+                        <div class="campo-input">
+                            <i class="fa-solid fa-user" aria-hidden="true"></i>
+
+                            <input type="text"
+                                id="nome"
+                                name="nome"
+                                required
+                                placeholder="Seu nome"
+                                autocomplete="name"
+                                value="<?= escapar($nomeCompleto) ?>">
                         </div>
                     </div>
 
-                    <div class="mensagem_group">
-                        <label for="mensagem" class="message-title"><i class="fa-solid fa-message"></i> Mensagem</label>
-                        <textarea id="mensagem" name="mensagem" rows="5" required
-                            placeholder="Inserir nome"></textarea>
+                    <div class="campo">
+                        <label for="telefone">Telefone</label>
+
+                        <div class="campo-input">
+                            <i class="fa-solid fa-phone" aria-hidden="true"></i>
+
+                            <input type="tel"
+                                id="telefone"
+                                name="telefone"
+                                required
+                                placeholder="(00) 00000-0000"
+                                inputmode="tel"
+                                autocomplete="tel"
+                                maxlength="15">
+                        </div>
                     </div>
+
+                    <div class="campo largo">
+                        <label for="email">
+                            E-mail <span class="opcional">(opcional)</span>
+                        </label>
+
+                        <div class="campo-input">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+
+                            <input type="email"
+                                id="email"
+                                name="email"
+                                placeholder="voce@exemplo.com"
+                                autocomplete="email"
+                                value="<?= escapar($emailUsuario) ?>">
+                        </div>
+                    </div>
+
+                    <div class="campo largo">
+                        <label for="mensagem">Mensagem</label>
+
+                        <div class="campo-input">
+                            <i class="fa-solid fa-message" aria-hidden="true"></i>
+
+                            <textarea id="mensagem"
+                                name="mensagem"
+                                rows="5"
+                                required
+                                placeholder="Como podemos ajudar?"></textarea>
+                        </div>
+                    </div>
+
                 </div>
-                <button id="enviar_mensagem" type="submit">Enviar Mensagem</button>
+
+                <div class="form-rodape">
+
+                    <p id="form-status" role="status" aria-live="polite"></p>
+
+                    <button id="enviar_mensagem" type="submit">
+                        Enviar Mensagem
+                    </button>
+
+                </div>
+
             </form>
         </section>
+
     </main>
 
+    <!-- Rodapé -->
     <footer class="footer">
-        <div class="footer-row">
-            <div class="footer-col">
-                <h4>Informação</h4>
-                <ul class="links">
-                    <li><a href="../inicio/index.php">Início</a></li>
-                    <li><a href="../sobre_nos/sobre_nos.html">Sobre nós</a></li>
-                    <li><a href="../produto/produto.php">Produtos</a></li>
-                    <li><a href="#">Contatos</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Explore</h4>
-                <ul class="links">
-                    <li><a href="../termos/termosdeuso.php">Termos de uso</a></li>
-                    <li><a href="#">Políticas</a></li>
-                    <li><a href="#">Carreiras</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Aruanã</h4>
-                <p>
-                    Líder em soluções sustentáveis. Criamos caminhos para um futuro onde o consumo e a natureza caminham
-                    juntos em harmonia.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Newsletter</h4>
-                <p>Receba atualizações exclusivas.</p>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Seu e-mail" required>
-                    <button type="submit">OK</button>
-                </form>
-                <div class="icons">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <i class="fa-brands fa-twitter"></i>
-                    <i class="fa-brands fa-instagram"></i>
+
+        <div class="footer-container">
+
+            <div class="footer-top">
+
+                <div class="footer-left">
+                    <p class="footer-mensagem">
+                        O futuro começa nas escolhas de hoje.<br>
+                        A Aruanã torna esse caminho mais simples.
+                    </p>
+                </div>
+
+                <div class="footer-right">
+
+                    <nav>
+                        <ul>
+                            <li><a href="../inicio/index.php">Início</a></li>
+                            <li><a href="../sobre_nos/sobre_nos.php">Sobre nós</a></li>
+                            <li><a href="../produto/produto.php">Produtos</a></li>
+                            <li><a href="#fale_conosco">Contato</a></li>
+                            <li><a href="../perfil/perfil.php">Perfil</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="social">
+                        <a href="https://instagram.com" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+
+                        <a href="https://facebook.com" title="Facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    </div>
+
                 </div>
             </div>
+
+            <div class="footer-bottom">
+
+                <div class="footer-logo">
+                    <img src="../../assetsGerais/aruanaCabecario.webp" alt="Logo Aruanã">
+                </div>
+
+                <div class="footer-legal">
+
+                    <p>
+                        ©<?= date('Y') ?> todos direitos reservados Aruanã
+                    </p>
+
+                    <div class="footer-links">
+                        <a href="../termos/termosdeuso.php">Termos de uso</a>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
+
     </footer>
 
+    <!-- Um único arquivo JavaScript controla todas as interações -->
     <script src="script.js"></script>
-</body>
 
+</body>
 </html>
