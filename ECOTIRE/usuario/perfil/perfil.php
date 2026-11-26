@@ -51,6 +51,8 @@ if (isset($_POST['atualizar_perfil'])) {
 
     if (mb_strlen($nome) < 2) {
         $msg_erro = 'Nome deve ter pelo menos 2 caracteres.';
+    } elseif (mb_strlen($nome) > 60) {
+        $msg_erro = 'Nome deve ter no máximo 60 caracteres.';
     } elseif ($telefone !== '' && (strlen($digitos_telefone) < 10 || strlen($digitos_telefone) > 11)) {
         $msg_erro = 'Telefone inválido.';
     } else {
@@ -61,9 +63,9 @@ if (isset($_POST['atualizar_perfil'])) {
 
         if ($stmt->execute([$nome, $telefone_db, $id_usuario])) {
             $msg_sucesso = 'Perfil atualizado com sucesso!';
-            $usuario['nome'] = $nome;
-            $usuario['telefone'] = $telefone_db;
-            $_SESSION['usuario_nome'] = $nome;
+            $usuario['nome'] =$nome;
+            $usuario['telefone'] =$telefone_db;
+            $_SESSION['usuario_nome'] =$nome;
         } else {
             $msg_erro = 'Erro ao atualizar perfil.';
         }
@@ -71,23 +73,20 @@ if (isset($_POST['atualizar_perfil'])) {
 }
 
 // Processar adição de endereço
-if (isset($_POST['adicionar_endereco'])) {
-    $aba_ativa = 'enderecos';
+if (isset($_POST['adicionar_endereco'])) {$aba_ativa = 'enderecos';
     $cep = trim($_POST['cep'] ?? '');
-    $numero = preg_replace('/\D/', '', $_POST['numero'] ?? '');
+    $numero = preg_replace('/\D/', '',$_POST['numero'] ?? '');
     $complemento = trim($_POST['complemento'] ?? '');
 
-    if ($numero === '') {
-        $msg_erro = 'Número inválido. Digite apenas números.';
+    if ($numero === '') {$msg_erro = 'Número inválido. Digite apenas números.';
     } else {
         $sql_insert_endereco = "INSERT INTO endereco (id_usuario, cep, numero, complemento) VALUES (?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql_insert_endereco);
         
-        if ($stmt->execute([$id_usuario, $cep, $numero, $complemento])) {
-            $msg_sucesso = 'Endereço adicionado com sucesso!';
+        if ($stmt->execute([$id_usuario, $cep,$numero, $complemento])) {$msg_sucesso = 'Endereço adicionado com sucesso!';
             $stmt = $pdo->prepare($sql_endereco);
             $stmt->execute([$id_usuario]);
-            $enderecos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $msg_erro = 'Erro ao adicionar endereço.';
         }
@@ -95,24 +94,21 @@ if (isset($_POST['adicionar_endereco'])) {
 }
 
 // Processar edição de endereço
-if (isset($_POST['editar_endereco'])) {
-    $aba_ativa = 'enderecos';
-    $id_endereco = $_POST['id_endereco'];
+if (isset($_POST['editar_endereco'])) {$aba_ativa = 'enderecos';
+    $id_endereco =$_POST['id_endereco'];
     $cep = trim($_POST['cep'] ?? '');
-    $numero = preg_replace('/\D/', '', $_POST['numero'] ?? '');
+    $numero = preg_replace('/\D/', '',$_POST['numero'] ?? '');
     $complemento = trim($_POST['complemento'] ?? '');
 
-    if ($numero === '') {
-        $msg_erro = 'Número inválido. Digite apenas números.';
+    if ($numero === '') {$msg_erro = 'Número inválido. Digite apenas números.';
     } else {
         $sql_edit_endereco = "UPDATE endereco SET cep = ?, numero = ?, complemento = ? WHERE id_endereco = ? AND id_usuario = ?";
         $stmt = $pdo->prepare($sql_edit_endereco);
 
-        if ($stmt->execute([$cep, $numero, $complemento, $id_endereco, $id_usuario])) {
-            $msg_sucesso = 'Endereço atualizado com sucesso!';
+        if ($stmt->execute([$cep,$numero, $complemento,$id_endereco, $id_usuario])) {$msg_sucesso = 'Endereço atualizado com sucesso!';
             $stmt = $pdo->prepare($sql_endereco);
             $stmt->execute([$id_usuario]);
-            $enderecos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $msg_erro = 'Erro ao atualizar endereço.';
         }
@@ -120,28 +116,25 @@ if (isset($_POST['editar_endereco'])) {
 }
 
 // Processar exclusão de endereço
-if (isset($_POST['excluir_endereco'])) {
-    $aba_ativa = 'enderecos';
-    $id_endereco = $_POST['id_endereco'];
+if (isset($_POST['excluir_endereco'])) {$aba_ativa = 'enderecos';
+    $id_endereco =$_POST['id_endereco'];
 
     try {
         $sql_del_endereco = "DELETE FROM endereco WHERE id_endereco = ? AND id_usuario = ?";
         $stmt = $pdo->prepare($sql_del_endereco);
 
-        if ($stmt->execute([$id_endereco, $id_usuario])) {
-            $msg_sucesso = 'Endereço excluído com sucesso!';
+        if ($stmt->execute([$id_endereco, $id_usuario])) {$msg_sucesso = 'Endereço excluído com sucesso!';
             $stmt = $pdo->prepare($sql_endereco);
             $stmt->execute([$id_usuario]);
-            $enderecos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $enderecos =$stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $stmt = $pdo->prepare($sql_pedidos_andamento);
             $stmt->execute([$id_usuario]);
-            $pedidos_andamento = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pedidos_andamento =$stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $msg_erro = 'Erro ao excluir endereço.';
         }
-    } catch (PDOException $e) {
-        $msg_erro = 'Não foi possível excluir este endereço pois ele está vinculado a um pedido.';
+    } catch (PDOException $e) {$msg_erro = 'Não foi possível excluir este endereço pois ele está vinculado a um pedido.';
     }
 }
 
@@ -159,7 +152,7 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Conta - Ecotire</title>
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,7 +198,7 @@ if (isset($_GET['logout'])) {
             <div class="tab-content <?php echo $aba_ativa === 'pedidos' ? 'active' : ''; ?>" id="pedidos">
                 <h2><i class="fa-solid fa-box-open"></i> Pedidos em Andamento</h2>
                 
-                <?php if ($msg_sucesso && $aba_ativa === 'pedidos'): ?>
+                <?php if ($msg_sucesso &&$aba_ativa === 'pedidos'): ?>
                     <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
                 <?php endif; ?>
                 
@@ -217,7 +210,7 @@ if (isset($_GET['logout'])) {
                     </div>
                 <?php else: ?>
                     <div class="orders-list">
-                        <?php foreach ($pedidos_andamento as $pedido): ?>
+                        <?php foreach ($pedidos_andamento as$pedido): ?>
                         <div class="order-card">
                             <div class="order-header">
                                 <span class="order-id">Pedido #<?php echo $pedido['id_pedido']; ?></span>
@@ -226,7 +219,7 @@ if (isset($_GET['logout'])) {
                             <div class="order-body">
                                 <p><strong>Produto:</strong> <?php echo htmlspecialchars($pedido['nome_produto']); ?></p>
                                 <p><strong>Quantidade:</strong> <?php echo $pedido['quantidade']; ?></p>
-                                <p><strong>Total:</strong> R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
+                                <p><strong>Total:</strong> R$<?php echo number_format($pedido['total'], 2, ',', '.'); ?></p>
                                 <p><strong>Data:</strong> <?php echo date('d/m/Y H:i', strtotime($pedido['data_pedido'])); ?></p>
                             </div>
                         </div>
@@ -239,18 +232,18 @@ if (isset($_GET['logout'])) {
             <div class="tab-content <?php echo $aba_ativa === 'conta' ? 'active' : ''; ?>" id="conta">
                 <h2><i class="fa-solid fa-gear"></i> Configurações da Conta</h2>
                 
-                <?php if ($msg_erro && $aba_ativa === 'conta'): ?>
+                <?php if ($msg_erro &&$aba_ativa === 'conta'): ?>
                     <div class="alert erro"><?php echo $msg_erro; ?></div>
                 <?php endif; ?>
                 
-                <?php if ($msg_sucesso && $aba_ativa === 'conta'): ?>
+                <?php if ($msg_sucesso &&$aba_ativa === 'conta'): ?>
                     <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
                 <?php endif; ?>
                 
                 <form method="POST" class="form-perfil">
                     <div class="form-group">
                         <label for="nome"><i class="fa-solid fa-user"></i> Nome</label>
-                        <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
+                        <input type="text" id="nome" name="nome" maxlength="60" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
                     </div>
                     
                     <div class="form-group">
@@ -285,17 +278,17 @@ if (isset($_GET['logout'])) {
             <div class="tab-content <?php echo $aba_ativa === 'enderecos' ? 'active' : ''; ?>" id="enderecos">
                 <h2><i class="fa-solid fa-location-dot"></i> Meus Endereços</h2>
 
-                <?php if ($msg_erro && $aba_ativa === 'enderecos'): ?>
+                <?php if ($msg_erro &&$aba_ativa === 'enderecos'): ?>
                     <div class="alert erro"><?php echo $msg_erro; ?></div>
                 <?php endif; ?>
 
-                <?php if ($msg_sucesso && $aba_ativa === 'enderecos'): ?>
+                <?php if ($msg_sucesso &&$aba_ativa === 'enderecos'): ?>
                     <div class="alert sucesso"><?php echo $msg_sucesso; ?></div>
                 <?php endif; ?>
                 
                 <div class="enderecos-grid">
-                    <?php foreach ($enderecos as $endereco): ?>
-                    <?php $idEnd = (int) $endereco['id_endereco']; ?>
+                    <?php foreach ($enderecos as$endereco): ?>
+                    <?php $idEnd = (int)$endereco['id_endereco']; ?>
                     <div class="endereco-card" id="card-end-<?php echo $idEnd; ?>">
                         <!-- Visualização padrão -->
                         <div class="endereco-view-box" id="view-end-<?php echo $idEnd; ?>">
