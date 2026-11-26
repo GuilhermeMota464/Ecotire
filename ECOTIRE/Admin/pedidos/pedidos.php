@@ -87,12 +87,11 @@ foreach ($pedidos as $p) {
 
             <div class="profile" id="profile">
                 <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid fa-circle-user user-avatar"
-                                    aria-hidden="true" id="user_avatar" ></i>
-                    <span class="profile-text">
-                        <span class="profile-name">Administrador</span>
-                        <span class="profile-role">Painel Aruanã</span>
-                    </span>
+                    <i class="fa-solid fa-circle-user user-avatar" aria-hidden="true" id="user_avatar"></i>
+                <span class="profile-text">
+                    <span class="profile-name">Administrador</span>
+                    <span class="profile-role">Painel Aruanã</span>
+                </span>
                     <i class="fa-solid fa-chevron-down profile-chevron"></i>
                 </button>
                 <div class="profile-menu" id="profileMenu" role="menu">

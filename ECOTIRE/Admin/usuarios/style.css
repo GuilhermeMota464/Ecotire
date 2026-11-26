@@ -171,6 +171,10 @@ body {
     line-height: 1.2;
 }
 
+.profile-btn{
+    font-size: 20px;
+}
+
 .profile-name {
     font-size: 0.85rem;
     font-weight: 600;
@@ -300,10 +304,10 @@ body {
         margin-left: auto;
     }
 
-    .profile-text,
-    .profile-chevron {
-        display: none;
-    }
+   .profile-chevron { display: none; }
+    .profile-btn { padding: 4px 10px 4px 4px; gap: 8px; }
+    .profile-name { font-size: 0.8rem; }
+    .profile-role { display: none; }
 
     .profile-btn {
         padding: 4px;
