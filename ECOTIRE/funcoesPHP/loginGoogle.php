@@ -23,7 +23,7 @@ function respond(array $data, int $httpCode = 200): void
 try {
 
     // Carrega as dependências
-    require __DIR__ . '/../vendor/autoload.php';
+    require __DIR__ . '/../../vendor/autoload.php';
     require __DIR__ . '/connection.php';
 
     // Inicia a sessão
