@@ -36,7 +36,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <header class="site-header" id="siteHeader">
         <div class="header-inner">
 
-            <a href="../inicio-admin/inicio-admin.php" class="logo-link" aria-label="Ir para o início">
                 <img src="../../assetsGerais/aruana.webp" class="logo" alt="Aruanã">
             </a>
 
