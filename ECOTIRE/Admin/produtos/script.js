@@ -180,3 +180,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+window.confirmarExclusao = async function (idProduto, nomeProduto) {
+    const confirmacao = await Swal.fire({
+        title: "Excluir produto?",
+        text: `Tem certeza que deseja excluir "${nomeProduto}"?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1e6b1d",
+        cancelButtonColor: "#8a8f7a",
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar"
+    });
+
+    if (!confirmacao.isConfirmed) return;
+
+    try {
+        const resp = await fetch(`../../funcoesPHP/remove.php?delete_id=${encodeURIComponent(idProduto)}`);
+        const dados = await resp.json();
+
+        if (dados.ok) {
+            await Swal.fire({
+                title: "Excluído!",
+                text: dados.mensagem,
+                icon: "success",
+                confirmButtonColor: "#1e6b1d"
+            });
+            window.location.reload();
+            return;
+        }
+
+        await Swal.fire({
+            title: "Ops!",
+            text: dados.mensagem || "Não foi possível excluir o produto.",
+            icon: "warning",
+            confirmButtonColor: "#1e6b1d"
+        });
+    } catch (erro) {
+        await Swal.fire({
+            title: "Erro de conexão",
+            text: "Não foi possível comunicar com o servidor. Tente novamente.",
+            icon: "error",
+            confirmButtonColor: "#1e6b1d"
+        });
+    }
+};

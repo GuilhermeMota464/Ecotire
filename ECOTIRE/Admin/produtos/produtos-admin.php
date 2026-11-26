@@ -32,7 +32,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Cabeçalho -->
     <header class="site-header" id="siteHeader">
         <div class="header-inner">
-                <img src="../../assetsGerais/aruana.webp" class="logo" alt="Aruanã">
+                <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Aruanã">
             </a>
 
             <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
@@ -185,7 +185,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <button type="button" class="edit-button" onclick="window.location.href='../pagina-produto-admin/pagina-produto-admin.php?id=<?php echo $produto['id_produto']; ?>'">
                                         <i class="fa-solid fa-pen"></i> Editar
                                     </button>
-                                    <button type="button" class="delete-button" onclick="if(confirm('Tem certeza que deseja excluir o produto \'<?php echo addslashes($produto['nome']); ?>\'?')) window.location.href='../../funcoesPHP/remove.php?delete_id=<?php echo $produto['id_produto']; ?>'">
+                                    <button type="button" class="delete-button" onclick="confirmarExclusao(<?php echo (int) $produto['id_produto']; ?>, '<?php echo htmlspecialchars(addslashes($produto['nome']), ENT_QUOTES, 'UTF-8'); ?>')">
                                         <i class="fa-solid fa-trash"></i> Excluir
                                     </button>
                                 </div>    
@@ -197,7 +197,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </main>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="script.js"></script>
+</body>
 </body>
 </html>

@@ -36,7 +36,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <header class="site-header" id="siteHeader">
         <div class="header-inner">
 
-                <img src="../../assetsGerais/aruana.webp" class="logo" alt="Aruanã">
+                <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Aruanã">
             </a>
 
             <button type="button" class="menu-toggle" id="menuToggle"
@@ -67,29 +67,23 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </nav>
 
             <div class="profile" id="profile">
-                <button type="button" class="profile-btn" id="profileBtn"
-                    aria-haspopup="true" aria-expanded="false">
-
-                    <img src="../../assetsGerais/fotoPerfil.webp"
-                        class="foto_perfil" alt="Foto de perfil">
-
+                <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true" id="user_avatar" ></i>
                     <span class="profile-text">
                         <span class="profile-name">Administrador</span>
                         <span class="profile-role">Painel Aruanã</span>
                     </span>
-
                     <i class="fa-solid fa-chevron-down profile-chevron"></i>
                 </button>
-
                 <div class="profile-menu" id="profileMenu" role="menu">
-                    <a href="../../funcoesPHP/logout.php" role="menuitem">
-                        <i class="fa-solid fa-right-from-bracket"></i> Sair
-                    </a>
+                    <!-- Ajuste o caminho do logout conforme o seu projeto -->
+                    <a href="../../funcoesPHP/logout.php" role="menuitem"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
                 </div>
             </div>
-
         </div>
     </header>
+
 
     <!-- Conteúdo -->
     <div class="container">
@@ -228,9 +222,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <i class="fa-solid fa-pen"></i>
                                     </button>
 
-                                    <form action="../../funcoesPHP/deletar_usuario.php"
-                                        method="POST" class="delete-form"
-                                        onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
+                                        <form action="../../funcoesPHP/deletar_usuario_admin.php"
+                                            method="POST" class="delete-form"
+                                            onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');">
 
                                         <input type="hidden" name="id_usuario"
                                             value="<?php echo htmlspecialchars($usuario['id_usuario'], ENT_QUOTES, 'UTF-8'); ?>">

@@ -70,7 +70,7 @@ foreach ($pedidos as $p) {
     <!-- Cabeçalho -->
     <header class="site-header" id="siteHeader">
         <div class="header-inner">
-                <img src="../../assetsGerais/aruana.webp" class="logo" alt="Aruanã">
+                <img src="../../assetsGerais/aruanaCabecario.webp" class="logo" alt="Aruanã">
             </a>
 
             <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
@@ -87,7 +87,8 @@ foreach ($pedidos as $p) {
 
             <div class="profile" id="profile">
                 <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false">
-                    <img src="../../assetsGerais/fotoPerfil.webp" class="foto_perfil" alt="Foto de perfil">
+                    <i class="fa-solid fa-circle-user user-avatar"
+                                    aria-hidden="true" id="user_avatar" ></i>
                     <span class="profile-text">
                         <span class="profile-name">Administrador</span>
                         <span class="profile-role">Painel Aruanã</span>
@@ -95,11 +96,13 @@ foreach ($pedidos as $p) {
                     <i class="fa-solid fa-chevron-down profile-chevron"></i>
                 </button>
                 <div class="profile-menu" id="profileMenu" role="menu">
+                    <!-- Ajuste o caminho do logout conforme o seu projeto -->
                     <a href="../../funcoesPHP/logout.php" role="menuitem"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
                 </div>
             </div>
         </div>
     </header>
+
 
     <main class="container-pedidos">
         <h2>
