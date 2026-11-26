@@ -25,7 +25,15 @@ $estoque = (int) ($produto['estoque'] ?? 0);
 
 $src_imagem = '../../assetsGerais/ecotire.webp';
 if (!empty($produto['imagem'])) {
-    $src_imagem = 'data:image/jpeg;base64,' . base64_encode($produto['imagem']);
+    $mime = 'image/jpeg';
+    if (class_exists('finfo')) {
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $detectado = $finfo->buffer($produto['imagem']);
+        if ($detectado) {
+            $mime = $detectado;
+        }
+    }
+    $src_imagem = 'data:' . $mime . ';base64,' . base64_encode($produto['imagem']);
 }
 ?>
 <!DOCTYPE html>
@@ -34,7 +42,7 @@ if (!empty($produto['imagem'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto - Aruanã</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -48,15 +56,29 @@ if (!empty($produto['imagem'])) {
         <i class="fa-solid fa-arrow-left"></i> Voltar para Produtos
     </a>
 
-    <form action="../../funcoesPHP/editionProduct.php" method="POST" id="formEdicao" class="detalhe">
+    <form data-action="../../funcoesPHP/editionProduct.php" method="POST" enctype="multipart/form-data" id="formEdicao" class="detalhe">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
         <input type="hidden" name="preco_venda" id="precoVendaReal" value="<?php echo number_format($preco_venda, 2, '.', ''); ?>">
         <input type="hidden" name="preco_promocional" id="precoPromoReal" value="<?php echo $tem_promo ? number_format($preco_promocional, 2, '.', '') : '0'; ?>">
 
         <!-- Coluna da Imagem -->
-        <div class="detalhe-imagem">
-            <img src="<?php echo $src_imagem; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="foto-produto" id="produto-principal">
-            <span class="selo-desconto" id="seloDesconto" style="<?php echo $tem_promo ? '' : 'display: none;'; ?>">0% OFF</span>
+        <div class="coluna-imagem">
+            <div class="detalhe-imagem" id="areaImagem" title="Clique ou arraste uma imagem para alterar">
+                <img src="<?php echo $src_imagem; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="foto-produto" id="produto-principal">
+                <span class="selo-desconto" id="seloDesconto" style="<?php echo $tem_promo ? '' : 'display: none;'; ?>">0% OFF</span>
+
+                <label for="inputImagem" class="btn-trocar-imagem">
+                    <i class="fa-solid fa-camera"></i> Trocar imagem
+                </label>
+                <input type="file" name="imagem" id="inputImagem" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+            </div>
+
+            <div class="info-upload">
+                <span class="texto-ajuda-img" id="nomeArquivoImg">Clique na foto ou arraste um arquivo (JPG, PNG ou WEBP até 5 MB)</span>
+                <button type="button" class="btn-cancelar-img oculto" id="btnCancelarImg">
+                    <i class="fa-solid fa-xmark"></i> Desfazer troca de imagem
+                </button>
+            </div>
         </div>
 
         <!-- Coluna das Informações / Edição -->
@@ -125,6 +147,6 @@ if (!empty($produto['imagem'])) {
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="script.js"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>

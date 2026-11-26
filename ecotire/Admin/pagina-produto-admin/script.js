@@ -5,6 +5,14 @@
     const form = document.getElementById("formEdicao");
     if (!form) return;
 
+    const areaImagem = document.getElementById("areaImagem");
+    const imgPrincipal = document.getElementById("produto-principal");
+    const inputImagem = document.getElementById("inputImagem");
+    const nomeArquivoImg = document.getElementById("nomeArquivoImg");
+    const btnCancelarImg = document.getElementById("btnCancelarImg");
+    let imagemOriginalSrc = imgPrincipal.src;
+    const textoAjudaPadrao = nomeArquivoImg.textContent;
+
     const precoVendaInput = document.getElementById("precoVendaFormatado");
     const precoPromoInput = document.getElementById("precoPromoFormatado");
     const precoVendaReal = document.getElementById("precoVendaReal");
@@ -20,6 +28,96 @@
     const btnMais = document.getElementById("mais");
     const btnSalvar = document.getElementById("btnSalvar");
     const btnResetar = document.getElementById("btnResetar");
+
+    /* ---------- Seleção e Pré-visualização da Imagem ---------- */
+    const TIPOS_PERMITIDOS = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const TAMANHO_MAX_BYTES = 5 * 1024 * 1024; // 5 MB
+
+    const limparSelecaoImagem = () => {
+        inputImagem.value = "";
+        imgPrincipal.src = imagemOriginalSrc;
+        nomeArquivoImg.textContent = textoAjudaPadrao;
+        btnCancelarImg.classList.add("oculto");
+    };
+
+    const processarArquivoImagem = (arquivo) => {
+        if (!arquivo) return;
+
+        if (!TIPOS_PERMITIDOS.includes(arquivo.type)) {
+            limparSelecaoImagem();
+            if (typeof Swal !== "undefined") {
+                Swal.fire({
+                    title: "Formato inválido",
+                    text: "Envie uma imagem JPG, PNG, WEBP ou GIF.",
+                    icon: "warning",
+                    confirmButtonColor: "#1e6b1d"
+                });
+            }
+            return;
+        }
+
+        if (arquivo.size > TAMANHO_MAX_BYTES) {
+            limparSelecaoImagem();
+            if (typeof Swal !== "undefined") {
+                Swal.fire({
+                    title: "Arquivo muito grande",
+                    text: "A imagem deve ter no máximo 5 MB.",
+                    icon: "warning",
+                    confirmButtonColor: "#1e6b1d"
+                });
+            }
+            return;
+        }
+
+        const leitor = new FileReader();
+        leitor.onload = (ev) => {
+            imgPrincipal.src = ev.target.result;
+            nomeArquivoImg.textContent = `Nova imagem selecionada: ${arquivo.name}`;
+            btnCancelarImg.classList.remove("oculto");
+        };
+        leitor.readAsDataURL(arquivo);
+    };
+
+    areaImagem.addEventListener("click", (e) => {
+        if (e.target.closest(".btn-trocar-imagem") || e.target === inputImagem) return;
+        inputImagem.click();
+    });
+
+    inputImagem.addEventListener("change", () => {
+        const arquivo = inputImagem.files && inputImagem.files[0];
+        if (arquivo) {
+            processarArquivoImagem(arquivo);
+        }
+    });
+
+    btnCancelarImg.addEventListener("click", () => {
+        limparSelecaoImagem();
+    });
+
+    // Suporte a arrastar e soltar (Drag & Drop)
+    ["dragenter", "dragover"].forEach((evento) => {
+        areaImagem.addEventListener(evento, (e) => {
+            e.preventDefault();
+            areaImagem.classList.add("arrastando");
+        });
+    });
+
+    ["dragleave", "drop"].forEach((evento) => {
+        areaImagem.addEventListener(evento, (e) => {
+            e.preventDefault();
+            areaImagem.classList.remove("arrastando");
+        });
+    });
+
+    areaImagem.addEventListener("drop", (e) => {
+        const arquivos = e.dataTransfer && e.dataTransfer.files;
+        if (arquivos && arquivos.length > 0) {
+            const dt = new DataTransfer();
+            dt.items.add(arquivos[0]);
+            inputImagem.files = dt.files;
+            processarArquivoImagem(arquivos[0]);
+        }
+    });
 
     /* ---------- Formatação de moeda (BRL) ---------- */
     const formatarMoeda = (valorDigitado) => {
@@ -150,7 +248,8 @@
         btnSalvar.disabled = true;
 
         try {
-            const resp = await fetch(form.action, {
+            const urlDestino = form.dataset.action || "../../funcoesPHP/editionProduct.php";
+            const resp = await fetch(urlDestino, {
                 method: "POST",
                 body: new FormData(form)
             });
@@ -165,6 +264,14 @@
             }
 
             if (dados.ok) {
+                // Atualiza a referência da imagem original caso uma nova foto tenha sido salva
+                if (inputImagem.files && inputImagem.files.length > 0) {
+                    imagemOriginalSrc = imgPrincipal.src;
+                    inputImagem.value = "";
+                    nomeArquivoImg.textContent = textoAjudaPadrao;
+                    btnCancelarImg.classList.add("oculto");
+                }
+
                 await Swal.fire({
                     title: "Salvo!",
                     text: dados.mensagem || "Produto atualizado com sucesso!",
