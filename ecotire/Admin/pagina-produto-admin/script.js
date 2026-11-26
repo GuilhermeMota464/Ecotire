@@ -18,6 +18,7 @@
     const campoEstoque = document.getElementById("estoque");
     const btnMenos = document.getElementById("menos");
     const btnMais = document.getElementById("mais");
+    const btnSalvar = document.getElementById("btnSalvar");
     const btnResetar = document.getElementById("btnResetar");
 
     /* ---------- Formatação de moeda (BRL) ---------- */
@@ -127,22 +128,67 @@
         atualizarBotoesEstoque(novo);
     });
 
-    /* ---------- Validação no envio e Reset ---------- */
-    form.addEventListener("submit", (e) => {
+    /* ---------- Envio via Fetch + Pop-up SweetAlert2 ---------- */
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
         atualizarValoresEPromo();
+
         const venda = converterParaNumero(precoVendaInput.value);
         const promo = converterParaNumero(precoPromoInput.value);
 
         if (venda <= 0) {
-            e.preventDefault();
             precoVendaInput.focus();
             return;
         }
 
         if (togglePromo.checked && (promo <= 0 || promo >= venda)) {
-            e.preventDefault();
             avisoPromo.textContent = "Informe um valor promocional menor que o preço de venda.";
             precoPromoInput.focus();
+            return;
+        }
+
+        btnSalvar.disabled = true;
+
+        try {
+            const resp = await fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            });
+
+            const texto = await resp.text();
+            let dados;
+            try {
+                dados = JSON.parse(texto);
+            } catch (erroParse) {
+                console.error("Resposta inválida do PHP:", texto);
+                throw new Error("Resposta inválida do servidor.");
+            }
+
+            if (dados.ok) {
+                await Swal.fire({
+                    title: "Salvo!",
+                    text: dados.mensagem || "Produto atualizado com sucesso!",
+                    icon: "success",
+                    confirmButtonColor: "#1e6b1d"
+                });
+                return;
+            }
+
+            await Swal.fire({
+                title: "Ops!",
+                text: dados.mensagem || "Não foi possível salvar as alterações.",
+                icon: "warning",
+                confirmButtonColor: "#1e6b1d"
+            });
+        } catch (erro) {
+            await Swal.fire({
+                title: "Erro de conexão",
+                text: erro.message || "Tente novamente em instantes.",
+                icon: "error",
+                confirmButtonColor: "#1e6b1d"
+            });
+        } finally {
+            btnSalvar.disabled = false;
         }
     });
 

@@ -3,11 +3,11 @@ require_once __DIR__ . '/../auth_admin/auth_admin.php';
 include '../../funcoesPHP/connection.php';
 
 if (isset($_GET['id'])) {
-    $id =$_GET['id'];
+    $id = $_GET['id'];
 
-    $stmt =$pdo->prepare("SELECT * FROM produtos WHERE id_produto = ?");
+    $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id_produto = ?");
     $stmt->execute([$id]);
-    $produto =$stmt->fetch(PDO::FETCH_ASSOC);
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$produto) {
         echo "Produto não encontrado.";
@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
 
 $preco_venda = (float) ($produto['preco_venda'] ?? 0);
 $preco_promocional = (float) ($produto['preco_promocional'] ?? 0);
-$tem_promo =$preco_promocional > 0 && $preco_promocional <$preco_venda;
+$tem_promo = $preco_promocional > 0 && $preco_promocional < $preco_venda;
 $estoque = (int) ($produto['estoque'] ?? 0);
 
 $src_imagem = '../../assetsGerais/ecotire.webp';
@@ -124,6 +124,7 @@ if (!empty($produto['imagem'])) {
     </form>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="script.js"></script>
 </body>
 </html>

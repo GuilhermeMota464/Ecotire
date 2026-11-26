@@ -1,63 +1,85 @@
 <?php
-include 'connection.php';
+header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    // O operador ?? evita os "Warnings" caso o formulário não envie o campo
-    $id = intval($_POST['id'] ?? 0);
-    $nome = trim($_POST['nome'] ?? '');
-    $valor = floatval($_POST['preco'] ?? 0);
-    $promocao = intval($_POST['promo'] ?? 0);
-    $descricao = trim($_POST['descricao'] ?? '');
-    $estoque = intval($_POST['estoque'] ?? 0);
-    $preco_promocional = isset($_POST['preco_promocional']) && $_POST['preco_promocional'] !== '' ? floatval($_POST['preco_promocional']) : null;
-    $modelo = $_POST['modelo'] ?? $nome;
-    $ativo = 1;
-
-
-    if ($id > 0) {
-        
-        try {
-            // 1. Usando parâmetros nomeados (:nome) em vez de (?) para não haver confusão
-            $stmt = $pdo->prepare("
-                UPDATE produtos
-                SET nome = :nome,
-                    preco_custo = :preco_custo,
-                    preco_venda = :preco_venda,
-                    preco_promocional = :preco_promocional,
-                    modelo = :modelo,
-                    estoque = :estoque,
-                    imagem = :imagem,
-                    ativo = :ativo
-                WHERE id_produto = :id
-            ");
-
-            // 2. Colocando o array de dados DENTRO do execute() e incluindo o :id
-            $sucesso = $stmt->execute([
-                ':nome' => $nome,
-                ':preco_custo' => $valor,
-                ':preco_venda' => $valor,
-                ':preco_promocional' => ($promocao ? $preco_promocional : null),
-                ':modelo' => $modelo,
-                ':imagem' => null,
-                ':ativo' => $ativo,
-                ':estoque' => $estoque,
-                ':id' => $id
-            ]);
-
-            if ($sucesso) {
-                echo "Produto atualizado com sucesso!";
-            } else {
-                echo "Erro ao atualizar o produto.";
-            }
-            
-        } catch (PDOException $e) {
-            // 3. Capturando erros corretamente no padrão PDO
-            echo "Erro no banco de dados: " . $e->getMessage();
-        }
-
-    } else {
-        echo "ID inválido. Certifique-se de que o formulário está enviando o 'id' do produto.";
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode([
+        'ok' => false,
+        'mensagem' => 'Método de requisição inválido.'
+    ]);
+    exit;
 }
-?>
+
+$id = intval($_POST['id'] ?? 0);
+$nome = trim($_POST['nome'] ?? '');
+$modelo = trim($_POST['modelo'] ?? '');
+if ($modelo === '') {
+    $modelo = $nome;
+}
+
+$preco_venda = floatval($_POST['preco_venda'] ?? 0);
+$promocao = isset($_POST['promo']) && intval($_POST['promo']) === 1;
+$preco_promocional_raw = $_POST['preco_promocional'] ?? '';
+$preco_promocional = ($promocao && floatval($preco_promocional_raw) > 0)
+    ? floatval($preco_promocional_raw)
+    : null;
+
+$descricao = trim($_POST['descricao'] ?? '');
+$estoque = max(0, intval($_POST['estoque'] ?? 0));
+
+if ($id <= 0) {
+    echo json_encode([
+        'ok' => false,
+        'mensagem' => 'ID do produto inválido.'
+    ]);
+    exit;
+}
+
+if ($nome === '' || $preco_venda <= 0) {
+    echo json_encode([
+        'ok' => false,
+        'mensagem' => 'Preencha o nome e um preço de venda maior que zero.'
+    ]);
+    exit;
+}
+
+if ($promocao && ($preco_promocional === null || $preco_promocional >= $preco_venda)) {
+    echo json_encode([
+        'ok' => false,
+        'mensagem' => 'O preço promocional deve ser menor que o preço de venda.'
+    ]);
+    exit;
+}
+
+try {
+    $stmt = $pdo->prepare("
+        UPDATE produtos
+        SET nome = :nome,
+            preco_venda = :preco_venda,
+            preco_promocional = :preco_promocional,
+            modelo = :modelo,
+            descricao = :descricao,
+            estoque = :estoque
+        WHERE id_produto = :id
+    ");
+
+    $stmt->execute([
+        ':nome' => $nome,
+        ':preco_venda' => $preco_venda,
+        ':preco_promocional' => $preco_promocional,
+        ':modelo' => $modelo,
+        ':descricao' => $descricao,
+        ':estoque' => $estoque,
+        ':id' => $id
+    ]);
+
+    echo json_encode([
+        'ok' => true,
+        'mensagem' => 'Produto atualizado com sucesso!'
+    ]);
+} catch (PDOException $e) {
+    echo json_encode([
+        'ok' => false,
+        'mensagem' => 'Erro ao atualizar o produto no banco de dados.'
+    ]);
+}
