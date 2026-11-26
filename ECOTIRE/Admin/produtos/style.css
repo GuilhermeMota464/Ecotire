@@ -277,10 +277,11 @@ body {
     }
 
     .profile { order: 2; margin-left: auto; }
-    .profile-text,
     .profile-chevron { display: none; }
-    .profile-btn { padding: 4px; }
-
+    .profile-btn { padding: 4px 10px 4px 4px; gap: 8px; }
+    .profile-name { font-size: 0.8rem; }
+    .profile-role { display: none; }
+    
     .main-nav {
         position: absolute;
         top: 100%;
@@ -735,7 +736,7 @@ textarea {
     color: #777;
 }
 
-.profile-btn i {
+.profile-btn .user-avatar {
     font-size: 20px;
 }
 
