@@ -88,7 +88,18 @@
             }
 
             if (dados.ok) {
-                window.location.href = "../carrinho/carrinho.php";
+                const textoSucesso = dados.mensagem || `${quantidade} ${quantidade === 1 ? "unidade adicionada" : "unidades adicionadas"} ao seu carrinho.`;
+
+                await alerta({
+                    title: "Adicionado ao carrinho!",
+                    text: textoSucesso,
+                    icon: "success",
+                    confirmButtonText: "Continuar comprando",
+                    confirmButtonColor: "#1e6b1d"
+                });
+
+                campo.value = 1;
+                atualizarBotoes(1);
                 return;
             }
 
